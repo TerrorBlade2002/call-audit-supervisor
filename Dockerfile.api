@@ -16,5 +16,9 @@ RUN pip install --no-cache-dir -e .
 RUN python -m playwright install --with-deps chromium
 
 # Release runs migrations, then serves. (Railway "release command" can also run migrations.)
+# Migration 0001 builds the FULL current schema via Base.metadata.create_all(), so the
+# incremental migrations 0002-0012 (raw add_column/etc.) collide with it on a fresh DB.
+# Therefore: on a fresh DB (no alembic_version) build the baseline and stamp head;
+# on an existing DB, upgrade normally.
 EXPOSE 8000
-CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+CMD ["sh", "-c", "if [ -z \"$(alembic current 2>/dev/null)\" ]; then alembic upgrade 0001 && alembic stamp head; else alembic upgrade head; fi && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
