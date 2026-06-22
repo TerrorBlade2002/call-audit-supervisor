@@ -1,0 +1,45 @@
+# Local dev stack. Postgres ships with pgvector (objection clustering, §7.5).
+# api + worker run from the same image (different commands), mirroring Railway.
+services:
+  db:
+    image: pgvector/pgvector:pg16
+    environment:
+      POSTGRES_USER: everest
+      POSTGRES_PASSWORD: everest
+      POSTGRES_DB: everest
+    ports:
+      - "5432:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U everest"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://everest:everest@db:5432/everest
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.worker
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://everest:everest@db:5432/everest
+    depends_on:
+      db:
+        condition: service_healthy
+
+volumes:
+  pgdata:

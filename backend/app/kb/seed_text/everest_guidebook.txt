@@ -1,0 +1,6095 @@
+ 
+▲  ▴ ▲ 
+EVEREST  RECEIVABLE  SERVICES 
+DEBT  COLLECTION  PROCESS Agent  Training  &  Operations  Guidebook 
+ 
+MANDATORY  DISCLOSURE  —  EVERY  NON-LOCATION  MESSAGE  &  TALK-OFF “This  is  a  communication  from  a  debt  collector.  This  is  an  attempt  to  collect  a  debt,  and  any  information  obtained  will  be  used  for  that  purpose.” 
+ FOR  INTERNAL  TRAINING  USE  ONLY Compiled  from  Everest  AG  training  materials  •  2024–2025  Edition  
+Everest  Receivable  Services  —  Debt  Collection  Process 
+Contents 
+1.  Introduction  &  How  to  Use  This  Guide5 How  the  guide  is  organized5 2.  Compliance  Foundation5 2.1  Mandatory  disclosures5 2.2  Authentication  before  substance5 2.3  Third-party  &  spouse  contact6 2.4  What  you  must  never  do7 2.5  Honoring  stop  requests  (DNC  &  revocation  of  consent)7 2.6  UDAAP  —  acknowledge  without  validating7 2.7  The  regulatory  framework  at  a  glance8 2.8  Reg  F  —  call  frequency  &  the  7-in-7  rule8 2.9  New  York  language-preference  rule8 2.10  SCRA  —  active-duty  &  deployed  servicemembers8 2.11  Words  that  build  the  right  image9 3.  The  11-Point  Talk-Off:  Structure  &  Purpose10 3.1  The  3  Indicators  (buying  signs  &  commitment)10 3.2  The  flow  at  a  glance10 4.  The  Standard  Talk-Off  Script11 Point  1–2:  Setup  &  Transition11 Point  3:  Listen  &  Answer  (engage  the  consumer)11 Point  4:  Pros  of  Payment11 Point  5:  Request  Intentions  (get  commitment)11 Point  6:  BIF  Questions  (Balance  in  Full)11 Point  7:  Qualify  with  A-Page  Questions12 Point  8:  Hold  for  Approval12 Point  9–10:  Urgency  &  Provide  Offers12 Point  11:  OTB  Resources12 4.1  Before  letting  the  consumer  off  the  phone13 5.  The  Prelegal  Talk-Off14 5.1  Prelegal  opening14 5.2  Prelegal  pros  of  payment14 5.3  Asset  profiling  for  a  litigation  recommendation14 5.4  If  the  consumer  refuses  all  options15 5.5  The  pre-legal  recommendation  matrix15 5.6  Pre-legal  specific  objections15 5.7  Pre-legal  Q&A:  “Will  they  definitely  sue  me?”15 6.  Building  Urgency  on  Every  Call17 6.1  Where  urgency  lives  in  the  call17 6.2  The  60-day  collection  timeline17 7.  Negotiation  &  Closing18 7.1  Pushing  for  answers  at  the  BIF  questions18 7.2  Negotiation  guidelines18 7.3  Negotiation  linguistics  &  anchoring18 7.4  Pushing  for  payment  —  sample  lines19 7.5  Securing  the  offer19 7.6  Out-to-Borrow  (OTB)  resources19 7.7  Closing  techniques20 7.8  Negotiation  psychology20 
+Internal  Training  Document  —  ConfidentialPage  2  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+7.9  Situational  rebuttals21 8.  Common  Objections  &  Rebuttals22 8.1  Empathy  &  rapport  phrases22 8.2  Location  /  gatekeeping  objections22 8.3  Account  &  balance  objections23 8.4  Payment-method  objections24 8.5  Legitimacy  &  “is  this  a  scam?”  objections24 8.6  Dispute,  bankruptcy  &  attorney  objections24 9.  Credit  Reporting  Rebuttals  (DNF  Associates)26 10.  Fraud  /  Dispute  /  Validate27 10.1  What  to  do  when  the  consumer  is  convinced27 10.2  Testing  a  fraud  claim  against  the  payment  history27 11.  Working  Judgment  Accounts28 11.1  What  a  judgment  is28 11.2  Compliance  must-knows28 11.3  Quality  of  engagement28 11.4  Strategy  &  selling  points28 11.5  Push-for-resolution  lines28 12.  Payment  Authorization29 12.1  Authorization  script29 12.2  Payment  authorization  checklist30 12.3  Card  rules,  fees  &  rounding30 13.  Call-Handling  Policies31 13.1  Inbound  calls31 13.2  RPC  follow-up  calls31 13.3  Wrong-number  calls31 13.4  RTA  —  Refuse  To  Authenticate32 14.  Account  Statuses  &  Documentation33 14.1  Working  statuses33 14.2  Statuses  that  freeze  the  account  for  manager  review33 14.3  Documenting  contact34 15.  Documentation  &  Statusing  Cheat  Sheet35 16.  Conveying  Company  Legitimacy37 17.  State  Statutes  &  Spouse-Contact  Reference37 18.  Quality  Assurance  &  the  Agent  Report  Card39 18.1  Checklist  score  —  the  11  points39 18.2  Quality  score39 18.3  Compliance  score  —  zero-tolerance  failures39 18.4  File-audit  score39 19.  Transcript-Auditable  QA  &  Call  Audit  Checklist40 19.1  Mandatory  compliance  &  legal  (auto-fail  when  triggered)40 19.2  Call-flow  control  (the  11  points)40 19.3  Qualifying  &  negotiation  tactics  (if  BIF  declined)41 19.4  Objection  handling  &  federal  rebuttals41 19.5  Payment  authorization  &  closing41 19.6  Prelegal-specific  (audit  only  if  flagged  prelegal)42 20.  Client  &  Product  Knowledge43 20.1  Dental  &  medical  (e.g.,  Aspen  Dental,  Bite,  local  dentists)43 20.2  Home  security  (e.g.,  Vivint  Smart  Home)43 
+Internal  Training  Document  —  ConfidentialPage  3  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+20.3  Personal  &  installment  loans  (e.g.,  CashNetUSA,  PenFed)43 20.4  Power  sports  (e.g.,  Octane  /  Roadrunner  Financial)43  
+Internal  Training  Document  —  ConfidentialPage  4  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+1.  Introduction  &  How  to  Use  This  Guide  
+This  guidebook  consolidates  the  Everest  Receivable  Services  (ERS)  account-management  (AG)  training  
+materials
+ 
+into
+ 
+a
+ 
+single
+ 
+reference
+ 
+for
+ 
+collection
+ 
+agents.
+ 
+It
+ 
+covers
+ 
+the
+ 
+full
+ 
+lifecycle
+ 
+of
+ 
+a
+ 
+collection
+ 
+call
+ 
+—
+ 
+from
+ 
+the
+ 
+opening
+ 
+disclosure
+ 
+through
+ 
+negotiation,
+ 
+closing,
+ 
+payment
+ 
+authorization,
+ 
+and
+ 
+account
+ 
+documentation
+ 
+—
+ 
+along
+ 
+with
+ 
+the
+ 
+compliance
+ 
+rules
+ 
+and
+ 
+reference
+ 
+tables
+ 
+that
+ 
+govern
+ 
+every
+ 
+contact.
+ 
+Everything  in  this  guide  is  built  on  one  principle:  we  collect  professionally,  legally,  and  completely. Aggressive  
+does
+ 
+not
+ 
+mean
+ 
+non-compliant.
+ 
+Every
+ 
+technique
+ 
+in
+ 
+this
+ 
+book
+ 
+is
+ 
+meant
+ 
+to
+ 
+be
+ 
+used
+ 
+inside
+ 
+the
+ 
+boundaries
+ 
+of
+ 
+the
+ 
+FDCPA,
+ 
+applicable
+ 
+state
+ 
+law,
+ 
+and
+ 
+client
+ 
+guidelines.
+ 
+How  the  guide  is  organized  ▪  Foundations  —  compliance,  mandatory  disclosures,  and  the  structure  of  the  call.  ▪  The  Talk-Off  —  the  standard  and  prelegal  scripts,  urgency,  qualifying,  negotiation,  and  closing.  ▪  Objection  Handling  —  rebuttals  for  common  objections,  credit-reporting  questions,  and  
+fraud/dispute/validate
+ 
+situations.
+ ▪  Operations  —  inbound  calls,  follow-ups,  wrong  numbers,  RTAs,  payment  authorization,  and  
+statusing/documentation.
+ ▪  Reference  —  state  statutes  &  spouse-contact  table,  QA  report  card,  and  shortcuts.  
+Golden  rule  of  documentation If  you  do  not  document  it,  then  technically  it  didn’t  happen.  Before  writing  any  call  note,  ask  yourself:  would  I  be  comfortable  reading  this  aloud  in  the  office  —  or  in  a  courtroom?  If  not,  revise  it. 
+2.  Compliance  Foundation  
+Compliance  is  not  a  section  of  the  call  —  it  runs  through  every  second  of  it.  The  disclosures  below  are  
+mandatory
+ 
+and
+ 
+non-negotiable.
+ 
+Failure
+ 
+to
+ 
+give
+ 
+them
+ 
+is
+ 
+a
+ 
+potential
+ 
+FDCPA
+ 
+violation
+ 
+that
+ 
+carries
+ 
+disciplinary
+ 
+consequences
+ 
+and
+ 
+exposes
+ 
+the
+ 
+company
+ 
+to
+ 
+legal
+ 
+action.
+ 
+2.1  Mandatory  disclosures  
+Call  Recording  Disclosure  (CRD)  —  open  every  call “This  is  [your  name],  all  calls  are  recorded  … ” 
+Mini-Miranda  /  Debt  Collector  Disclosure  (DCD) “This  is  a  communication  from  a  debt  collector.  This  is  an  attempt  to  collect  a  debt,  and  any  information  obtained  will  be  used  for  that  purpose.” 
+ALL  non-location  messages  and  talk-offs  must  include  the  full  Mini-Miranda  disclosure. The  CRD  is  given  the  
+moment
+ 
+you
+ 
+ask
+ 
+to
+ 
+speak
+ 
+with
+ 
+the
+ 
+consumer;
+ 
+the
+ 
+Mini-Miranda/DCD
+ 
+is
+ 
+given
+ 
+immediately
+ 
+after
+ 
+the
+ 
+consumer
+ 
+authenticates.
+ 
+2.2  Authentication  before  substance  
+Internal  Training  Document  —  ConfidentialPage  5  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+You  may  not  discuss  account  specifics  until  the  right  party  is  authenticated.  Authenticate  by  one  of  the  
+following:
+ 
+▪  Date  of  Birth  (DOB),  ▪  Social  Security  Number  (SSN)  —  typically  the  last  four,  ▪  Full  mailing  address  (use  as  a  last  resort).  
+A  mumble  is  not  a  “yes”  —  confirm  affirmative  consent Never  accept  an  ambiguous  “uh-huh”  or  “mhm”  as  verification  or  as  agreement  to  a  payment.  If  the  consumer’s  answer  is  unclear,  ask  for  an  explicit  confirmation:  “I’m  sorry,  I  didn’t  hear  you  clearly  —  is  that  a  yes?”  A  clean,  recorded  “yes”  protects  both  the  consumer  and  the  company. 
+The  three-step  method  for  reluctant  verification  When  a  consumer  hesitates  to  verify,  don’t  surrender  the  call  immediately.  Escalate  gently  through  three  
+steps:
+ 
+1.  Direct  ask:  “Can  you  please  verify  your  date  of  birth  for  security?”  2.  Remind  &  re-ask:  “I  already  have  your  DOB  in  front  of  me;  I  just  need  you  to  confirm  it  so  I  know  I’m  
+speaking
+ 
+to
+ 
+the
+ 
+correct
+ 
+person.”
+ 3.  Provide  partial  info:  “If  it  makes  it  easier,  I  have  June  1985  —  is  that  correct?”  (give  month/year  only).  Alternate  option:  ask  them  to  verify  the  last  four  (or  full)  digits  of  the  original-creditor  account  number.  
+The  stalemate  —  terminate  without  disclosing If  they  still  refuse,  end  the  call  without  disclosing  the  debt:  “I  cannot  proceed  as  I’m  unable  to  verify  your  identity.  I  wouldn’t  want  to  discuss  private  financial  matters  with  the  wrong  person.”  Then  handle  as  an  RTA  (below). 
+If  the  consumer  refuses  to  authenticate Do  not  disclose  account  details.  If  they  identify  by  name  but  refuse  DOB/SSN/address,  the  account  is  handled  as  an  RTA  (Refuse  To  Authenticate)  —  see  the  RTA  and  Statusing  sections. 
+2.3  Third-party  &  spouse  contact  You  may  only  disclose  the  nature  of  the  debt  to  the  consumer  or  to  an  authorized  party.  Whether  you  may  
+speak
+ 
+with
+ 
+a
+ 
+spouse
+ 
+depends
+ 
+on
+ 
+the
+ 
+state
+ 
+—
+ 
+consult
+ 
+the
+ 
+State
+ 
+Statutes
+ 
+&
+ 
+Spouse-Contact
+ 
+table
+ 
+at
+ 
+the
+ 
+back
+ 
+of
+ 
+this
+ 
+guide.
+ 
+When
+ 
+a
+ 
+state
+ 
+allows
+ 
+spouse
+ 
+contact,
+ 
+or
+ 
+the
+ 
+consumer
+ 
+grants
+ 
+explicit
+ 
+verbal
+ 
+permission
+ 
+on
+ 
+the
+ 
+current
+ 
+call,
+ 
+and
+ 
+the
+ 
+account
+ 
+is
+ 
+talked
+ 
+off,
+ 
+document
+ 
+consumer
+ 
+contact.
+ 
+Non-spousal  states  —  do  NOT  disclose  debt  details  to  a  spouse AL,  AZ,  IL,  IA,  MA,  NE,  NYC,  PA,  SC. In  these  jurisdictions  you  may  not  disclose  debt  details  to  a  spouse  without  the  consumer’s  explicit  verbal  permission  on  the  current  call.  (See  the  full  table  for  every  state.)  If  any  third  party  probes  —  “What  do  you  guys  do?”  —  use  the  vague  rebuttal:  “We  provide  location  services  and  we  manage  account  receivables.  May  I  ask  who  I’m  speaking  with?” 
+Navigating  third-party  deflections  without  lying  
+Internal  Training  Document  —  ConfidentialPage  6  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+▪  The  vague  probe  (“What  do  you  guys  do?”  /  “What  type  of  company  is  this?”):  “We  provide  location  
+services
+ 
+and
+ 
+we
+ 
+manage
+ 
+account
+ 
+receivables.
+ 
+May
+ 
+I
+ 
+ask
+ 
+who
+ 
+I’m
+ 
+speaking
+ 
+with?”
+ ▪  The  direct  probe  (“Are  you  a  debt  collector?”)  —  you  cannot  lie:  “Yes,  debt  collection  is  one  of  the  
+things
+ 
+we
+ 
+do;
+ 
+we
+ 
+also
+ 
+provide
+ 
+location
+ 
+services.
+ 
+Do
+ 
+you
+ 
+know
+ 
+[consumer]?
+ 
+Is
+ 
+there
+ 
+a
+ 
+direct
+ 
+number
+ 
+I
+ 
+can
+ 
+reach
+ 
+them
+ 
+at?”
+ ▪  The  “How  can  I  help  you?”  deflection  —  don’t  assume  it’s  the  debtor:  “I’m  trying  to  reach  [full  name].  I  
+just
+ 
+need
+ 
+to
+ 
+verify
+ 
+I’m
+ 
+speaking
+ 
+with
+ 
+the
+ 
+right
+ 
+person
+ 
+so
+ 
+we
+ 
+can
+ 
+proceed
+ 
+—
+ 
+am
+ 
+I
+ 
+speaking
+ 
+with
+ 
+[full
+ 
+name]?”
+ ▪  Skeptical  /  repetitive  pushback:  “I  completely  understand.  We  can’t  share  someone’s  personal  business  
+with
+ 
+anyone
+ 
+else
+ 
+—
+ 
+that’s
+ 
+why
+ 
+we
+ 
+verify;
+ 
+it
+ 
+protects
+ 
+the
+ 
+privacy
+ 
+of
+ 
+[full
+ 
+name].
+ 
+Once
+ 
+I
+ 
+confirm
+ 
+I’ve
+ 
+reached
+ 
+[full
+ 
+name],
+ 
+I
+ 
+can
+ 
+discuss
+ 
+the
+ 
+matter.”
+ 
+The  “spouse  phone  snatch” If  you’re  speaking  with  the  debtor  and  a  spouse/partner  grabs  the  phone  and  starts  demanding  answers,  get  the  debtor  back  on  the  line  before  disclosing  anything:  “I’m  happy  to  speak  with  you,  but  I  need  [debtor]  back  on  the  line  for  a  moment  to  give  me  verbal  permission  to  discuss  the  account  with  you.” 
+2.4  What  you  must  never  do  ▪  No  threats  or  misrepresentation. Never  say  “they  are  going  to  sue  you”  or  “they  will  garnish  your  
+wages”
+ 
+unless
+ 
+legitimate
+ 
+financial
+ 
+resources
+ 
+for
+ 
+that
+ 
+possibility
+ 
+have
+ 
+actually
+ 
+been
+ 
+uncovered
+ 
+and
+ 
+the
+ 
+statement
+ 
+is
+ 
+truthful.
+ ▪  No  false  claims,  misleading  information,  or  deceptive  tactics. ▪  No  confrontational,  argumentative,  or  unprofessional  conduct. ▪  Respect  exemptions. Social  Security,  unemployment,  pensions,  and  certain  other  income  are  protected  
+by
+ 
+law.
+ ▪  Honor  cease  &  attorney  requests. If  a  consumer  says  they  are  represented  by  an  attorney,  obtain  the  
+attorney
+ 
+info,
+ 
+advise
+ 
+your
+ 
+manager,
+ 
+and
+ 
+do
+ 
+not
+ 
+call
+ 
+the
+ 
+consumer
+ 
+again.
+ 
+2.5  Honoring  stop  requests  (DNC  &  revocation  of  consent)  If  a  consumer  says  “stop  calling,”  “do  not  call,”  “remove  my  number,”  or  “wrong  number,”  you  must  accept  it  
+and
+ 
+end
+ 
+the
+ 
+pursuit
+ 
+on
+ 
+that
+ 
+number
+ 
+—
+ even  if  you  suspect  they  are  saying  it  only  to  avoid  the  debt. Mark  
+the
+ 
+number
+ 
+appropriately,
+ 
+follow
+ 
+the
+ 
+wrong-number
+ 
+or
+ 
+cease
+ 
+procedure,
+ 
+and
+ 
+notify
+ 
+a
+ 
+manager
+ 
+so
+ 
+the
+ 
+number
+ 
+can
+ 
+be
+ 
+added
+ 
+to
+ 
+the
+ 
+DNC
+ 
+list
+ 
+if
+ 
+needed.
+ 
+Continuing
+ 
+to
+ 
+call
+ 
+after
+ 
+a
+ 
+clear
+ 
+stop
+ 
+request
+ 
+is
+ 
+a
+ 
+TCPA/FDCPA
+ 
+exposure.
+ 
+2.6  UDAAP  —  acknowledge  without  validating  Beyond  the  FDCPA,  conduct  is  judged  against  UDAAP  standards  (unfair,  deceptive,  or  abusive  acts  or  
+practices).
+ 
+Two
+ 
+behaviors
+ 
+matter
+ 
+most
+ 
+on
+ 
+a
+ 
+live
+ 
+call:
+ 
+▪  Never  validate  a  complaint  against  the  original  creditor.  You  may  acknowledge  the  consumer’s  feelings  
+(“I
+ 
+understand
+ 
+that
+ 
+was
+ 
+tough”)
+ 
+but
+ 
+you
+ 
+must
+ 
+not
+ 
+agree
+ 
+with
+ 
+or
+ 
+confirm
+ 
+an
+ 
+allegation
+ 
+(“yes,
+ 
+they
+ 
+scammed
+ 
+you”).
+ 
+Acknowledge
+ 
+the
+ 
+emotion,
+ 
+not
+ 
+the
+ 
+accusation.
+ ▪  No  false  threats,  no  abuse.  No  abusive  language,  no  threats  of  legal  action  that  aren’t  true  and  
+authorized,
+ 
+and
+ 
+no
+ 
+deceptive
+ 
+tactics
+ 
+—
+ 
+regardless
+ 
+of
+ 
+how
+ 
+the
+ 
+consumer
+ 
+behaves.
+ 
+Internal  Training  Document  —  ConfidentialPage  7  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+2.7  The  regulatory  framework  at  a  glance  Several  federal  laws  shape  what  you  can  and  can’t  say.  You  don’t  need  to  quote  them,  but  you  should  
+recognize
+ 
+the
+ 
+behavior
+ 
+each
+ 
+one
+ 
+requires.
+ 
+Specific
+ 
+dollar
+ 
+thresholds
+ 
+and
+ 
+floors
+ 
+below
+ 
+follow
+ 
+current
+ 
+client/compliance
+ 
+guidance
+ 
+and
+ 
+should
+ 
+be
+ 
+confirmed
+ 
+with
+ 
+your
+ 
+compliance
+ 
+team.
+ 
+Law What  it  governs What  it  means  on  the  call 
+FDCPA Fair  debt  collection  practices 
+Mini-Miranda,  no  harassment/false  threats,  honor  cease  &  attorney  requests. 
+FCRA Credit  reporting 
+No  “pay-for-delete”  promises,  no  credit-score  guarantees,  accurate  update  language  only. 
+TCPA Phone/text  contact  &  consent 
+Honor  DNC/revocation;  explain  local  +  toll-free  number  as  a  courtesy. 
+TILA Truth  in  lending  /  disclosures 
+Fees  &  interest  were  disclosed  in  the  original  agreement;  DNF  adds  $0.00  interest. 
+UDAAP Unfair/deceptive/abusive  acts 
+Professional  tone;  acknowledge  without  validating;  no  deception. 
+Reg  E Electronic  fund  transfers 
+Obtain  proper  authorization  for  each  payment  date  &  amount  (see  Payment  Authorization). 
+Reg  F Call  frequency  &  contact 
+No  more  than  7  attempts,  or  1  conversation,  per  7  days;  get  callback  permission  on  the  call. 
+SCRA Servicemember  protections 
+Don’t  pursue  active-duty/deployed  consumers  aggressively;  document  and  step  back. 
+2.8  Reg  F  —  call  frequency  &  the  7-in-7  rule  Regulation  F  limits  collectors  to  7  call  attempts,  or  1  conversation,  in  any  7-day  period. Once  you’ve  had  a  
+conversation,
+ 
+no
+ 
+callback
+ 
+is
+ 
+permitted
+ 
+within
+ 
+7
+ 
+days
+ 
+unless
+ 
+the
+ 
+consumer
+ 
+gives
+ 
+explicit
+ 
+permission
+ 
+on
+ 
+the
+ 
+call.
+ 
+So
+ 
+when
+ 
+a
+ 
+consumer
+ 
+asks
+ 
+to
+ 
+be
+ 
+called
+ 
+back,
+ 
+capture
+ 
+that
+ 
+permission:
+ 
+“I  can  definitely  do  that.  Is  this  the  best  number  to  reach  you?  [Yes]  Great  —  do  I  have  your  permission  to  
+call
+ 
+you
+ 
+back
+ 
+on
+ 
+this
+ 
+number?
+ 
+[Yes]
+ 
+And
+ 
+can
+ 
+I
+ 
+call
+ 
+you
+ 
+back
+ 
+on
+ 
+[specific
+ 
+day/time]?” 
+Call-drop  rules Payment  in  progress:  implied  consent  exists  —  you  may  call  back  immediately  if  the  line  drops. Angry  hang-up:  do  NOT  manually  redial.  Let  the  dialer  system  handle  the  next  attempt  on  a  later  day. 
+2.9  New  York  language-preference  rule  New  York  law  requires  collectors  to  ask  about  language  preference.  If  you’re  speaking  with  a  consumer  
+residing
+ 
+in
+ 
+New
+ 
+York
+ 
+and
+ 
+they’re
+ 
+struggling
+ 
+with
+ 
+English,
+ 
+you
+ 
+must
+ 
+ask
+ 
+their
+ 
+preferred
+ 
+language.
+ 
+If
+ 
+there’s
+ 
+a
+ 
+language
+ 
+barrier,
+ 
+transfer
+ 
+to
+ 
+a
+ 
+Spanish-speaking
+ 
+agent
+ 
+(or
+ 
+the
+ 
+appropriate
+ 
+resource)
+ 
+or
+ 
+note
+ 
+the
+ 
+file
+ 
+accordingly.
+ 
+2.10  SCRA  —  active-duty  &  deployed  servicemembers  Under  the  Servicemembers  Civil  Relief  Act  (SCRA),  active-duty  and  deployed  consumers  have  strict  
+protections.
+ 
+If
+ 
+a
+ 
+consumer
+ 
+states
+ 
+they
+ 
+are
+ 
+deployed
+ 
+or
+ 
+on
+ 
+active
+ 
+duty:
+ 
+Internal  Training  Document  —  ConfidentialPage  8  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+▪  Do  not  pursue  collection  aggressively.  ▪  Gather  their  location  and  expected  duration  of  deployment  if  possible,  end  the  call  professionally,  and  
+document
+ 
+the
+ 
+file
+ 
+as
+ 
+DEPLOYED.
+ ▪  Exception:  if  a  deployed  consumer  calls  in  and  explicitly  states  they  want  to  settle  voluntarily,  you  may  
+accept
+ 
+the
+ 
+payment
+ 
+and
+ 
+work
+ 
+the
+ 
+file.
+ 
+2.11  Words  that  build  the  right  image  
+Use  these  —  professional  &  engaging Avoid  these  —  negative 
+comfortable,  mutual,  supported,  shared,  common,  respect,  satisfaction,  courtesy,  privacy,  responsible,  manageable,  resolve,  secure,  convenience,  resolution,  protection,  guarantee,  personal,  value,  commitment,  assurance,  success,  opportunity,  overcome,  assist,  solution  
+can’t,  won’t,  don’t,  no,  not,  unfortunately,  unable,  regardless 
+ 
+Internal  Training  Document  —  ConfidentialPage  9  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+3.  The  11-Point  Talk-Off:  Structure  &  Purpose  
+Every  collection  call  follows  the  same  11-point  structure.  The  first  half  is  the  Opening;  the  second  half  is  the  
+Negotiation.
+ 
+Knowing
+ 
+the
+ 
+structure
+ 
+lets
+ 
+you
+ 
+stay
+ 
+in
+ 
+control,
+ 
+cover
+ 
+every
+ 
+compliance
+ 
+point,
+ 
+and
+ 
+move
+ 
+naturally
+ 
+toward
+ 
+resolution.
+ 
+# Talk-Off  Point Phase Purpose 
+1 Setup Opening 
+Identify  yourself,  give  CRD,  reach  &  authenticate  the  consumer. 
+2 Transition Opening Give  Mini-Miranda/DCD,  client  update,  explain  account  info. 
+3 Listen  &  Answer Opening Hear  concerns,  rebut,  answer  questions,  address  objections. 
+4 Pros  of  Payment Opening Sell  the  benefits  of  resolving  the  account. 
+5 Request  Intentions Opening 
+Gain  commitment:  “this  is  something  you’d  like  to  resolve,  right?” 
+6 3  BIF  Questions Negotiation Ask  all  three;  push  conversationally  for  the  3  indicators. 
+7 Qualify  /  A-Page Negotiation Gather  financial  picture  to  find  alternative  arrangements. 
+8 Hold  for  Approval Negotiation Check  with  supervisor  /  2nd  voice;  build  value  of  the  hold. 
+9 Stress  Urgency Negotiation Short  timeframes,  client  update,  banking  commitment. 
+10 Provide  Offers Negotiation SIF  pyramid:  BIF  /  BIF  in  parts  /  SIF  —  offer  high,  leave  room. 
+11 OTB  Resources Negotiation Return  to  probing  for  out-to-borrow  funds  to  close. 
+3.1  The  3  Indicators  (buying  signs  &  commitment)  Throughout  the  BIF  questions,  push  conversationally  for  the  three  indicators  of  commitment.  These  tell  you  
+what
+ 
+the
+ 
+consumer
+ 
+is
+ 
+really
+ 
+offering
+ 
+and
+ 
+where
+ 
+the
+ 
+deal
+ 
+will
+ 
+close:
+ 
+1.   Date  of  1st  Payment 2.   Banking  Commitment  (ACH  /  Credit  /  Debit) 3.   Number  of  Payments 
+3.2  The  flow  at  a  glance  ▪  Setup  →  Engagement  (listening,  product  knowledge,  rebuttals,  answering  questions,  addressing  
+concerns).
+ ▪  Transition  →  Listen  &  Answer  →  Pros  of  Payment  →  Request  Intentions.  ▪  3  BIF  Questions  —  ask  all  three;  conversationally  push  for  the  3  indicators.  ▪  Qualify  /  A-Page  →  Hold  for  Approval  →  Stress  Urgency.  ▪  Provide  Offers  based  on  the  3  indicators;  offer  roughly  double  where  you  expect  to  close;  BIF,  SIF,  or  BIF  
+in
+ 
+2–3
+ 
+parts;
+ 
+gain
+ 
+commitment
+ 
+before
+ 
+each
+ 
+secondary
+ 
+offer.
+ ▪  OTB  Resources  —  return  to  information  gathered  while  qualifying.   
+Internal  Training  Document  —  ConfidentialPage  10  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+4.  The  Standard  Talk-Off  Script  
+This  is  the  core  script  for  a  right-party  contact.  Follow  it  point  by  point.  Script  lines  are  shown  in  the  bordered  
+blocks;
+ 
+instructions
+ 
+and
+ 
+coaching
+ 
+notes
+ 
+are
+ 
+in
+ 
+plain
+ 
+text.
+ 
+Point  1–2:  Setup  &  Transition  This  is  ________,  all  calls  are  recorded,  I’m  calling  to  speak  to  _____? 
+Hi,  _______,  I’m  calling  from  Everest  Receivable  Services  on  behalf  of  (CLIENT)  regarding  a  file  of  yours  that  
+has
+ 
+been
+ 
+placed
+ 
+with
+ 
+my
+ 
+office.
+ 
+Just
+ 
+so
+ 
+that
+ 
+I
+ 
+can
+ 
+provide
+ 
+you
+ 
+more
+ 
+information,
+ 
+can
+ 
+you
+ 
+please
+ 
+verify
+ 
+the
+ 
+date
+ 
+of
+ 
+birth
+ 
+we
+ 
+have
+ 
+on
+ 
+file? 
+Authenticate  by  DOB  /  SSN  /  full  address  before  continuing. 
+Thank  you,  I  have  to  state  this  is  a  call  from  a  debt  collector,  this  is  an  attempt  to  collect  a  debt,  and  any  
+information
+ 
+obtained
+ 
+will
+ 
+be
+ 
+used
+ 
+for
+ 
+that
+ 
+purpose. 
+The  reason  for  the  call  is  that  our  client  (CLIENT)  has  asked  us  to  attempt  to  recover  and  provide  them  with  
+an
+ 
+update
+ 
+regarding
+ 
+your
+ 
+(ORIGINATOR)
+ 
+account. 
+Point  3:  Listen  &  Answer  (engage  the  consumer)  Now  we  are  given  a  small  window  of  opportunity  allowing  you  to  satisfy  your  account.  If  I  can  ask,  what  
+happened
+ 
+to
+ 
+cause
+ 
+this
+ 
+to
+ 
+fall
+ 
+behind? 
+ENGAGE  •  ACTIVELY  LISTEN  •  ADDRESS  ISSUES This  is  where  rapport  is  built.  Let  the  consumer  talk,  acknowledge  their  situation  sincerely,  and  use  the  reason  they  give  you  later  in  the  call. 
+Point  4:  Pros  of  Payment  Once  you  resolve  this  with  our  office:  
+▪  You  are  going  to  be  released  of  all  liability  on  the  account.  ▪  We  will  send  you  a  confirmation  email  detailing  the  arrangement  we  agreed  to.  ▪  Once  resolved,  you’ll  be  issued  a  satisfaction  and  release  letter  reflecting  a  zero  balance.  ▪  And  we  will  notify  the  client  to  update  your  credit  report  accordingly.  
+Point  5:  Request  Intentions  (get  commitment)  So  it  sounds  like  this  is  something  that  you  want  to  resolve,  right? 
+Point  6:  BIF  Questions  (Balance  in  Full)  The  client  is  seeking  recovery  in  the  amount  of  $____.__ ▪  Is  the  full  balance  available  today?  (Probe  alternate  resources:  CC,  Savings,  401K,  OTB,  etc.)  ▪  How  close  are  you  to  the  full  balance  today?  (Probe  down  payment  at  least  twice.)  ▪  How  long  will  it  take  you  to  come  up  with  the  full  balance?  (Short  timeframes:  a  few  days  /  weeks?)  
+Answer  these  three  before  you  let  them  off  the  phone 
+Internal  Training  Document  —  ConfidentialPage  11  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+1)  Date  of  1st  Payment     2)  #  of  Payments     3)  Using  CC  /  ACH? 
+Point  7:  Qualify  with  A-Page  Questions  Since  you  don’t  have  the  full  amount  available  to  satisfy  the  balance,  let  me  ask  you  a  few  qualifying  
+questions
+ 
+to
+ 
+see
+ 
+what
+ 
+alternative
+ 
+arrangements
+ 
+may
+ 
+still
+ 
+be
+ 
+available
+ 
+to
+ 
+you
+… 
+# A-Page  Qualifying  Question 
+1 Do  you  own  or  rent  the  [address]?  How  long  have  you  been  there? 
+2 How  many  dependents  or  people  living  with  you? 
+3 
+Are  you  employed  full  time?  (If  no,  do  you  receive  public  assistance?)  How  long  there?  Paid  weekly/biweekly/monthly?  About  how  much  do  you  take  home? 
+4 Are  you  currently  leasing  or  financing  a  vehicle?  About  how  much  is  the  payment? 
+5 Are  you  a  single-income  household?  (If  no,  how  many  contribute  to  finances?) 
+6 How  many  delinquent  accounts  similar  to  this?  Any  reported  on  credit?  Settled  any  in  the  last  12  months? 
+7 What  is  your  credit  score  at  this  time? 
+8 What  is  a  good  email  for  you? 
+9 Do  you  have  any  child  support  obligations? 
+10 Any  tax  liens,  judgments,  or  wage  garnishments  at  this  time? 
+11 Do  you  bank  with  a  traditional  bank  or  credit  union?  In  good  standing? 
+Point  8:  Hold  for  Approval  I’m  going  to  place  you  on  a  brief  hold  while  I  review  this  information  (with  my  supervisor).  If  the  offer  is  
+approved,
+ 
+we’ll
+ 
+simply
+ 
+need
+ 
+to
+ 
+secure
+ 
+it
+ 
+with
+ 
+your
+ 
+banking
+ 
+information
+ 
+on
+ 
+this
+ 
+call.
+ 
+Do
+ 
+you
+ 
+have
+ 
+any
+ 
+questions?
+ 
+Please
+ 
+hold. 
+Why  the  hold  matters The  brief  hold  is  not  a  formality  —  it  builds  authority,  tests  how  serious  the  consumer  is,  and  keeps  the  eventual  offer  from  feeling  “too  easy.”  Think  of  the  car-dealership  analogy:  the  salesperson  “checks  with  the  manager”  so  the  final  number  feels  earned  and  approved,  not  arbitrary.  Use  the  hold  deliberately  before  presenting  any  settlement. 
+Point  9–10:  Urgency  &  Provide  Offers  ______,  Great  News!  Here’s  what  I  was  able  to  get  approved  for  you … Use  the  SIF  pyramid:  BIF  →  BIF  in  Parts  →  SIF.  Discuss  the  options,  review  the  pros  of  payment,  and  find  a  
+2nd
+ 
+voice
+ 
+if
+ 
+needed.
+ 
+(Which  option  are  you  leaning  towards?)  How  close  are  you  to  the  [current  offer]?  So  if  I  was  able  to  get  
+you
+ 
+approved
+ 
+for
+ 
+____,
+ 
+we
+ 
+can
+ 
+go
+ 
+ahead
+ 
+and
+ 
+secure
+ 
+that
+ 
+on
+ 
+this
+ 
+call? Two  things  they’re  going  to  ask …  Is  the  1st  payment  available  today?  Will  you  be  using  ACH/CC? 
+Point  11:  OTB  Resources  
+Internal  Training  Document  —  ConfidentialPage  12  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+Return  to  the  information  gathered  while  qualifying  and  probe  out-to-borrow  sources  (see  the  Negotiation  
+section
+ 
+for
+ 
+the
+ 
+full
+ 
+OTB
+ 
+list).
+ 
+4.1  Before  letting  the  consumer  off  the  phone  4.  Confirm  the  best  number  to  reach  the  consumer  and  request  permission  to  contact  via  voicemail  or  
+text
+ 
+at
+ 
+that
+ 
+number.
+ 
+Mark
+ 
+it
+ 
+as
+ 
+a
+ 
+good
+ 
+number
+ 
+in
+ 
+SOR;
+ 
+update
+ 
+all
+ 
+other
+ 
+numbers;
+ 
+check
+ 
+the
+ 
+permission
+ 
+boxes
+ 
+in
+ 
+the
+ 
+Contact
+ 
+Info
+ 
+screen.
+ 5.  Request  email  &  permission  to  correspond  by  email  in  the  future,  including  payment  reminders.  
+Document
+ 
+permission
+ 
+(checkbox).
+ 6.  If  a  call  back  is  requested,  specify  the  date,  time,  and  phone  #,  and  obtain  verbal  permission.  Document  
+a
+ 
+general
+ 
+call
+ 
+note
+ 
+with
+ 
+the
+ 
+date
+ 
+and
+ 
+time
+ 
+permission
+ 
+was
+ 
+given.
+ 
+Limited  Content  Message  (LCM) “This  is  _________  with  ERS  Incorporated.  Please  return  this  call.  You  may  reach  me  directly  or  any  representative  at  (800  #).  Thank  you.” 
+ 
+Internal  Training  Document  —  ConfidentialPage  13  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+5.  The  Prelegal  Talk-Off  
+The  prelegal  script  is  used  on  aged  accounts  the  client  may  forward  to  an  attorney  for  review.  It  follows  the  
+same
+ 
+11-point
+ 
+structure
+ 
+but
+ 
+reframes
+ 
+the
+ 
+opening
+ 
+around
+ 
+the
+ 
+prelegal
+ 
+recommendation.
+ 
+The
+ 
+compliance
+ 
+guardrails
+ 
+are
+ 
+stricter
+ 
+—
+ 
+read
+ 
+the
+ 
+warning
+ 
+below
+ 
+before
+ 
+using
+ 
+it.
+ 
+Compliance  limits  on  prelegal  language You  are  NOT  an  attorney,  and  the  account  has  NOT  been  reviewed  by  an  attorney.  You  must  say  so.  Never  state  that  the  client  WILL  sue  or  garnish  —  only  that  the  client  MAY  forward  the  account  for  attorney  review  based  on  a  recommendation.  Describe  possibilities  truthfully  and  conditionally. 
+5.1  Prelegal  opening  Thank  you,  I  have  to  state  this  is  a  call  from  a  debt  collector,  this  is  an  attempt  to  collect  a  debt,  and  any  
+information
+ 
+obtained
+ 
+will
+ 
+be
+ 
+used
+ 
+for
+ 
+that
+ 
+purpose. 
+Our  office  has  been  forwarded  your  (ORIGINATOR)  account  for  review.  They  are  requesting  a  
+recommendation
+ 
+on
+ 
+how
+ 
+to
+ 
+recover
+ 
+the
+ 
+balance.
+ 
+Based
+ 
+on
+ 
+our
+ 
+recommendation,
+ 
+our
+ 
+client
+ 
+MAY
+ 
+be
+ 
+forwarding
+ 
+this
+ 
+account
+ 
+to
+ 
+an
+ 
+attorney
+ 
+for
+ 
+review.
+ 
+I
+ 
+do
+ 
+need
+ 
+to
+ 
+advise
+ 
+you
+ 
+that
+ 
+we
+ 
+are
+ 
+not
+ 
+attorneys,
+ 
+nor
+ 
+has
+ 
+your
+ 
+account
+ 
+been
+ 
+reviewed
+ 
+by
+ 
+an
+ 
+attorney
+ 
+yet. 
+Due  to  the  length  of  delinquency,  the  client  is  under  the  impression  this  will  not  be  resolved;  however,  we  
+are
+ 
+given
+ 
+a
+ 
+small
+ 
+window
+ 
+of
+ 
+opportunity
+ 
+allowing
+ 
+you
+ 
+to
+ 
+satisfy
+ 
+the
+ 
+account
+ 
+balance.
+ 
+If
+ 
+I
+ 
+can
+ 
+ask,
+ 
+how
+ 
+did
+ 
+you
+ 
+fall
+ 
+behind? 
+5.2  Prelegal  pros  of  payment  The  good  news  is  that  we  were  able  to  get  you  on  the  phone  today  and  can  still  include  you  in  the  
+decision-making
+ 
+process.
+ 
+By
+ 
+resolving
+ 
+this
+ 
+with
+ 
+our
+ 
+office: ▪  You  are  going  to  be  released  of  all  liability  on  the  account.  ▪  We  will  guarantee  no  further  collection  activity  will  be  taken  by  the  client.  ▪  Once  resolved,  you’ll  be  issued  a  satisfaction  letter  reflecting  a  zero  balance  and  we’ll  notify  the  client  to  
+update
+ 
+your
+ 
+credit
+ 
+report
+ 
+accordingly.
+ From  here,  follow  the  same  commitment,  BIF,  qualifying,  hold,  urgency,  and  offer  sequence  as  the  standard  
+talk-off.
+ 
+5.3  Asset  profiling  for  a  litigation  recommendation  On  a  prelegal  file,  the  qualifying  questions  also  inform  the  recommendation  to  the  client.  Three  asset  
+questions
+ 
+matter
+ 
+most
+ 
+—
+ 
+ask
+ 
+them
+ 
+naturally
+ 
+within
+ 
+the
+ 
+A-page
+ 
+flow,
+ 
+never
+ 
+as
+ 
+a
+ 
+threat:
+ 
+▪  Do  you  own  or  rent  your  home?  ▪  Are  you  currently  employed?  ▪  Do  you  own  a  vehicle?  
+Profile,  don’t  threaten 
+Internal  Training  Document  —  ConfidentialPage  14  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+These  questions  help  assess  collectability  for  the  recommendation.  They  are  not  a  script  for  predicting  outcomes  to  the  consumer  —  do  not  say  “they’ll  garnish  your  wages”  or  “they’ll  put  a  lien  on  your  house.”  Gather  the  information;  let  the  offer  do  the  persuading. 
+5.4  If  the  consumer  refuses  all  options  I’m  sorry  to  hear  that.  Just  so  you  know,  this  information  WILL  be  sent  to  our  client  and/or  the  attorney  who  
+may
+ 
+be
+ 
+involved
+ 
+in
+ 
+reviewing
+ 
+this
+ 
+matter.
+ 
+Prior
+ 
+to
+ 
+submitting
+ 
+this
+ 
+documentation,
+ 
+we
+ 
+were
+ 
+allowing
+ 
+you
+ 
+to
+ 
+make
+ 
+voluntary
+ 
+arrangements
+ 
+on
+ 
+this
+ 
+account.
+ 
+If
+ 
+the
+ 
+attorney
+ 
+deems
+ 
+the
+ 
+account
+ 
+suit-worthy,
+ 
+they
+ 
+may
+ 
+file
+ 
+suit,
+ 
+most
+ 
+likely
+ 
+within
+ 
+your
+ 
+county,
+ 
+and
+ 
+then
+ 
+attempt
+ 
+to
+ 
+recover
+ 
+funds
+ 
+through
+ 
+post-judgment
+ 
+activities
+ 
+if
+ 
+a
+ 
+judgment
+ 
+is
+ 
+awarded.
+ 
+Keep
+ 
+in
+ 
+mind
+ 
+there
+ 
+can
+ 
+be
+ 
+additional
+ 
+costs
+ 
+and
+ 
+attorney
+ 
+fees
+ 
+added
+ 
+to
+ 
+the
+ 
+total
+ 
+owed.
+ 
+This
+ 
+attorney
+ 
+review
+ 
+takes
+ 
+place
+ 
+after
+ 
+the
+ 
+recommendation
+ 
+to
+ 
+my
+ 
+client
+ 
+has
+ 
+been
+ 
+completed.
+ 
+Any
+ 
+questions
+ 
+for
+ 
+me? 
+Stay  truthful  and  conditional Every  clause  above  is  framed  as  a  possibility  (“may  file,”  “if  the  attorney  deems”,  “if  a  judgment  is  awarded”).  Do  not  collapse  these  into  certainties.  Overstating  consequences  is  a  compliance  violation. 
+5.5  The  pre-legal  recommendation  matrix  On  a  pre-legal  file  your  role  is  to  act  as  a  reviewer:  the  client  relies  on  the  financial  snapshot  you  gather  to  
+decide
+ 
+on
+ 
+litigation.
+ 
+Use
+ 
+this
+ 
+logic
+ 
+to
+ 
+document
+ 
+your
+ 
+recommendation
+ 
+in
+ 
+the
+ 
+system.
+ 
+Consumer  profile Recommendation Why 
+Employed  +  homeowner Recommend  suit  /  asset  &  POE 
+High  likelihood  of  recovery  via  wage  garnishment  or  property  lien. 
+Employed  +  renter Recommend  suit  /  POE Recovery  still  possible  via  wage  garnishment. 
+Unemployed  /  disability No  action  /  no  assets 
+Legally  uncollectible  via  suit;  disability  income  can’t  be  garnished. 
+Refuses  /  uncooperative Insufficient  info 
+Client  or  attorney  will  likely  run  their  own  asset  search. 
+Keep  the  recommendation  internal The  matrix  drives  your  internal  documentation,  not  your  script.  Never  tell  a  consumer  “we  won’t  sue  you”  (even  when  the  profile  is  no-action)  —  simply  document  it. 
+5.6  Pre-legal  specific  objections  I  ignored  the  first  letter  /  didn’t  take  this  seriously  before. 
+Internal  Training  Document  —  ConfidentialPage  15  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+I  understand.  That  previous  window  was  the  validation  period.  We’re  now  in  the  review  period  before  a  
+potential
+ 
+attorney
+ 
+placement
+ 
+—
+ 
+this
+ 
+is
+ 
+your
+ 
+chance
+ 
+to
+ 
+resolve
+ 
+it
+ 
+voluntarily
+ 
+before
+ 
+any
+ 
+additional
+ 
+legal
+ 
+costs
+ 
+could
+ 
+be
+ 
+added. 
+What  legal  action  will  they  take? If  a  judgment  were  awarded,  they  may  attempt  recovery  through  wage  garnishment,  liens  on  property,  or  other  
+post-judgment
+ 
+activities,
+ 
+depending
+ 
+on
+ 
+the
+ 
+laws
+ 
+in
+ 
+your
+ 
+specific
+ 
+state. 
+5.7  Pre-legal  Q&A:  “Will  they  definitely  sue  me?”  Maintain  urgency  without  overstating.  Keep  answers  conditional  and  defer  the  decision  to  the  client/attorney.  
+What  is  your  recommendation  going  to  be? Based  on  the  facts  we  gathered  today,  this  fits  the  criteria  for  attorney  review.  The  final  decision  lies  with  the  
+client. 
+Will  the  attorney  definitely  sue? That’s  up  to  the  attorney  and  the  client.  My  job  is  simply  to  provide  the  current  financial  snapshot  of  your  
+situation.  
+Internal  Training  Document  —  ConfidentialPage  16  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+6.  Building  Urgency  on  Every  Call  
+Urgency  keeps  the  call  moving  toward  resolution  without  pressure  that  crosses  the  line.  Urgency  comes  from  
+the
+ 
+genuine,
+ 
+time-bound
+ 
+nature
+ 
+of
+ 
+the
+ 
+work
+ 
+—
+ 
+the
+ 
+client
+ 
+expects
+ 
+an
+ 
+update,
+ 
+and
+ 
+the
+ 
+window
+ 
+to
+ 
+work
+ 
+the
+ 
+account
+ 
+voluntarily
+ 
+is
+ 
+limited.
+ 
+Use
+ 
+these
+ 
+lines
+ 
+naturally;
+ 
+do
+ 
+not
+ 
+stack
+ 
+them
+ 
+or
+ 
+recite
+ 
+them
+ 
+robotically.
+ 
+Urgency  lines 1)   Once  we  speak  to  you,  we  have  to  update  the  client  whether  or  not  we  were  able  to  secure  an  arrangement  with  you. 2)   We  are  still  within  a  timeframe  where  you  can  resolve  this  with  our  office … 3)   The  client  gives  us  a  small  window  of  opportunity  to  work  with  you  on  getting  this  taken  care  of … 4)   Please  understand  we  have  a  limited  timeframe  to  provide  an  update  to  the  client … 5)   The  good  news  is  we  were  able  to  get  you  on  the  phone  today  and  can  now  include  you  in  the  decision-making  process. 6)   Our  client  is  under  the  impression  this  is  not  going  to  be  resolved,  so  should  you  wish  to  take  advantage  of  an  alternate  payout  option,  we  need  to  decide  if  you  want  to  work  with  our  office  on  this. 7)   I  cannot  guarantee  this  offer  will  be  available  tomorrow  —  let’s  take  advantage  of  it  while  it’s  approved. 
+6.1  Where  urgency  lives  in  the  call  ▪  Short  timeframes  —  when  probing  for  the  BIF:  “do  you  need  a  couple  of  days,  or  a  couple  of  weeks?  
+(not
+ 
+months).”
+ ▪  Client  update  —  you  must  report  back  whether  an  arrangement  was  secured.  ▪  Green-light  /  banking  commitment  —  the  sooner  it’s  secured,  the  sooner  the  matter  is  behind  them.  
+6.2  The  60-day  collection  timeline  Understanding  the  account  lifecycle  helps  you  create  genuine,  honest  urgency  —  the  window  really  is  limited:  
+Day What  happens 
+Day  1 Placement  letter  (Initial  Demand  Letter)  is  sent. 
+Day  35 Pre-legal  notice  letter  is  sent  —  this  usually  triggers  the  panicked  inbound  calls. 
+Day  60 If  still  unresolved,  the  account  is  typically  recalled  by  the  client  and  leaves  your  desk.  
+Internal  Training  Document  —  ConfidentialPage  17  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+7.  Negotiation  &  Closing  
+7.1  Pushing  for  answers  at  the  BIF  questions  Move  down  this  ladder  conversationally  —  each  rung  narrows  toward  a  real  number  and  a  real  timeframe:  
+1.  Do  you  have  the  balance  available  TODAY  to  resolve  the  account?  2.  What  about  savings  or  401K?  Can  you  put  the  balance  on  a  credit  card?  3.  How  CLOSE  to  the  balance  are  you  TODAY?  4.  I  get  you  may  not  have  the  whole  balance,  but  if  you  had  to  come  up  with  it  today,  HOW  SHORT  would  
+you
+ 
+be?
+ 5.  Normally  the  client  requests  50%  down  —  how  close  are  you  to  that  today?  6.  How  LONG  will  it  take  you  to  come  up  with  the  full  balance?  7.  Do  you  need  a  couple  of  days,  or  a  couple  of  weeks?  (NOT  MONTHS) 
+7.2  Negotiation  guidelines  ▪  Conversationally  push  for  the  3  indicators  during  the  BIF  questions.  ▪  Work  the  numbers  —  understand  the  buying  signs  and  what  the  consumer  is  actually  offering.  ▪  Leave  yourself  room  to  negotiate  and  gain  commitment.  ▪  If  they  won’t  commit  to  the  3  indicators,  set  the  initial  offer  at  2×  where  you  expect  to  close. ▪  When  the  consumer  doesn’t  take  the  initial  offer,  use  a  counteroffer.  
+Questions  to  gain  commitment  before  a  secondary  offer  ▪  How  close  are  you  to  the  current  offer(s)?  →  (#  of  pays)  ▪  If  I  got  that  approved,  you’re  willing  to  set  it  up?  →  (banking  info)  ▪  First  payment  available  today?  →  (date  of  1st  pay)  ▪  Will  you  be  using  ACH/CC  to  secure  the  payments?  →  (banking  info)  
+Using  a  2nd  voice  correctly If  you  HAVE  rapport  and  buying  signs  →  give  the  initial  offer  yourself. If  you  do  NOT  have  rapport  and/or  buying  signs  →  pass  to  a  2nd  voice.  A  2nd  voice  can  push  for  resolution  only  when  used  correctly. 
+Bring  a  manager  or  closer  (the  turnover,  or  “T.O.”)  onto  the  line  when  the  negotiation  stalls.  Typical  triggers:  
+▪  The  consumer  demands  a  settlement  below  the  approved  floor.  ▪  The  consumer  wants  a  very  low  monthly  payment  that  won’t  resolve  the  file  in  a  reasonable  timeframe.  ▪  The  consumer  clearly  has  the  means  but  refuses  to  pay.  ▪  The  consumer  becomes  hostile  and  you’ve  lost  control  of  the  call.  
+7.3  Negotiation  linguistics  &  anchoring  How  you  phrase  numbers  changes  how  the  consumer  hears  them.  Two  habits  make  the  difference:  
+Internal  Training  Document  —  ConfidentialPage  18  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+▪  Quote  dollars,  not  percentages.  Say  “I  can  close  this  out  for  $1,700”  —  not  “I  can  do  85%.”  A  concrete  
+dollar
+ 
+figure
+ 
+feels
+ 
+like
+ 
+a
+ 
+real,
+ 
+tangible
+ 
+offer;
+ 
+a
+ 
+percentage
+ 
+invites
+ 
+the
+ 
+consumer
+ 
+to
+ 
+do
+ 
+the
+ 
+math
+ 
+and
+ 
+negotiate
+ 
+the
+ 
+percentage
+ 
+down.
+ ▪  Anchor  high  and  leave  room.  Never  open  at  your  lowest  authorized  floor.  Start  above  where  you  expect  
+to
+ 
+close
+ 
+(roughly
+ 
+double
+ 
+when
+ 
+the
+ 
+consumer
+ 
+won’t
+ 
+commit
+ 
+to
+ 
+the
+ 
+3
+ 
+indicators)
+ 
+so
+ 
+you
+ 
+have
+ 
+room
+ 
+to
+ 
+“work
+ 
+the
+ 
+numbers”
+ 
+toward
+ 
+a
+ 
+settlement
+ 
+that
+ 
+still
+ 
+lands
+ 
+within
+ 
+client
+ 
+guidelines.
+ 
+Floors  follow  client  guidance Settlement  authority  and  any  percentage  floors  are  set  by  current  client/compliance  guidance  and  can  change  —  confirm  your  approved  floor  before  quoting.  The  principle  is  constant:  open  above  the  floor,  never  at  it. 
+The  two-offer  plan  Before  you  make  the  first  offer,  mentally  hold  two:  
+▪  Plan  A  (initial):  a  higher  number  —  e.g.,  90%,  or  3  payments  —  to  leave  room.  ▪  Plan  B  (target):  the  number  you  actually  want  —  e.g.,  80%,  or  6  payments.  When  they  reject  Plan  A,  “work  your  way  down”  to  Plan  B.  Arriving  at  Plan  B  then  feels  like  a  win  the  
+consumer
+ 
+earned,
+ 
+which
+ 
+reduces
+ 
+buyer’s
+ 
+remorse
+ 
+and
+ 
+back-out.
+ 
+7.4  Pushing  for  payment  —  sample  lines  ▪  So  it’s  not  that  you  didn’t  have  intentions  on  resolving  this  —  you  weren’t  able  to  at  the  time,  right?  ▪  The  client  is  seeking  the  full  balance  —  where  do  you  stand  with  paying  that  off  today?  ▪  I’m  going  to  do  everything  I  can  to  help  you  get  this  resolved;  just  understand  the  client  provides  certain  
+guidelines
+ 
+we
+ 
+need
+ 
+to
+ 
+work
+ 
+within.
+ ▪  I’m  not  sure  what  options  are  still  available,  but  let  me  see  if  I  can  get  that  approved.  ▪  Is  the  first  payment  available  today?  ▪  Let  me  ask  you  a  few  questions  to  see  what  alternative  options  may  still  be  available  to  you.  ▪  Normally  we  look  to  have  offers  secured  on  file  to  ensure  the  arrangement  is  agreed  upon  by  all  parties.  ▪  Normally  they  look  for  that  settlement  to  be  paid  today.  ▪  We  can  process  payments  electronically  free  of  charge  using  check  by  phone,  debit,  credit,  or  savings  —  
+which
+ 
+method
+ 
+would
+ 
+you
+ 
+like
+ 
+to
+ 
+use?
+ ▪  This  is  a  great  opportunity  to  take  care  of  this  once  and  for  all  and  put  it  behind  you.  ▪  Feel–Felt–Found:  “I  understand  how  you  feel;  many  of  our  customers  have  felt  very  similarly,  and  we  
+have
+ 
+found
+ 
+that
+ 
+being
+ 
+able
+ 
+to
+ 
+________
+ 
+has
+ 
+worked
+ 
+out
+ 
+to
+ 
+their
+ 
+satisfaction.”
+ 
+7.5  Securing  the  offer  Great  News!  If  you  can  take  advantage  of  it,  I  was  able  to  get  you  approved  for  a  one-time  settlement,  
+closing
+ 
+you
+ 
+out
+ 
+for
+ 
+$____
+ 
+[sell
+ 
+the
+ 
+savings]
+ 
+and
+ 
+still
+ 
+getting
+ 
+you
+ 
+the
+ 
+[review
+ 
+PROS].
+ 
+Can
+ 
+you
+ 
+take
+ 
+advantage
+ 
+of
+ 
+that? If  no  →  “How  close  are  you  to  [offer]?”  →  determine  the  secondary  offer  based  on  commitment  to  the  3  
+indicators.
+ 
+When  taking  banking  details,  confirm:  the  name  of  the  bank  the  account  is  with,  how  the  name  appears  on  
+the
+ 
+card/check/account,
+ 
+and
+ 
+whether
+ 
+the
+ 
+billing
+ 
+address
+ 
+is
+ 
+the
+ 
+same
+ 
+as
+ 
+the
+ 
+mailing
+ 
+address.
+ 
+Internal  Training  Document  —  ConfidentialPage  19  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+7.6  Out-to-Borrow  (OTB)  resources  
+Category Examples 
+Personal  savings Savings  account,  CDs,  stocks,  bonds,  401K,  IRA,  annuity 
+Lines  of  credit Credit  cards,  current  personal  loan,  current  HELOC 
+Loans Personal  loan  (credit  union  /  bank);  refinance  home  or  vehicle  (equity  to  refi?) 
+Friends  /  relatives  /  employer Loan  with  possible  cosigner;  paycheck  allotment 
+Selling  personal  items Vehicle,  jewelry,  antiques,  etc. 
+7.7  Closing  techniques  
+Trial  close  —  if  accepted,  TAKE  THE  PAYMENT  ▪  “So  this  sounds  like  something  you’d  like  to  resolve,  right?”  ▪  “If  you  had  all  the  money  available  right  now,  you’d  take  care  of  the  balance  today,  right?”  
+Simple  close  —  direct  and  clear  State  the  amount  due,  ask  for  the  entire  past-due  amount  by  a  fixed  deadline,  then  wait  for  the  response.  
+Your  account  balance  is  $577.46;  we’re  calling  to  secure  that  amount  with  our  office  today,  no  later  than  
+this
+ 
+Friday.
+ 
+(Pause
+ 
+/
+ 
+wait
+ 
+for
+ 
+response.) 
+Alternative-choice  close  —  choice  between  two  actions  We  can  take  $680  today  to  close  out  the  balance  of  $800,  or  split  the  full  balance  into  two  equal  payments  
+of
+ 
+$400
+ 
+—
+ 
+which
+ 
+option
+ 
+works
+ 
+best
+ 
+for
+ 
+you,
+ 
+_____? 
+Assumptive  close  —  assume  readiness  ▪  “What’s  a  good  email  address  where  I  can  send  a  copy  of  the  agreement?”  ▪  “Will  you  be  using  check  by  phone,  debit,  or  credit  card  to  secure  the  payment?”  
+Summary  close  —  build  to  “yes”  ▪  “I  understand  things  are  a  little  tight  right  now,  aren’t  they?”  →  “Wouldn’t  you  feel  better  knowing  this  
+is
+ 
+resolved?”
+ 
+→
+ 
+“Let’s
+ 
+take
+ 
+care
+ 
+of
+ 
+it
+ 
+now
+ 
+so
+ 
+it’s
+ 
+off
+ 
+your
+ 
+mind,
+ 
+fair
+ 
+enough?”
+ 
+Just-for-you  close  —  special  treatment  We  normally  don’t  do  this,  but  your  situation  is  unique.  I  can  offer  you  a  plan  of  $145  a  month  for  the  next  7  
+months
+ 
+—
+ 
+the
+ 
+only
+ 
+condition
+ 
+being
+ 
+your
+ 
+first
+ 
+payment
+ 
+is
+ 
+made
+ 
+by
+ 
+Friday
+ 
+and
+ 
+we
+ 
+secure
+ 
+the
+ 
+remaining
+ 
+payments
+ 
+for
+ 
+automatic
+ 
+withdrawal
+ 
+on
+ 
+this
+ 
+call.
+ 
+Fair
+ 
+enough? 
+7.8  Negotiation  psychology  
+Read  the  reason  for  delinquency  When  you  ask  “what  happened  to  cause  this  to  fall  behind?”,  listen  for  which  of  three  buckets  the  hardship  
+falls
+ 
+into
+ 
+—
+ 
+each
+ 
+calls
+ 
+for
+ 
+a
+ 
+different
+ 
+approach:
+ 
+▪  Circumstantial  (lost  job,  medical,  etc.)  —  needs  empathy  and  a  flexible  plan.  ▪  Intellectual  (didn’t  understand  the  fees,  disputes  the  product)  —  needs  a  contract/TILA  explanation.  ▪  Emotional  (overspent,  “keeping  up  with  the  Joneses”)  —  needs  firm  boundaries  and  balance  anchoring.  
+Internal  Training  Document  —  ConfidentialPage  20  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+Prevent  buyer’s  remorse  If  a  consumer  owes  $1,000,  offers  $700,  and  you  instantly  say  “yes,”  they  may  feel  they  offered  too  much  and  
+start
+ 
+backing
+ 
+out.
+ 
+Even
+ 
+on
+ 
+a
+ 
+good
+ 
+offer,
+ 
+negotiate
+ 
+slightly
+ 
+so
+ 
+they
+ 
+feel
+ 
+they
+ 
+won:
+ 
+Okay  —  normally  we  ask  for  two  payments,  but  since  you’re  agreeing  to  three,  can  you  make  the  first  one  
+today?
+ 
+Will
+ 
+you
+ 
+be
+ 
+using
+ 
+a
+ 
+checking
+ 
+account
+ 
+or
+ 
+a
+ 
+debit
+ 
+card? 
+The  “no  money”  trap  If  a  consumer  says  “I  have  no  money  today,”  don’t  immediately  ask  “how  short  are  you?”  —  that  instantly  
+drops
+ 
+the
+ 
+value
+ 
+of
+ 
+the
+ 
+debt.
+ 
+Stay
+ 
+anchored
+ 
+to
+ 
+the
+ 
+balance
+ 
+and
+ 
+pivot
+ 
+to
+ 
+resources
+ 
+first:
+ 
+I  understand.  Would  you  happen  to  have  that  balance  in  a  401K  from  a  past  job,  or  perhaps  available  credit  
+on
+ 
+a
+ 
+card? 
+The  “laugh  indicator”  If  you  ask  “how  close  are  you  to  the  balance?”  and  the  consumer  laughs  —  especially  after  claiming  to  be  
+broke
+ 
+—
+ 
+it’s
+ 
+often
+ 
+a
+ 
+tell
+ 
+that
+ 
+they
+ 
+do
+ 
+have
+ 
+access
+ 
+to
+ 
+funds
+ 
+and
+ 
+are
+ 
+withholding.
+ 
+Don’t
+ 
+back
+ 
+down;
+ 
+press
+ 
+gently
+ 
+for
+ 
+the
+ 
+funds.
+ 
+7.9  Situational  rebuttals  What  is  the  least  I  can  pay? If  it  were  up  to  me,  I’d  say  yes  to  anything,  but  I  have  to  work  within  the  client’s  parameters.  Normally  they  look  
+for
+ 
+50%
+ 
+down
+ 
+—
+ 
+how
+ 
+close
+ 
+can
+ 
+you
+ 
+get
+ 
+to
+ 
+that
+ 
+today? 
+I’ll  pay  the  debt,  but  I’m  not  paying  these  interest/fees. I  understand  you  dispute  the  fees.  If  I  can  get  approval  to  waive  the  interest  and  fees,  would  you  be  willing  to  
+clear
+ 
+the
+ 
+principal
+ 
+balance
+ 
+of
+ 
+[amount]
+ 
+today?  
+Internal  Training  Document  —  ConfidentialPage  21  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+8.  Common  Objections  &  Rebuttals  
+Avoid  an  argument  by  listening,  using  empathy,  and  asking  clarifying  questions.  Acknowledge  the  consumer’s  
+position
+ 
+sincerely,
+ 
+rephrase
+ 
+toward
+ 
+a
+ 
+positive
+ 
+outcome,
+ 
+then
+ 
+make
+ 
+a
+ 
+call
+ 
+to
+ 
+action
+ 
+that
+ 
+keeps
+ 
+the
+ 
+focus
+ 
+on
+ 
+the
+ 
+solution.
+ 
+For
+ 
+disputes
+ 
+tied
+ 
+to
+ 
+a
+ 
+specific
+ 
+product
+ 
+(dental,
+ 
+home
+ 
+security,
+ 
+loans,
+ 
+power
+ 
+sports),
+ 
+see
+ 
+the
+ 
+Client
+ 
+&
+ 
+Product
+ 
+Knowledge
+ 
+section.
+ 
+8.1  Empathy  &  rapport  phrases  
+Acknowledge  the  consumer’s  position  with  sincere,  deliberate  empathy  ▪  “That’s  understandable;  I  can  only  imagine  what  that’s  like … ”  ▪  “I  can  hear  how  frustrated  you  are  about  what  happened.”  ▪  “Your  concern(s)  make  sense;  I  have  been  in  a  similar  situation  myself.”  ▪  “Based  on  your  question(s),  I  can  see  how  important  this  is  to  you.”  
+Align  with  the  consumer  /  imply  working  together  ▪  “I’d  like  us  to  be  able  to  review  the  document  —  let’s  make  this  comfortable  together.”  ▪  “Let’s  update  the  system  together  and  see  how  we  can  get  this  resolved.”  ▪  “Certainly  we  can  figure  this  out  together  and  find  a  solution.”  ▪  “We’re  here  to  help  —  let’s  work  this  out  together.”  
+Rephrase  and  plant  the  seed  for  a  positive  outcome  ▪  “I’m  happy  to  work  with  you  on  resolving  this  matter … ”  ▪  “I’ve  got  great  news  —  we  can  definitely  get  this  issue  taken  care  of  today … ”  ▪  “I  really  want  us  to  find  a  solution  together  and  put  this  behind  you … ”  ▪  “Let’s  get  some  answers  to  these  questions  together  right  now … ”  
+Make  a  call  to  action  —  keep  the  focus  on  the  solution  ▪  “Let  me  do  a  little  research  and  get  some  answers  real  quick.”  ▪  “What  I  can  do  for  you  right  now  is … ”  ▪  “Here’s  what  we  can  do … ”  ▪  “Let’s  go  ahead  and  do  this … ”  
+Avoid  these  statements “I  can’t  go  further  until  you  do  this.” “I  have  to  provide  an  update,  so  what  are  YOUR  intentions?” “I’m  trying  to  help  but  you’re  not  cooperating … ” 
+8.2  Location  /  gatekeeping  objections  What  is  this  about? It’s  regarding  a  file  we  have  in  our  office  for  _____,  is  this  a  good  #  for  them? 
+What  kind  of  file  is  it? I  can  go  over  that  with  _____;  may  I  ask  who  I  am  speaking  with? 
+Internal  Training  Document  —  ConfidentialPage  22  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+What  is  the  file  about? I  would  need  _____’s  permission  to  go  over  that;  what’s  a  better  #  for  them? 
+What  do  you  guys  do? We  provide  location  services  and  we  manage  account  receivables.  We  were  calling  to  speak  to  _____;  is  this  a  
+good
+ 
+#
+ 
+to
+ 
+reach
+ 
+them?
+ 
+May
+ 
+I
+ 
+ask
+ 
+who
+ 
+I’m
+ 
+speaking
+ 
+with? 
+Are  you  a  debt  collector? Yes,  debt  collection  is  one  of  the  things  we  do;  we  also  provide  location  services.  Do  you  know  _____?  Is  this  a  
+good
+ 
+#
+ 
+for
+ 
+them? 
+[Inbound]  What  type  of  company  is  this? We  are  a  Receivables  Management  Company.  Did  you  receive  a  call  from  us?  Did  we  call  the  number  you  are  
+calling
+ 
+in
+ 
+from? 
+8.3  Account  &  balance  objections  I’ve  never  heard  of  this  account. The  account  was  opened  in  (date)  and  charged  off  on  (date).  [If  there’s  a  payment  history,  review  it  and  ask  what  
+happened
+ 
+around
+ 
+the
+ 
+date
+ 
+payments
+ 
+stopped,
+ 
+or
+ 
+bridge
+ 
+to
+ 
+the
+ 
+PROS.] 
+Send  me  a  letter  first  /  I  didn’t  get  a  letter. The  Initial  Demand  Letter  was  sent  to  you  from  Everest  Receivable  Services  on  (date)  [to  the  email/address  on  
+file].
+ 
+Rather
+ 
+than
+ 
+wait
+ 
+on
+ 
+the
+ 
+mail,
+ 
+I
+ 
+can
+ 
+email
+ 
+a
+ 
+copy
+ 
+to
+ 
+you
+ 
+right
+ 
+now
+ 
+while
+ 
+we’re
+ 
+on
+ 
+the
+ 
+phone.
+ 
+If
+ 
+requesting
+ 
+a
+ 
+new
+ 
+IDL,
+ 
+confirm
+ 
+the
+ 
+email. 
+I  need  a  history  of  my  purchases  /  original  contract. It  sounds  like  you’re  requesting  further  information  about  the  debt,  which  we  can  have  the  client  provide.  
+[Confirm
+ 
+email.]
+ 
+Are
+ 
+you
+ 
+planning
+ 
+to
+ 
+dispute
+ 
+the
+ 
+debt? 
+I  disagree  with  the  amount. That  is  the  amount  charged  off  by  [originator]  per  the  original  signed  contract.  Under  the  Truth  in  Lending  Act,  
+all
+ 
+fees
+ 
+and
+ 
+interest
+ 
+were
+ 
+disclosed
+ 
+in
+ 
+your
+ 
+original
+ 
+agreement;
+ 
+DNF
+ 
+Associates
+ 
+now
+ 
+owns
+ 
+this
+ 
+account,
+ 
+and
+ 
+the
+ 
+balance
+ 
+reflects
+ 
+those
+ 
+agreed-upon
+ 
+terms.
+ 
+Our
+ 
+client
+ 
+adds
+ 
+$0.00
+ 
+in
+ 
+interest
+ 
+or
+ 
+fees
+ 
+—
+ 
+so
+ 
+if
+ 
+it’s
+ 
+reported
+ 
+on
+ 
+your
+ 
+credit,
+ 
+it
+ 
+would
+ 
+reflect
+ 
+that
+ 
+amount.
+ 
+(Is
+ 
+this
+ 
+on
+ 
+your
+ 
+credit?
+ 
+Tell
+ 
+me
+ 
+what
+ 
+happened.) 
+I  can’t  afford  to  pay  this. Sometimes  things  happen,  and  we  firmly  believe  people  want  to  resolve  their  financial  obligations.  We’ll  do  our  
+best
+ 
+to
+ 
+work
+ 
+with
+ 
+you.
+ 
+What
+ 
+resources
+ 
+could
+ 
+help
+ 
+you
+ 
+resolve
+ 
+this? 
+My  husband/wife/ex  did  this. I  understand.  Because  the  account  is  attached  to  your  name  and  SSN,  the  remaining  balance  is  an  obligation  our  
+client
+ 
+is
+ 
+looking
+ 
+for
+ 
+you
+ 
+to
+ 
+fulfill. 
+I’m  driving  right  now. I  don’t  mind  waiting  until  you’re  able  to  pull  over  so  we  can  discuss  further. 
+I’m  at  work  right  now. We  can  quickly  take  care  of  this  —  another  moment  and  we’ll  be  done.  Can  you  do  half  the  balance  today  and  
+the
+ 
+other
+ 
+half
+ 
+in
+ 
+a
+ 
+couple
+ 
+of
+ 
+weeks
+ 
+or
+ 
+your
+ 
+next
+ 
+paycheck,
+ 
+fair
+ 
+enough? 
+I  don’t  get  paid  until  [future  date]. I  understand.  Rather  than  just  scheduling  a  callback,  let’s  lock  this  in  today  with  a  good-faith  payment  —  even  a  
+small
+ 
+amount
+ 
+—
+ 
+and
+ 
+we
+ 
+can
+ 
+post-date
+ 
+the
+ 
+remaining
+ 
+balance
+ 
+to
+ 
+your
+ 
+payday
+ 
+so
+ 
+the
+ 
+arrangement
+ 
+is
+ 
+secured
+ 
+now.
+ 
+That
+ 
+protects
+ 
+the
+ 
+offer
+ 
+while
+ 
+it’s
+ 
+still
+ 
+available. 
+Internal  Training  Document  —  ConfidentialPage  23  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+Can  you  call  me  back? [Confirm  contact  info  —  and  get  callback  permission  per  Reg  F.]  We  do  have  to  provide  an  update  to  the  client …  
+[move
+ 
+on
+ 
+with
+ 
+talk-off]. 
+I  returned  that  furniture  /  jewelry. [Check  Last  Paid  and  Balance  —  usually  the  item  was  kept.]  Do  you  have  a  return  receipt?  If  you  can  produce  one  
+we’ll
+ 
+note
+ 
+it;
+ 
+otherwise
+ 
+the
+ 
+financed
+ 
+balance
+ 
+is
+ 
+still
+ 
+owed
+ 
+and
+ 
+we
+ 
+should
+ 
+resolve
+ 
+it
+ 
+today. 
+8.4  Payment-method  objections  I  don’t  feel  comfortable  giving  out  my  banking  information. This  is  one  reason  all  our  calls  are  recorded.  We  normally  secure  arrangements  using  check  by  phone,  debit,  or  
+credit;
+ 
+once
+ 
+set
+ 
+up,
+ 
+we
+ 
+send
+ 
+a
+ 
+confirmation
+ 
+email
+ 
+detailing
+ 
+the
+ 
+dates
+ 
+and
+ 
+amounts.
+ 
+There’s
+ 
+also
+ 
+an
+ 
+authorization
+ 
+process
+ 
+to
+ 
+ensure
+ 
+everything
+ 
+we
+ 
+agreed
+ 
+to
+ 
+is
+ 
+correct.
+ 
+Let’s
+ 
+work
+ 
+together
+ 
+to
+ 
+resolve
+ 
+this. 
+I  want  to  mail  in  payments. If  payments  are  mailed  in,  they’ll  be  applied  to  the  balance,  but  without  a  valid  agreement  on  file  I  can’t  
+guarantee
+ 
+the
+ 
+account
+ 
+stays
+ 
+here.
+ 
+After
+ 
+contacting
+ 
+you,
+ 
+we
+ 
+update
+ 
+the
+ 
+client
+ 
+whether
+ 
+or
+ 
+not
+ 
+we
+ 
+secured
+ 
+an
+ 
+arrangement.
+ 
+What
+ 
+would
+ 
+make
+ 
+you
+ 
+comfortable
+ 
+working
+ 
+with
+ 
+me? 
+I  don’t  have  banking  information  on  me. At  Everest  we  normally  secure  the  arrangement  on  the  call  using  check  by  phone,  debit,  or  credit  card.  Payments  
+run
+ 
+securely
+ 
+and
+ 
+are
+ 
+free
+ 
+of
+ 
+any
+ 
+fees. 
+I’m  going  to  send  a  check  to  the  original  creditor  instead. If  you  pay  the  originator  directly,  it  can  take  up  to  60  days  to  update  in  our  system.  During  that  time  the  account  
+may
+ 
+still
+ 
+be
+ 
+credit
+ 
+reported
+ 
+and
+ 
+remain
+ 
+active
+ 
+in
+ 
+our
+ 
+office.
+ 
+We
+ 
+can
+ 
+resolve
+ 
+it
+ 
+right
+ 
+now,
+ 
+prevent
+ 
+credit-reporting
+ 
+issues,
+ 
+and
+ 
+give
+ 
+you
+ 
+immediate
+ 
+confirmation. 
+Can  I  pay  online  or  through  a  website? You  certainly  can.  But  to  make  sure  this  resolves  correctly  —  the  proper  ‘paid  in  full’  letter  and  an  accurate  
+credit-report
+ 
+status
+ 
+—
+ 
+I’d
+ 
+recommend
+ 
+we
+ 
+secure
+ 
+the
+ 
+arrangement
+ 
+together
+ 
+right
+ 
+now.
+ 
+If
+ 
+you
+ 
+make
+ 
+a
+ 
+small,
+ 
+unagreed
+ 
+payment
+ 
+online,
+ 
+the
+ 
+system
+ 
+may
+ 
+not
+ 
+recognize
+ 
+it
+ 
+as
+ 
+a
+ 
+settlement
+ 
+and
+ 
+the
+ 
+remaining
+ 
+balance
+ 
+stays
+ 
+active.
+ 
+Completing
+ 
+it
+ 
+with
+ 
+me
+ 
+ensures
+ 
+your
+ 
+info
+ 
+is
+ 
+protected
+ 
+and
+ 
+the
+ 
+account
+ 
+is
+ 
+properly
+ 
+closed. 
+8.5  Legitimacy  &  “is  this  a  scam?”  objections  Why  are  you  calling  from  a  local  number?  /  Is  this  a  scam? Because  of  TCPA  regulations  and  state  laws,  we’re  required  to  provide  a  local  number  as  well  as  a  toll-free  
+number
+ 
+—
+ 
+this
+ 
+is
+ 
+a
+ 
+courtesy
+ 
+so
+ 
+you
+ 
+don’t
+ 
+incur
+ 
+long-distance
+ 
+charges
+ 
+returning
+ 
+our
+ 
+call.
+ 
+We’re
+ 
+a
+ 
+registered
+ 
+Receivables
+ 
+Management
+ 
+Company;
+ 
+all
+ 
+our
+ 
+calls
+ 
+are
+ 
+recorded
+ 
+for
+ 
+your
+ 
+protection
+ 
+and
+ 
+ours. 
+How  do  I  know  you’re  a  real  company? We  record  all  calls,  we’re  registered  with  the  BBB,  and  we  have  Compliance  and  QA  departments.  Our  website  
+lists
+ 
+our
+ 
+mission
+ 
+and
+ 
+contact
+ 
+information,
+ 
+and
+ 
+every
+ 
+secured
+ 
+arrangement
+ 
+is
+ 
+confirmed
+ 
+by
+ 
+email
+ 
+with
+ 
+our
+ 
+company
+ 
+details
+ 
+for
+ 
+you
+ 
+to
+ 
+review
+ 
+and
+ 
+sign.
+ 
+(See
+ 
+the
+ 
+legitimacy
+ 
+points
+ 
+for
+ 
+the
+ 
+full
+ 
+list.) 
+8.6  Dispute,  bankruptcy  &  attorney  objections  This  was  already  paid  before  it  came  to  you. We  generally  don’t  receive  accounts  that  have  already  been  paid,  so  we  can’t  just  close  it  on  that  basis  —  but  I  
+want
+ 
+to
+ 
+get
+ 
+this
+ 
+right
+ 
+for
+ 
+you.
+ 
+Please
+ 
+email
+ 
+a
+ 
+‘paid
+ 
+in
+ 
+full’
+ 
+letter
+ 
+from
+ 
+the
+ 
+original
+ 
+creditor,
+ 
+or
+ 
+a
+ 
+bank
+ 
+statement
+ 
+showing
+ 
+the
+ 
+cleared
+ 
+payment,
+ 
+and
+ 
+we’ll
+ 
+put
+ 
+the
+ 
+account
+ 
+in
+ 
+a
+ 
+prior-pending
+ 
+status
+ 
+while
+ 
+we
+ 
+confirm. 
+Internal  Training  Document  —  ConfidentialPage  24  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+I’m  disputing  this  account. In  looking  over  the  account  I  don’t  see  any  dispute  noted  up  to  this  point,  and  you  told  me  you  fell  behind  
+because
+ 
+(reason).
+ 
+Tell
+ 
+me
+ 
+a
+ 
+little
+ 
+about
+ 
+what
+ 
+you’re
+ 
+disputing. 
+I’m  thinking  of  filing  for  bankruptcy. Bankruptcy  is  a  public  record  that  affects  credit  for  some  time.  In  many  situations  where  it  seemed  like  the  only  
+option,
+ 
+we
+ 
+still
+ 
+found
+ 
+ways
+ 
+to
+ 
+work
+ 
+with
+ 
+consumers.
+ 
+Let
+ 
+me
+ 
+ask
+ 
+you
+ 
+a
+ 
+few
+ 
+questions
+ 
+and
+ 
+see
+ 
+what
+ 
+we
+ 
+can
+ 
+do,
+ 
+fair
+ 
+enough? 
+You  can  deal  with  my  attorney. Okay  —  did  you  retain  the  attorney  due  to  bankruptcy,  finances,  or  debt?  Can  you  provide  your  attorney’s  info  
+so
+ 
+I
+ 
+can
+ 
+update
+ 
+the
+ 
+file?
+ 
+(Put
+ 
+account
+ 
+in
+ 
+ATTORNEY
+ 
+status
+ 
+at
+ 
+end
+ 
+of
+ 
+call.) 
+I’m  not  giving  you  attorney  info. Okay  —  the  attorney  info  simply  helps  us  update  the  file  and  resolve  this  properly  for  you.  Can  you  have  your  
+attorney
+ 
+call
+ 
+us
+ 
+please?
+ 
+(Put
+ 
+account
+ 
+in
+ 
+ATTORNEY
+ 
+status
+ 
+at
+ 
+end
+ 
+of
+ 
+call.) 
+Attorney  representation If  a  consumer  states  they  are  represented  by  an  attorney,  obtain  and  document  the  attorney  info,  advise  your  manager,  and  DO  NOT  call  the  consumer  again. 
+ 
+Internal  Training  Document  —  ConfidentialPage  25  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+9.  Credit  Reporting  Rebuttals  (DNF  Associates)  
+Use  these  for  accounts  placed  by  DNF  Associates.  Everest  Receivable  Services  does  not  report  to  the  credit  
+bureaus;
+ 
+DNF
+ 
+Associates
+ 
+does.
+ 
+Always
+ 
+check
+ 
+the
+ 
+system
+ 
+before
+ 
+answering
+ 
+whether
+ 
+an
+ 
+account
+ 
+has
+ 
+been
+ 
+reported.
+ 
+Is  this  on  my  credit? I  cannot  see  your  credit  report,  but  Everest  Receivable  Services  does  not  report  to  the  bureaus.  DNF  Associates  
+does
+ 
+report;
+ 
+based
+ 
+on
+ 
+the
+ 
+system
+ 
+it
+ 
+shows
+ 
+me
+…
+ 
+[icon
+ 
+present]
+ 
+=
+ 
+reported,
+ 
+[blank]
+ 
+=
+ 
+not
+ 
+yet
+ 
+reported. 
+How  will  this  affect  my  credit? That  depends  on  many  factors;  you’d  have  to  refer  to  your  attorney  or  financial  advisor.  What  I  can  tell  you  is  
+that
+ 
+by
+ 
+resolving
+ 
+the
+ 
+account
+ 
+with
+ 
+my
+ 
+office
+ 
+I
+ 
+can
+ 
+provide
+ 
+you
+…
+ 
+[give
+ 
+PROS]. 
+Will  this  come  off  my  credit? DNF  Associates  does  not  delete  accounts,  however  they  will  update  your  credit  report  accordingly  once  you  
+resolve
+ 
+the
+ 
+account
+ 
+with
+ 
+our
+ 
+office. 
+Will  you  update  my  credit? If  DNF  Associates  reported  your  account,  then  paying  it  off  with  our  office  means  DNF  will  update  your  report  
+once
+ 
+fully
+ 
+resolved.
+ 
+If
+ 
+it’s
+ 
+reported
+ 
+by
+ 
+another
+ 
+creditor,
+ 
+we’ll
+ 
+send
+ 
+you
+ 
+a
+ 
+Satisfaction
+ 
+&
+ 
+Release
+ 
+letter
+ 
+reflecting
+ 
+a
+ 
+zero
+ 
+balance
+ 
+so
+ 
+you
+ 
+can
+ 
+update
+ 
+your
+ 
+credit
+ 
+with
+ 
+the
+ 
+3
+ 
+reporting
+ 
+agencies. 
+DNF  hasn’t  reported  yet  —  are  they  going  to? Normally  DNF  Associates  waits  30–45  days  to  report.  Since  your  account  is  still  within  that  window,  by  paying  it  
+off
+ 
+with
+ 
+my
+ 
+office
+ 
+we’ll
+ 
+update
+ 
+the
+ 
+client
+ 
+that
+ 
+it’s
+ 
+being
+ 
+resolved
+ 
+and
+ 
+request
+ 
+they
+ 
+don’t
+ 
+report
+ 
+it.
+ 
+[Find
+ 
+the
+ 
+LOAD
+ 
+DATE
+ 
+field.] 
+My  account  is  reported  —  once  I  pay  it  off,  what  happens? We  update  DNF  Associates  once  the  account  is  fully  resolved;  usually  within  60  days  after  the  last  payment  it’ll  
+reflect
+ 
+as
+ 
+paid
+ 
+to
+ 
+a
+ 
+zero
+ 
+balance
+ 
+on
+ 
+your
+ 
+credit
+ 
+report. 
+Does  DNF  report  to  all  3  bureaus? DNF  Associates  reports  to  TransUnion.  By  paying  the  account  off  with  Everest,  DNF  will  update  their  tradeline. 
+FCRA  guardrails  —  what  you  must  NOT  promise Never  promise  “pay  for  delete.”  DNF  Associates  does  not  delete  tradelines  —  they  update  them  (e.g.,  to  “paid  /  zero  balance”)  once  the  account  is  resolved. Never  guarantee  a  credit-score  change:  “I’m  not  a  financial  advisor,  so  I  can’t  tell  you  exactly  how  your  score  will  change.” Use  the  30–45  day  window  for  honest  urgency  —  if  the  account  is  still  within  that  timeframe  and  not  yet  reported,  resolving  now  lets  us  ask  the  client  not  to  report  it.  Only  say  this  when  the  load  date  supports  it. 
+ 
+Internal  Training  Document  —  ConfidentialPage  26  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+10.  Fraud  /  Dispute  /  Validate  
+Listen  closely  to  distinguish  which  of  the  three  situations  you’re  in  —  they  carry  different  statuses  and  
+processes.
+ 
+Probe
+ 
+for
+ 
+clarification
+ 
+using
+ 
+available
+ 
+dates
+ 
+and
+ 
+the
+ 
+payment
+ 
+history;
+ 
+sometimes
+ 
+new
+ 
+information
+ 
+helps
+ 
+a
+ 
+consumer
+ 
+recognize
+ 
+something
+ 
+they
+ 
+didn’t
+ 
+before
+ 
+—
+ 
+but
+ 
+not
+ 
+always.
+ 
+Status Verbal  indicator What  it  means 
+VALIDATE 
+“I  want  proof  that  I  owe  this”  /  “I  don’t  recognize  this” 
+Consumer  requests  proof  they  owe  —  send  validation  paperwork. 
+DISPUTE 
+“I  disagree  that  I  owe  this”  /  “I  disagree  with  the  amount” 
+Consumer  disagrees  with  part  or  all  of  the  balance  —  gather  info. 
+FRAUD “I  never  had  this  account” 
+Consumer  states  the  account  isn’t  theirs  —  send  the  fraud  packet. 
+10.1  What  to  do  when  the  consumer  is  convinced  If  the  consumer  is  convinced  the  account  belongs  in  a  Fraud/Dispute/Validate  status,  confirm  pertinent  
+account
+ 
+information,
+ 
+explain
+ 
+the
+ 
+process
+ 
+going
+ 
+forward,
+ 
+and
+ 
+leave
+ 
+the
+ 
+call
+ 
+on
+ 
+a
+ 
+positive
+ 
+note.
+ 
+▪  Confirm  mailing  address.  ▪  Confirm  email  address.  ▪  Confirm  best  phone  #.  
+Set  the  correct  pending  status VALIDATE-PENDING,  DISPUTE-PENDING,  and  FRAUD-PENDING  all  impact  the  credit-reporting  process  and  require  manager  review.  Gather  the  information,  verify  contact  details,  and  let  the  appropriate  packet/paperwork  be  sent. 
+10.2  Testing  a  fraud  claim  against  the  payment  history  Some  consumers  claim  “fraud”  or  “identity  theft”  on  an  account  they  actually  opened.  Always  check  the  
+payment
+ 
+history
+ 
+before
+ 
+processing
+ 
+a
+ 
+fraud
+ 
+packet
+ 
+—
+ 
+voluntary
+ 
+payments
+ 
+are
+ 
+a
+ 
+strong
+ 
+sign
+ 
+the
+ 
+account
+ 
+is
+ 
+genuine:
+ 
+I  see  a  payment  of  [amount]  made  on  [date]  in  the  history.  Fraudulent  accounts  usually  don’t  have  
+voluntary
+ 
+payments
+ 
+from
+ 
+the
+ 
+consumer
+ 
+—
+ 
+are
+ 
+you
+ 
+sure
+ 
+you
+ 
+want
+ 
+to
+ 
+go
+ 
+down
+ 
+the
+ 
+fraud
+ 
+route?
+ 
+It
+ 
+requires
+ 
+a
+ 
+formal
+ 
+fraud
+ 
+packet
+ 
+and
+ 
+investigation. 
+For  loan  products,  you  can  add:  “To  obtain  these  loans,  a  consumer  must  provide  a  driver’s  license,  a  bank  
+account,
+ 
+and
+ 
+a
+ 
+place
+ 
+of
+ 
+employment
+ 
+—
+ 
+all
+ 
+verified
+ 
+at
+ 
+signing
+ 
+—
+ 
+which
+ 
+makes
+ 
+an
+ 
+identity-theft
+ 
+claim
+ 
+difficult
+ 
+to
+ 
+sustain.”
+ 
+If
+ 
+the
+ 
+consumer
+ 
+remains
+ 
+convinced,
+ 
+proceed
+ 
+respectfully
+ 
+with
+ 
+the
+ 
+fraud
+ 
+process.
+ 
+ 
+Internal  Training  Document  —  ConfidentialPage  27  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+11.  Working  Judgment  Accounts  
+11.1  What  a  judgment  is  A  judgment  is  a  court’s  decision  that  you  legally  owe  this  balance.  Because  a  creditor  took  you  to  court  and  
+a
+ 
+judgment
+ 
+was
+ 
+awarded,
+ 
+it
+ 
+is
+ 
+now
+ 
+enforceable
+ 
+by
+ 
+law
+ 
+—
+ 
+meaning
+ 
+a
+ 
+creditor
+ 
+can
+ 
+attempt
+ 
+to
+ 
+use
+ 
+legal
+ 
+tools
+ 
+such
+ 
+as
+ 
+wage
+ 
+garnishment,
+ 
+bank
+ 
+levies,
+ 
+or
+ 
+property
+ 
+liens
+ 
+to
+ 
+recover
+ 
+the
+ 
+balance. ▪  Enforceable  long-term  (e.g.,  NY:  20  years;  property  liens  10  years,  renewable).  ▪  A  judgment  can  follow  the  consumer  for  years  if  not  resolved.  
+11.2  Compliance  must-knows  ▪  Always  give  the  Mini-Miranda  and  follow  FDCPA  rules.  ▪  No  threats  or  misrepresentation.  Don’t  say  “they  are  going  to  sue  you”  or  “they  will  garnish  your  
+wages”
+ 
+unless
+ 
+you’ve
+ 
+actually
+ 
+uncovered
+ 
+financial
+ 
+resources
+ 
+making
+ 
+that
+ 
+a
+ 
+genuine
+ 
+possibility.
+ ▪  Exemptions  matter.  Social  Security,  unemployment,  pensions,  and  certain  incomes  are  protected.  
+11.3  Quality  of  engagement  ▪  Speak  with  confidence  and  professionalism  —  show  you  know  the  file  (case  #,  judgment  details).  ▪  Listen  first:  understand  the  consumer’s  concerns,  questions,  and  issues.  ▪  Document  carefully:  hardship  claims,  settlement  talks,  and  every  contact  detail.  
+11.4  Strategy  &  selling  points  ▪  Leverage:  judgments  are  legally  binding  and  consumers  know  they’re  serious.  ▪  Resolution  =  relief:  resolving  avoids  garnishment,  levies,  liens,  and  added  costs.  ▪  Satisfaction:  DNF  Associates  files  paperwork  with  the  court  for  Satisfaction  of  the  Judgment  within  60  
+days
+ 
+of
+ 
+final
+ 
+payment;
+ 
+the
+ 
+consumer
+ 
+receives
+ 
+a
+ 
+copy
+ 
+of
+ 
+the
+ 
+Satisfaction
+ 
+of
+ 
+Judgment
+ 
+letter.
+ ▪  Options:  lump  sum,  settlement,  or  structured  payment  plan  (per  client  guidelines).  
+Urgency  &  no  time  giveaway Never  frame  it  as  “take  all  the  time  you  need”  or  “you  can  make  monthly  payments.” The  longer  it  sits,  the  more  likely  enforcement  escalates. Stress  that  today’s  settlement  option  is  the  best  way  to  save  money  and  close  the  file. 
+11.5  Push-for-resolution  lines  ▪  “This  isn’t  just  a  balance  anymore  —  it’s  a  judgment  awarded  by  the  court.”  ▪  “Resolving  today  avoids  any  future  action  and  the  possibility  of  added  costs.”  ▪  “We  can  break  the  balance  into  a  few  payments,  but  the  best  savings  are  in  a  settlement  today.”  ▪  “Let’s  secure  your  resolution  now  and  put  this  behind  you.”   
+Internal  Training  Document  —  ConfidentialPage  28  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+12.  Payment  Authorization  
+Once  an  arrangement  is  agreed,  you  take  the  consumer  through  the  payment  authorization.  Read  it  carefully  
+—
+ 
+every
+ 
+“Y/N”
+ 
+must
+ 
+be
+ 
+answered
+ 
+verbally
+ 
+by
+ 
+the
+ 
+consumer,
+ 
+and
+ 
+the
+ 
+lines
+ 
+marked
+ 
+mandatory
+ 
+must
+ 
+be
+ 
+read
+ 
+on
+ 
+every
+ 
+call.
+ 
+Regulation  E  —  get  proper  authorization  for  every  payment Electronic  payments  are  governed  by  Regulation  E,  which  requires  clear  consumer  authorization  for  each  payment  date  and  amount.  Capture  an  explicit,  recorded  “yes”  for  every  date  and  dollar  figure. Signature  thresholds:  $1,000  and  over  strictly  requires  a  digital  “wet”  e-signature  (RightSignature)  completed  while  the  consumer  is  still  on  the  phone.  Between  $500  and  $1,000  is  “best  judgment”  —  verbal  authorization  is  technically  acceptable,  but  if  the  consumer  seems  shaky  or  hesitant,  require  the  e-signature  to  prevent  a  chargeback.  Confirm  current  thresholds  with  your  compliance  team. 
+12.1  Authorization  script  My  name  is  ____  and  I’m  going  to  take  you  through  the  payment  authorization  portion  of  the  call.  Just  a  
+reminder,
+ 
+this
+ 
+call
+ 
+is
+ 
+recorded
+ 
+for
+ 
+your
+ 
+protection
+ 
+and
+ 
+ours. 
+Today’s  date  is  __/__/__,  our  file  number  is  _________.  Will  you  please  state  your  full  name  for  me?...  
+Thank
+ 
+you. (Name),  this  phone  #  ending  in  ____  —  is  that  the  best  #  to  reach  you?  (Y/N)  …  And  do  you  give  us  
+permission
+ 
+to
+ 
+communicate
+ 
+with
+ 
+you
+ 
+by
+ 
+text
+ 
+or
+ 
+voicemail
+ 
+message?
+ 
+(Y/N) 
+Update  fields  in  SCollect  based  on  the  consumer’s  responses. 
+Are  you  (Name)  an  authorized  user  of  this  account?  [If  NO,  you  must  stop.]  And  you  are  authorizing  Everest  
+Receivable
+ 
+Services
+ 
+to
+ 
+deduct
+ 
+the
+ 
+following
+ 
+payment(s)? 
+Review  EACH  payment  amount  &  date.  The  consumer  must  verbally  agree  “Yes”  to  the  payments. 
+You  confirm  the  funds  are  available,  or  will  ensure  a  deposit  is  made  so  the  funds  are  available  at  time  of  
+deposit?
+ 
+(Y/N)
+ 
+And
+ 
+if
+ 
+there
+ 
+is
+ 
+any
+ 
+issue
+ 
+processing
+ 
+the
+ 
+payment(s),
+ 
+do
+ 
+you
+ 
+give
+ 
+us
+ 
+permission
+ 
+to
+ 
+call
+ 
+you
+ 
+back
+ 
+at
+ 
+this
+ 
+phone
+ 
+#
+ 
+ending
+ 
+in
+ 
+____?
+ 
+(Y/N) 
+We  show  this  is  coming  from  (banking  institution);  to  confirm,  the  account  is  open  and  in  good  standing?  
+(Y/N)
+ 
+[If
+ 
+NO,
+ 
+do
+ 
+not
+ 
+accept
+ 
+payment;
+ 
+advise
+ 
+the
+ 
+consumer
+ 
+to
+ 
+call
+ 
+back
+ 
+with
+ 
+an
+ 
+open/good-standing
+ 
+account.] 
+The  billing  address  we  have  associated  with  that  bank  account  is  (verify  address).  Can  you  please  read  back  
+the
+ 
+(account
+ 
+information)
+ 
+to
+ 
+ensure
+ 
+it
+ 
+was
+ 
+entered
+ 
+correctly
+ 
+in
+ 
+our
+ 
+system? 
+Please  note  this  will  reflect  on  your  statement  under  the  name  EVERESTREC  and  888-397-2894. 
+We’ll  send  a  confirmation  email  to  (verify/update  email),  is  that  OK?  It  comes  from  RightSignature  —  
+please
+ 
+open
+ 
+and
+ 
+read
+ 
+it
+ 
+to
+ 
+ensure
+ 
+the
+ 
+arrangement
+ 
+is
+ 
+correct,
+ 
+then
+ 
+sign
+ 
+with
+ 
+your
+ 
+mouse
+ 
+or
+ 
+finger
+ 
+and
+ 
+press
+ 
+Submit.
+ 
+You’ll
+ 
+receive
+ 
+reminders
+ 
+until
+ 
+you
+ 
+sign
+ 
+and
+ 
+send
+ 
+it
+ 
+back,
+ 
+alright? 
+Must  be  read  on  EVERY  call 
+Internal  Training  Document  —  ConfidentialPage  29  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+“If  you  have  any  questions  or  need  to  change  or  cancel  the  arrangement,  please  give  us  a  call  at  least  1  business  day  prior  to  the  payment  date.  Our  toll-free  number  is  888-397-2894.” Office  hours:  Mon–Thurs  8am–6pm,  Fri  8am–5pm  Eastern.  “Do  you  have  any  questions  for  me?  Thank  you  and  have  a  good  day.” 
+12.2  Payment  authorization  checklist  
+Contact  fields  (required) Payment  info 
+•  Email  address•  Email-OK  checkbox•  Best  phone  number•  Phone  Message-OK  checkbox•  Phone  Text  Message-OK  checkbox  
+•  Payer  first  &  last  name•  Billing  address:  street,  city,  state,  ZIP•  16-digit  card  #  &  expiration,  OR  9-digit  routing  #  &  account  #•  Settlement  amount  matches  payment(s)•  Payment  notes  &  call  notes•  Proper  status  on  account  Note:  the  contact  fields  and  the  settlement/payment-note  items  are  flagged  red  in  the  system  —  they  must  be  
+completed
+ 
+for
+ 
+any
+ 
+account
+ 
+in
+ 
+Settled/Payer
+ 
+status. 
+12.3  Card  rules,  fees  &  rounding  
+Accepted  methods  &  card  exceptions  ▪  American  Express:  not  accepted  under  any  circumstances.  ▪  Discover:  accepted,  but  it  must  be  run  on  a  separate  terminal  —  flag  a  manager  or  closer  to  process  it.  ▪  Checking/savings  (ACH),  Visa,  Mastercard:  processed  normally.  
+Processing  fees  —  the  3.5%  rule  Credit-card  payments  carry  a  3.5%  convenience  fee charged  by  the  processor  (Nuway  Commerce).  
+Checking/savings
+ 
+(ACH)
+ 
+is
+ free.  If  a  consumer  objects  to  the  card  fee,  use  it  to  pivot  them  to  ACH:  “We  can  
+avoid
+ 
+that
+ 
+fee
+ 
+entirely
+ 
+by
+ 
+running
+ 
+it
+ 
+from
+ 
+your
+ 
+checking
+ 
+account
+ 
+—
+ 
+it’s
+ 
+free
+ 
+that
+ 
+way.”
+ 
+The  rounding-up  rule  When  splitting  a  balance  into  recurring  payments,  the  math  often  produces  partial  cents  (e.g.,  $203.8325).  
+Always
+ 
+round
+ UP to  the  nearest  cent  (enter  $203.84).  Rounding  down  leaves  a  few  pennies  on  the  balance  at  
+the
+ 
+end
+ 
+of
+ 
+the
+ 
+term
+ 
+and
+ 
+prevents
+ 
+the
+ 
+account
+ 
+from
+ 
+closing
+ 
+properly
+ 
+—
+ 
+the
+ 
+system
+ 
+automatically
+ 
+lowers
+ 
+the
+ 
+final
+ 
+payment
+ 
+to
+ 
+make
+ 
+the
+ 
+total
+ 
+exact.
+ 
+ 
+Internal  Training  Document  —  ConfidentialPage  30  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+13.  Call-Handling  Policies  
+13.1  Inbound  calls  7.  Open  with:  “Hello,  my  name  is  [full  name],  all  calls  are  recorded,  how  can  I  help  you?”  8.  Find  out  whether  we  called  the  same  phone  #  the  caller  is  using.  If  a  different  #,  ask  for  the  full  number  
+with
+ 
+area
+ 
+code
+ 
+—
+ 
+this
+ 
+matters
+ 
+for
+ 
+pulling
+ 
+up
+ 
+the
+ 
+information.
+ 9.  Pull  up  the  account;  check  the  Assigned  To  field.  If  assigned  to  PRELOAD,  check  the  Last  Worked  date  to  
+see
+ 
+if
+ 
+the
+ 
+inbound
+ 
+was
+ 
+generated
+ 
+by
+ 
+a
+ 
+same-day
+ 
+call.
+ 10.  Unless  the  account  is  on  a  7-day  no-call  flag,  try  to  pass  the  call  to  the  agent  who  owns  it.  If  you  can’t  
+reach
+ 
+them:
+ 
+transfer
+ 
+via
+ 
+LiveVox,
+ 
+walk
+ 
+to
+ 
+their
+ 
+desk,
+ 
+route
+ 
+to
+ 
+a
+ 
+Team
+ 
+Lead
+ 
+or
+ 
+another
+ 
+agent
+ 
+on
+ 
+the
+ 
+team,
+ 
+or
+ 
+consult
+ 
+your
+ 
+manager.
+ 
+Courtesy  &  ownership If  you  work  someone  else’s  account,  ALWAYS  message  the  owning  agent  with  the  file  #  and  details.  The  only  time  you  don’t  need  to  message  them  is  if  you  work  the  account  on  the  dialer  or  a  7-day  flag  and  close  it  that  day  —  then  notify  a  manager  to  assign  it  to  you.  For  Promise-to-Pay  /  Settled  /  Payer  accounts,  find  a  manager  if  the  owner  is  unavailable.  Never  change  arrangements  on  a  promised  file. 
+13.2  RPC  follow-up  calls  On  any  future  call  to  a  consumer  who  has  already  verified  DOB/SSN  and  received  the  Mini-Miranda,  you  must  
+still
+ 
+cover
+ 
+all
+ 
+disclosures.
+ 
+Failure
+ 
+to
+ 
+verify
+ 
+and
+ 
+give
+ 
+the
+ 
+Mini-Miranda
+ 
+is
+ 
+a
+ 
+potential
+ 
+FDCPA
+ 
+violation.
+ 
+11.  Ask  to  speak  directly  to  the  consumer  —  GIVE  CRD.  12.  Identify  yourself  (and  your  company,  if  on  an  outbound  follow-up).  13.  Ask  the  consumer  to  verify  DOB/SSN.  14.  Once  verified,  give  the  DCD  and  Mini-Miranda  —  on  ANY  and  EVERY  RPC  call.  
+Remember Once  an  agent  has  verified  DOB/SSN  and  given  the  Mini-Miranda,  EVERY  future  call  must  start  by  identifying  the  consumer,  giving  the  CRD,  verifying  DOB/SSN,  and  giving  the  Mini-Miranda.  Managers  should  inform  agents  when  a  call  campaign  may  include  prior  RPC  accounts. 
+13.3  Wrong-number  calls  Handle  every  wrong-number  call  professionally  and  thoroughly  —  mishandling  carries  a  high  risk  of  
+complaints
+ 
+or
+ 
+lawsuits.
+ 
+15.  Open  the  call  as  you  normally  would  —  GIVE  CRD.  16.  Remain  courteous  no  matter  the  caller’s  tone  —  you  are  the  one  at  work.  17.  Apologize  for  any  inconvenience;  let  them  know  you’ll  remove  the  number  and  they  shouldn’t  receive  
+further
+ 
+calls.
+ 18.  Use  the  Wrong  Number  call  note  in  SCollect;  include  pertinent  details  (upset,  claims  of  repeated  calls,  
+threats
+ 
+to
+ 
+complain/sue,
+ 
+requests
+ 
+for
+ 
+a
+ 
+manager,
+ 
+etc.).
+ 19.  Mark  the  phone  #  as  “Wrong  Number”  in  SCollect  —  do  NOT  delete  the  number.  
+Internal  Training  Document  —  ConfidentialPage  31  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+20.  Use  the  “Wrong  #”  disposition  code  in  LiveVox.  If  a  future  call  to  any  #  may  generate  a  
+lawsuit/complaint,
+ 
+tell
+ 
+your
+ 
+manager
+ 
+so
+ 
+it
+ 
+can
+ 
+be
+ 
+added
+ 
+to
+ 
+the
+ 
+permanent
+ 
+DNC
+ 
+list.
+ 21.  After  informing  the  caller,  ask  “Is  there  anything  else  I  can  do  to  help?”  If  still  unsatisfied,  offer  a  
+supervisor
+ 
+or
+ 
+manager.
+ 
+13.4  RTA  —  Refuse  To  Authenticate  When  a  consumer  identifies  by  name  but  refuses  to  authenticate  by  DOB/SSN/address,  handle  as  an  RTA.  
+Document
+ 
+the
+ 
+call
+ 
+note
+ 
+as
+ 
+“HUNG
+ 
+UP
+ 
+IN
+ 
+OPEN”
+ 
+with
+ 
+appropriate
+ 
+details.
+ 
+Situation SCollect  status LiveVox  dispo 
+RPC  —  consumer  completes  authentication 
+Update  based  on  call  outcome  (Follow,  etc.) 
+RPC  dispo  per  SCollect  status  (never  “Left  Msg”  on  an  RPC) 
+Identifies  by  name,  refuses  to  authenticate 
+RTA RPC  Follow 
+Refuses  to  authenticate  AND  requests  no  more  calls 
+CEASE-PENDING Wrong  # 
+ 
+Internal  Training  Document  —  ConfidentialPage  32  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+14.  Account  Statuses  &  Documentation  
+Correct  statusing  keeps  accounts  in  the  right  queues  and  protects  the  company.  The  golden  rules:  always  
+document
+ 
+consumer
+ 
+contact
+ 
+once
+ 
+the
+ 
+consumer
+ 
+authenticates
+ 
+(regardless
+ 
+of
+ 
+ending
+ 
+status);
+ 
+always
+ 
+have
+ 
+a
+ 
+status
+ 
+on
+ 
+an
+ 
+account
+ 
+where
+ 
+contact
+ 
+was
+ 
+made;
+ 
+never
+ 
+move
+ 
+an
+ 
+account
+ 
+with
+ 
+consumer
+ 
+contact
+ 
+to
+ 
+ACTIVE;
+ 
+and
+ 
+don’t
+ 
+put
+ 
+a
+ 
+status
+ 
+on
+ 
+an
+ 
+account
+ 
+unless
+ 
+you
+ 
+authenticate
+ 
+the
+ 
+consumer
+ 
+(or
+ 
+are
+ 
+moving
+ 
+it
+ 
+to
+ 
+an
+ 
+inactive
+ 
+status
+ 
+such
+ 
+as
+ 
+CEASE-PENDING
+ 
+or
+ 
+DECEASED).
+ 
+14.1  Working  statuses  
+Status Meaning 
+PRELOAD 
+Assigned  until  consumer  contact  is  documented;  moves  to  the  agent’s  queue  once  RPC  is  documented. 
+ACTIVE  /  MOVED 
+PRELOAD  with  no  prior  contact  shows  ACTIVE;  once  RPC  is  documented  it  defaults  to  MOVED. 
+RTA Consumer  identifies  by  name  but  refuses  to  verify  DOB/SSN  (Refuse  To  Authenticate). 
+NEW  /  RESET Placed  with  an  agent;  pull  up  via  the  Work  List  to  work  manually. 
+FOLLOW Requires  follow-up  but  not  top  priority. 
+PRICKLY  HOT 
+Consumer  interested  in  resolving,  but  amounts/dates  not  yet  determined  —  higher  priority  than  FOLLOW. 
+PROMISE  TO  PAY 
+Arrangement  discussed  but  no  banking  info  on  file.  Keep  only  active  PTPs  here  (24–48  hrs). 
+CLOSE Consumer  refuses  any  arrangement  and  further  effort  is  unlikely  to  result  in  payment. 
+SETTLED Arrangement  secured  with  banking  info  to  close  out  the  balance  or  settlement. 
+PAYER 
+Payments  set  up  but  consumer  must  be  contacted  for  future  payments  (total  on  file  ≠  balance/settlement). 
+RETURNED 
+An  ACS/ACH/CC  payment  bounced  or  declined;  once  reauthorized,  move  to  SETTLED/PAYER. 
+SPANISH Consumer  requests  a  Spanish  speaker. 
+RECALL Account  recalled  by  client  —  no  longer  worked  at  Everest. 
+INCARCERATED Consumer  currently  incarcerated  (note  expected  length  &  location). 
+DEPLOYED Consumer  deployed  in  the  military  (note  expected  length  &  location). 
+DECEASED-PENDING We  are  notified  the  consumer  is  deceased. 
+14.2  Statuses  that  freeze  the  account  for  manager  review  These  require  a  manager  to  be  notified  so  the  inquiry  or  issue  can  be  investigated.  Most  require  either  our  
+company
+ 
+or
+ 
+the
+ 
+consumer
+ 
+to
+ 
+provide
+ 
+further
+ 
+information
+ 
+or
+ 
+proof
+ 
+before
+ 
+resolution.
+ 
+Status Meaning  /  action 
+DEBT  CONSOLDT  CO. 
+Handled  by  a  debt  consolidation  company  —  notify  a  manager;  follow-up  from  the  DEBTCO  rep. 
+Internal  Training  Document  —  ConfidentialPage  33  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+Status Meaning  /  action 
+PRIOR-PENDING 
+Consumer  states  the  account  was  previously  paid  or  the  balance  is  invalid  —  request  confirmation  by  email. 
+DIRECT  PAY-PEND 
+Client  confirmed  a  payment  was  made  to  the  issuer  after  the  sale/transfer  of  the  account. 
+VALIDATE-PENDING 
+Consumer  requests  proof  they  owe  —  gather  info  &  verify  contact  so  validation  paperwork  can  be  sent. 
+DISPUTE-PENDING 
+Consumer  disagrees  with  what  is  owed  (part  or  all)  —  ask  questions  to  gather  information. 
+FRAUD-PENDING 
+Consumer  states  they  never  had  the  account  —  gather  info  &  verify  contact  so  the  fraud  packet  can  be  sent. 
+COMPLAINT-REVIEW Caller  reports  an  issue  requiring  a  manager  to  investigate  and/or  follow  up. 
+CEASE-PENDING Cease  &  desist  received,  or  management  decided  to  close  the  account. 
+BANKO-PENDING Bankruptcy  attorney  info  provided  —  document  attorney  info  &  case  #,  alert  manager. 
+ATTORNEY-PENDING 
+Consumer  represented  by  an  attorney  —  document  attorney  info,  advise  manager,  do  NOT  call  consumer  again. 
+Always  notify  a  manager Whenever  you  feel  further  collection  activity  will  result  in  a  complaint  or  lawsuit,  notify  a  manager  so  the  number  can  be  added  to  the  DNC  list  and  the  account  handled  properly. 
+14.3  Documenting  contact  Select  the  phone  #  spoken  to  in  the  Phone  Numbers  field  (add  it  if  missing).  With  that  #  highlighted,  use  the  
+Quick
+ 
+Note
+ 
+Phone
+ 
+Number
+ 
+icon
+ 
+and
+ 
+include:
+ 
+who
+ 
+you
+ 
+spoke
+ 
+to;
+ 
+inbound
+ 
+or
+ 
+outbound;
+ 
+what
+ 
+was
+ 
+done
+ 
+on
+ 
+the
+ 
+account
+ 
+(disclosures
+ 
+given,
+ 
+info
+ 
+verified,
+ 
+qualifying);
+ 
+and
+ 
+anything
+ 
+for
+ 
+proper
+ 
+follow-up
+ 
+(reason
+ 
+for
+ 
+non-payment,
+ 
+offers
+ 
+provided,
+ 
+permission
+ 
+to
+ 
+call
+ 
+back).
+ 
+Anyone  reading  the  notes  should  be  able  to  work  the  account  from  them.  If  you  do  not  document  it,  
+technically
+ 
+it
+ 
+didn’t
+ 
+happen. 
+ 
+Internal  Training  Document  —  ConfidentialPage  34  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+15.  Documentation  &  Statusing  Cheat  Sheet  
+Quick  reference  mapping  who  you  spoke  to,  whether  they  verified,  the  SCollect  call  note  &  status,  and  the  
+LiveVox
+ 
+disposition.
+ 
+Spoke  to Verified SCollect  note SCollect  status LiveVox  dispo 
+Consumer Yes Spoke  To  Debtor Prickly  /  Promise Promise  to  Pay 
+Consumer Yes Spoke  To  Debtor Settled  /  Payer Settled  /  Payer 
+Consumer Yes Spoke  To  Debtor Close Refusal  to  Pay 
+Consumer Yes Spoke  To  Debtor Banko-Pending Bankruptcy  Filed 
+Consumer Yes Spoke  To  Debtor Attorney-Pending Attorney  Handling 
+Consumer Yes Spoke  To  Debtor Prior-Pending Prior  /  Dispute 
+Consumer Yes Spoke  To  Debtor Fraud-Pending Fraud  /  Dispute 
+Consumer Yes Spoke  To  Debtor Validate-Pending Validation  Requested 
+Consumer Yes Spoke  To  Debtor Follow RPC  Follow 
+Consumer Yes +  Sent  For  Second (update  at  end  of  call) Second  Voice  Transfer 
+Consumer No Hung  Up  In  Open RTA  /  Cease-Pending RPC  Follow  /  Wrong  # 
+Spouse No Spoke  To  Other Active 
+Left  Message  w/  Individual 
+Wrong  person No Wrong  Number Active Wrong  # 
+Other  /  relative No Spoke  To  Other Active Left  Message  Person 
+Voicemail No Left  Message  Machine Active 
+Left  Message  on  Machine 
+Nobody No No  Answer Active 
+No  Message  /  No  Machine 
+Deceased  (relative) No Spoke  To  Other Deceased-Pending Deceased 
+Reminders For  any  3rd-party  contact,  try  to  confirm/obtain  the  best  phone  #  to  reach  the  consumer. When  you  document  “Spoke  To  Debtor,”  the  status  auto-switches  to  MOVED  —  update  
+Internal  Training  Document  —  ConfidentialPage  35  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+Spoke  to Verified SCollect  note SCollect  status LiveVox  dispo 
+the  status  at  end  of  call. For  any  RPC,  complete  all  documentation  possible,  especially  verified  contact  info:  best  phone  #,  email,  mailing  address. All  documentation  must  be  completed  for  any  account  in  Settled/Payer  status. 
+Remember  by  outcome  
+Outcome Don’t  forget  to … 
+Prickly  /  Promise Enter  the  BIF  /  SIF  amount  discussed. 
+Settled  /  Payer Confirm  payments  are  secured  and  all  fields  completed. 
+Close  (refusal) Note  that  you  were  unable  to  resolve  and  why. 
+Banko  /  Attorney-Pending Capture  the  attorney  info  (and  case  #  for  bankruptcy). 
+Prior-Pending Request  proof  from  the  consumer  (email). 
+Fraud-Pending Confirm  the  mailing  address  for  the  fraud  packet. 
+Second  voice  sent Update  at  end  of  call;  note  “2nd  Voice  Sent.” 
+Spanish  caller Verbally  identify  the  caller  before  routing  to  SPANISH. 
+Any  RTA  /  wrong  #  /  3rd  party  /  voicemail 
+Use  the  matching  LiveVox  dispo;  never  leave  an  RPC  as  “Left  Msg.” 
+ 
+Internal  Training  Document  —  ConfidentialPage  36  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+16.  Conveying  Company  Legitimacy  
+When  a  consumer  questions  whether  we’re  a  real  company,  use  these  credibility  points  naturally:  
+▪  We  record  all  calls  —  this  is  for  your  protection  as  well  as  ours.  ▪  We  take  pride  in  working  professionally  and  adhere  to  rules  and  regulations  because  we  are  a  credible  
+company.
+ ▪  We  have  Compliance  and  Quality  Assurance  departments  to  ensure  best  service.  ▪  We  are  registered  with  the  BBB  —  only  legitimate  companies  can  be  accredited  as  a  business  with  the  
+BBB.
+ ▪  We  provide  a  local  phone  #  on  caller  ID  and  can  give  you  a  toll-free  #  as  a  courtesy  so  you  don’t  incur  
+charges
+ 
+returning
+ 
+our
+ 
+call.
+ ▪  Our  business  has  a  website  with  our  mission  and  contact  information;  a  Trust  Pilot  link  at  the  bottom  
+takes
+ 
+you
+ 
+to
+ 
+customer
+ 
+reviews.
+ ▪  All  transactions  secured  in  our  office  go  through  authorization  to  confirm  info  is  correct,  and  we  email  
+you
+ 
+a
+ 
+confirmation
+ 
+of
+ 
+the
+ 
+arrangement
+ 
+with
+ 
+our
+ 
+company
+ 
+info,
+ 
+which
+ 
+we
+ 
+ask
+ 
+you
+ 
+to
+ 
+sign
+ 
+and
+ 
+send
+ 
+back.
+ 
+17.  State  Statutes  &  Spouse-Contact  Reference  
+This  table  lists  the  written-contract  statute  of  limitations  (in  years)  and  whether  it  is  OK  to  talk  to  a  spouse  in  
+each
+ 
+jurisdiction.
+ Always  confirm  against  current  law  and  client  guidance  —  statutes  change,  and  this  is  a  
+training
+ 
+reference,
+ 
+not
+ 
+legal
+ 
+advice. 
+ 
+State Yrs Spouse 
+Alabama 6 N 
+Alaska 3 Y 
+Arizona 6 N 
+Arkansas 5 Y 
+California 4 Y 
+Colorado 6 Y 
+Connecticut 6 Y 
+Delaware 6 Y 
+D.C. 3 Y 
+Florida 5 Y 
+Georgia 6 Y 
+Hawaii 6 Y 
+Idaho 5 Y 
+Illinois 10 N 
+Indiana 10 Y 
+ 
+State Yrs Spouse 
+Montana 8 Y 
+Nebraska 5 N 
+Nevada 6 Y 
+New  Hampshire 3 Y 
+New  Jersey 6 Y 
+New  Mexico 6 Y 
+New  York 3 Y 
+New  York  City 3 N 
+North  Carolina 3 Y 
+North  Dakota 6 Y 
+Ohio 6 Y 
+Oklahoma 5 Y 
+Oregon 6 Y 
+Pennsylvania 4 N 
+Rhode  Island 10 Y 
+Internal  Training  Document  —  ConfidentialPage  37  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+Iowa 10 N 
+Kansas 5 Y 
+Kentucky 10 Y 
+Louisiana 10 Y 
+Maine 6 Y 
+Maryland 3 Y 
+Massachusetts 6 N 
+Michigan 6 Y 
+Minnesota 6 Y 
+Mississippi 3 Y 
+Missouri 10 Y  
+South  Carolina 3 N 
+South  Dakota 6 Y 
+Tennessee 6 Y 
+Texas 4 Y 
+Utah 6 Y 
+Vermont 6 Y 
+Virginia 5 Y 
+Washington 6 Y 
+West  Virginia 10 Y 
+Wisconsin 6 Y 
+Wyoming 10 Y   
+Reading  the  table Yrs  =  statute  of  limitations  on  a  written  contract,  in  years.    Spouse  =  whether  it  is  OK  to  talk  to  a  spouse  (Y =  yes,  N =  no).  Note  New  York  City  is  listed  separately  from  New  York  State.  
+ 
+Internal  Training  Document  —  ConfidentialPage  38  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+18.  Quality  Assurance  &  the  Agent  Report  Card  
+Calls  are  graded  across  four  scores.  Grading  reflects  what  parts  of  the  talk-off  were  used  effectively  versus  
+ineffectively,
+ 
+incorrectly,
+ 
+or
+ 
+missed
+ 
+—
+ 
+and
+ 
+flags
+ 
+any
+ 
+compliance
+ 
+issues.
+ 
+Know
+ 
+what
+ 
+reviewers
+ 
+look
+ 
+for
+ 
+and
+ 
+self-audit
+ 
+against
+ 
+it.
+ 
+18.1  Checklist  score  —  the  11  points  Did  the  call  hit  each  of  the  11  talk-off  points  effectively?  (Setup  &  CRD;  Authenticate  &  Transition;  Listen  &  
+Address
+ 
+Concerns;
+ 
+Pros
+ 
+of
+ 
+Payment;
+ 
+Request
+ 
+Intentions;
+ 
+all
+ 
+3
+ 
+BIF
+ 
+questions;
+ 
+Qualify/A-Page;
+ 
+Hold
+ 
+for
+ 
+Approval;
+ 
+Urgency
+ 
+or
+ 
+Scheduled
+ 
+Follow-up;
+ 
+Offer
+ 
+SIF
+ 
+Pyramid
+ 
+or
+ 
+higher;
+ 
+OTB
+ 
+Sources.)
+ 
+18.2  Quality  score  
+# Quality  element 
+1 Identified  who  you  are  speaking  with 
+2 Identified  your  company  &  client 
+3 Gave  DCD  &  Mini-Miranda 
+4 Client  update 
+5 Explained  account  info 
+6 Followed  the  call-opening  checklist 
+7 Used  a  2nd  voice  (where  appropriate) 
+8 Followed  the  negotiation  checklist 
+9 Appropriate  call  duration  (under  ~15  minutes) 
+10 Rapport,  tonality  &  professionalism  (all  calls) 
+18.3  Compliance  score  —  zero-tolerance  failures  
+Any  of  these  can  fail  the  call  outright 1)  Talk-off  script  used  out  of  context  (location  setup  /  message  /  RL  /  A-page). 2)  Didn’t  verify  SSN  /  didn’t  give  Mini-Miranda  or  CRD. 3)  Incorrect  client  info  /  relationship  or  3rd-party  disclosure. 4)  Call  contained  threatening  or  illegal  verbiage. 5)  False  claims,  misleading  info,  or  deceptive  tactics. 6)  Improper  end-call  procedure. 7)  Confrontational  /  argumentative  /  unprofessional. 8)  Improper  documentation  or  authorization. 
+18.4  File-audit  score  For  Settled/Payer  files:  notes  documented  properly;  address  updated;  good  contact  updated  (phone/email  +  
+checkboxes);
+ 
+status
+ 
+updated;
+ 
+correct
+ 
+agreed
+ 
+amount
+ 
+entered;
+ 
+payment
+ 
+info
+ 
+entered
+ 
+correctly;
+ 
+authorization
+ 
+documented.
+ 
+Internal  Training  Document  —  ConfidentialPage  39  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+ 
+Internal  Training  Document  —  ConfidentialPage  40  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+19.  Transcript-Auditable  QA  &  Call  Audit  Checklist  
+This  checklist  evaluates  only  what  can  be  verified  from  the  call  audio  or  transcript  —  agent  behavior,  
+compliance,
+ 
+script
+ 
+adherence,
+ 
+negotiation,
+ 
+and
+ 
+objection
+ 
+handling.
+ 
+It
+ 
+deliberately
+ 
+omits
+ 
+CRM/system
+ 
+steps
+ 
+(those
+ 
+live
+ 
+in
+ 
+the
+ 
+operations
+ 
+sections).
+ 
+Audit  by  context,  not  by  rote Not  every  item  applies  to  every  call  —  a  single  call  rarely  triggers  all  situations.  Audit  the  items  that  are  relevant  to  what  actually  happened  on  the  call,  and  mark  the  rest  “N/A.”  The  compliance  items  in  19.1,  however,  apply  whenever  their  trigger  occurs  and  a  miss  is  typically  an  automatic  failure. 
+19.1  Mandatory  compliance  &  legal  (auto-fail  when  triggered)  
+ Auditable  check What  a  passing  call  shows 
+☐ Call  Recording  Disclosure CRD  given  right  away  at  the  top  of  the  call  (“all  calls  are  recorded”). 
+☐ Right-party  verification 
+Verified  DOB,  last-4  SSN,  or  address  before  discussing  the  debt;  no  ambiguous  “uh-huh”  accepted  as  a  yes. 
+☐ Mini-Miranda 
+Stated  after  verification:  “communication  from  a  debt  collector …  attempt  to  collect  a  debt … ”  —  on  every  RPC. 
+☐ Third-party  /  spousal  disclosure 
+No  debt  details  disclosed  to  a  spouse/3rd  party  in  a  non-spousal  state  without  explicit  consumer  permission;  vague  rebuttal  used  when  probed. 
+☐ DNC  /  revocation  honored 
+Any  “stop  calling  /  remove  my  number  /  wrong  number”  accepted  immediately,  even  if  it  may  be  evasive. 
+☐ Reg  F  call  frequency 
+Within  7  attempts  /  1  conversation  per  7  days;  callback  permission  captured  on  the  call  when  requested. 
+☐ SCRA  servicemember 
+If  active-duty/deployed,  no  aggressive  pursuit;  file  documented  DEPLOYED  (unless  consumer  volunteers  to  settle). 
+☐ NY  language  preference 
+For  a  New  York  consumer  with  a  language  barrier,  preferred  language  asked  and  routed/noted  accordingly. 
+☐ UDAAP  conduct 
+Professional  throughout;  no  false  threats,  no  abuse,  no  validating  complaints  against  the  creditor. 
+19.2  Call-flow  control  (the  11  points)  
+ Auditable  check What  a  passing  call  shows 
+☐ Identification 
+Agent  stated  name,  “Everest  Receivable  Services,”  and  the  client  (DNF  Associates  /  originator). 
+☐ The  story  /  active  listening 
+Asked  the  hook  (“what  happened  to  cause  this  to  fall  behind?”)  and  acknowledged  without  arguing  or  validating. 
+☐ Pros  of  payment 
+Listed  the  benefits  before  asking  for  money:  release  of  liability,  email,  satisfaction/zero-balance  letter,  credit  update. 
+☐ Request  intentions 
+Attempted  the  assumptive  close:  “sounds  like  something  you’d  like  to  resolve,  right?” 
+Internal  Training  Document  —  ConfidentialPage  41  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+ Auditable  check What  a  passing  call  shows 
+☐ Balance-in-full  ask Asked  for  the  full  balance  first  before  offering  settlements  or  plans. 
+☐ The  hold Placed  a  brief  hold  to  “review  options”  before  presenting  the  offer. 
+19.3  Qualifying  &  negotiation  tactics  (if  BIF  declined)  
+ Auditable  check What  a  passing  call  shows 
+☐ Probing  questions 
+Asked  “how  close …  today?”  (down  payment)  and  “how  long … ?”  (short  timeframe). 
+☐ A-page  /  qualifying 
+Gathered  a  financial  snapshot  (housing,  employment,  dependents,  vehicle,  banking)  before  a  low  offer. 
+☐ OTB  resources 
+Suggested  alternate  funding:  credit  card,  401K,  savings,  family/friends,  personal  loan. 
+☐ Anchoring  &  linguistics 
+Quoted  dollar  amounts  (not  percentages)  and  opened  above  the  floor  with  room  to  negotiate. ☐ Urgency Stressed  the  limited  window  without  false  certainty. 
+☐ Second  voice  (T.O.) 
+Brought  a  manager/closer  on  when  the  consumer  pushed  below  floor,  wanted  a  very  low  plan,  refused  despite  means,  or  turned  hostile. 
+19.4  Objection  handling  &  federal  rebuttals  
+ Auditable  check What  a  passing  call  shows 
+☐ FCRA  /  credit  reporting 
+No  pay-for-delete  promise;  no  score  guarantee;  honest  30–45  day  framing;  accurate  update  language. 
+☐ TILA  /  amount  dispute 
+Explained  fees/interest  were  disclosed  in  the  original  agreement;  client  adds  $0.00  interest. 
+☐ TCPA  /  local  number 
+Explained  the  local  +  toll-free  number  as  a  courtesy;  reinforced  legitimacy. 
+☐ “Send  me  a  letter” 
+Offered  to  email  the  IDL  now  rather  than  promising  slow  physical  mail. ☐ “I’ll  mail  a  check” Pushed  for  electronic  payment  on  the  call;  explained  the  risk  of  delay. 
+☐ “I  don’t  get  paid  until … ” 
+Secured  a  good-faith  payment  today  and  post-dated  the  remainder  rather  than  only  scheduling  a  callback. 
+19.5  Payment  authorization  &  closing  
+ Auditable  check What  a  passing  call  shows 
+☐ 3  commitments  secured 
+Date  of  1st  payment,  number  of  payments  (or  total),  and  method  (CC/ACH)  all  captured. 
+☐ Reg  E  authorization 
+Explicit  recorded  “yes”  to  each  date  &  amount;  e-signature  obtained  on  the  call  where  required  ($1,000+,  or  shaky  $500–$1,000). 
+Internal  Training  Document  —  ConfidentialPage  42  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+ Auditable  check What  a  passing  call  shows 
+☐ Card  rules  &  fees 
+No  Amex  taken;  Discover  routed  to  a  closer;  3.5%  card  fee  disclosed  (or  pivoted  to  free  ACH);  recurring  amounts  rounded  up. 
+☐ Mandatory  close  items 
+Confirmed  email,  company  name  (EVERESTREC),  toll-free  888-397-2894,  and  the  1-business-day  cancellation  policy. 
+19.6  Prelegal-specific  (audit  only  if  flagged  prelegal)  
+ Auditable  check What  a  passing  call  shows 
+☐ Recommendation  hook 
+Framed  the  call  as  a  review  for  a  litigation  recommendation  (client  MAY  forward  to  an  attorney). 
+☐ Non-attorney  disclaimer 
+Stated  verbatim:  “we  are  not  attorneys,  nor  has  your  account  been  reviewed  by  an  attorney  yet”;  no  absolutes  (“they  WILL  sue  you”). 
+☐ Asset  profiling 
+Asked  the  three  asset  questions  (own/rent,  employed,  vehicle)  without  using  them  as  threats. 
+☐ Refusal  disclaimer 
+If  refused,  read  the  conditional  refusal  script  (suit-worthy  review,  possible  county  filing,  possible  added  costs).  
+ 
+Internal  Training  Document  —  ConfidentialPage  43  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+20.  Client  &  Product  Knowledge  
+Strong  objection  handling  depends  on  understanding  the  products  behind  the  debt.  Most  accounts  follow  a  
+three-part
+ 
+structure
+ 
+—
+ 
+know
+ 
+which
+ 
+party
+ 
+is
+ 
+which
+ 
+so
+ 
+you
+ 
+can
+ 
+answer
+ 
+“who
+ 
+is
+ 
+this?”
+ 
+with
+ 
+confidence.
+ 
+Role Who What  the  consumer  sees 
+The  bank The  Bank  of  Missouri  (TBOM) The  financial  institution  backing  the  credit. 
+The  servicer Fortiva The  name  that  appears  on  their  statements. 
+The  retailer The  store  where  the  purchase  was  made e.g.,  “TBOM  –  Ashley  Furniture.” 
+20.1  Dental  &  medical  (e.g.,  Aspen  Dental,  Bite,  local  dentists)  Common  dispute:  “The  service  wasn’t  good,”  “the  whitening  didn’t  work,”  or  “they  didn’t  finish  the  job.”  
+This  is  a  credit/financing  agreement,  not  medical  insurance.  Fortiva  paid  the  dentist  for  the  procedure  you  
+signed
+ 
+up
+ 
+for
+ 
+—
+ 
+the
+ 
+quality
+ 
+of
+ 
+the
+ 
+medical
+ 
+work
+ 
+doesn’t
+ 
+negate
+ 
+the
+ 
+debt
+ 
+owed
+ 
+to
+ 
+the
+ 
+bank. 
+20.2  Home  security  (e.g.,  Vivint  Smart  Home)  Common  dispute:  “I’m  still  paying  Vivint,”  or  “I  canceled  the  service.”  The  key  distinction:  Vivint  has  two  
+separate
+ 
+bills
+ 
+—
+ 
+a
+ 
+monitoring/service
+ 
+fee
+ 
+(paid
+ 
+to
+ 
+Vivint)
+ 
+and
+ 
+equipment
+ 
+financing
+ 
+(paid
+ 
+to
+ 
+Fortiva/TBOM).
+ 
+You  may  be  paying  Vivint  for  the  monitoring  service,  but  this  debt  is  for  the  hardware  —  the  cameras,  
+panels,
+ 
+and
+ 
+sensors
+ 
+—
+ 
+that
+ 
+you
+ 
+purchased
+ 
+and
+ 
+financed.
+ 
+You
+ 
+own
+ 
+the
+ 
+equipment,
+ 
+and
+ 
+the
+ 
+loan
+ 
+for
+ 
+that
+ 
+equipment
+ 
+is
+ 
+what’s
+ 
+past
+ 
+due. 
+20.3  Personal  &  installment  loans  (e.g.,  CashNetUSA,  PenFed)  High-interest  dispute:  “The  terms,  including  the  interest  rate,  were  fully  disclosed  in  the  original  contract  you  
+signed
+ 
+at
+ 
+the
+ 
+time
+ 
+of
+ 
+purchase.”
+ 
+Fraud  /  identity-theft  dispute:  “To  obtain  these  loans,  a  consumer  must  provide  a  driver’s  license,  a  bank  
+account,
+ 
+and
+ 
+a
+ 
+place
+ 
+of
+ 
+employment
+ 
+—
+ 
+all
+ 
+verified
+ 
+at
+ 
+signing
+ 
+—
+ 
+which
+ 
+makes
+ 
+an
+ 
+identity-theft
+ 
+claim
+ 
+difficult
+ 
+to
+ 
+sustain.”
+ 
+20.4  Power  sports  (e.g.,  Octane  /  Roadrunner  Financial)  Product:  ATVs,  side-by-sides,  quads,  dirt  bikes  —  these  are  titled  vehicles,  which  gives  you  a  clear  leverage  
+point.
+ 
+Once  you  resolve  this  account  with  DNF  Associates,  the  lien  on  the  title  is  released  and  you’ll  receive  the  
+clear
+ 
+title
+ 
+to
+ 
+the
+ 
+vehicle. 
+Use  product  knowledge  to  redirect,  not  to  argue The  goal  of  every  product  rebuttal  is  the  same:  separate  the  consumer’s  grievance  (with  the  merchant  or  the  service)  from  the  obligation  (to  the  bank/servicer),  then  bridge  back  to  resolving  the  balance.  Acknowledge  the  frustration,  clarify  the  structure,  and  move  to  the  offer. 
+ 
+Internal  Training  Document  —  ConfidentialPage  44  of  45 
+Everest  Receivable  Services  —  Debt  Collection  Process 
+One  last  reminder Collect  with  confidence,  empathy,  and  complete  compliance.  Cover  every  disclosure,  document  every  contact,  and  keep  the  focus  on  a  fair  resolution  that  puts  the  matter  behind  the  consumer.  That  is  how  Everest  collects  —  professionally,  legally,  and  completely. 
+ 
+Internal  Training  Document  —  ConfidentialPage  45  of  45 

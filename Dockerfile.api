@@ -1,0 +1,18 @@
+# Single portable image (Railway today, Cloud Run later — §13 portability).
+FROM python:3.11-slim AS base
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+WORKDIR /srv
+
+COPY pyproject.toml ./
+RUN pip install --no-cache-dir -e .
+
+# Chromium for the PDF report export (app/reports/pdf.py). --with-deps pulls the OS libs
+# Chromium needs on slim. Drop these two lines if you don't need server-side PDF.
+RUN python -m playwright install --with-deps chromium
+
+COPY backend ./backend
+COPY alembic.ini ./
+
+# Release runs migrations, then serves. (Railway "release command" can also run migrations.)
+EXPOSE 8000
+CMD ["sh", "-c", "alembic upgrade head && uvicorn app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]

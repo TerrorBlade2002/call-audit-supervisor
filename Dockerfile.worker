@@ -1,0 +1,13 @@
+# Worker image: durable loop + reconciler. Same deps as api, different entrypoint.
+FROM python:3.11-slim AS base
+ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
+WORKDIR /srv
+
+COPY pyproject.toml ./
+RUN pip install --no-cache-dir -e .
+
+COPY backend ./backend
+COPY alembic.ini ./
+
+# The worker does NOT run migrations (the api/release command owns that) to avoid races.
+CMD ["python", "-m", "app.worker.main"]
