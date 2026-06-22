@@ -141,9 +141,4 @@ CI (`.github/workflows/ci.yml`) runs all three against a pgvector service contai
 and `main`. Phase 8 adds the **eval gate** (§16.2) as a required check that blocks deploys
 on judge-quality regressions.
 
-## Deployment (PRD §15)
 
-Railway, two services (`api`, `worker`) + Postgres, per environment (`staging`,
-`production`). Migrations run as the release command. R2 lifecycle: 30-day expiry on
-`recordings`/`transcripts`, none on `kb`/`reports`. Everything containerized → portable to
-Cloud Run later without rewrite.
