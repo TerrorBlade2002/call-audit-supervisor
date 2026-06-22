@@ -3,15 +3,17 @@ FROM python:3.11-slim AS base
 ENV PYTHONUNBUFFERED=1 PYTHONDONTWRITEBYTECODE=1
 WORKDIR /srv
 
+# Copy project metadata AND source before the editable install, because
+# pyproject.toml's setuptools package discovery (where = ["backend"]) requires
+# the backend/ directory to exist at install time.
 COPY pyproject.toml ./
+COPY backend ./backend
+COPY alembic.ini ./
 RUN pip install --no-cache-dir -e .
 
 # Chromium for the PDF report export (app/reports/pdf.py). --with-deps pulls the OS libs
 # Chromium needs on slim. Drop these two lines if you don't need server-side PDF.
 RUN python -m playwright install --with-deps chromium
-
-COPY backend ./backend
-COPY alembic.ini ./
 
 # Release runs migrations, then serves. (Railway "release command" can also run migrations.)
 EXPOSE 8000
