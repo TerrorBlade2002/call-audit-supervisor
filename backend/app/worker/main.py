@@ -38,11 +38,24 @@ def _build_stt(http: httpx.AsyncClient) -> object:
     if not settings.assemblyai_api_key:
         log.warning("worker.stt_stub", reason="ASSEMBLYAI_API_KEY unset")
         return StubStt()
-    webhook_url = (
-        f"{settings.public_base_url.rstrip('/')}/webhooks/assemblyai"
-        if settings.public_base_url
-        else None
-    )
+    webhook_url: str | None = None
+    if settings.public_base_url and settings.assemblyai_webhook_secret:
+        webhook_url = f"{settings.public_base_url.rstrip('/')}/webhooks/assemblyai"
+        log.info("worker.stt_webhook_enabled", webhook_url=webhook_url)
+    else:
+        missing = [
+            name
+            for name, value in (
+                ("PUBLIC_BASE_URL", settings.public_base_url),
+                ("ASSEMBLYAI_WEBHOOK_SECRET", settings.assemblyai_webhook_secret),
+            )
+            if not value
+        ]
+        log.warning(
+            "worker.stt_webhook_disabled",
+            missing=",".join(missing),
+            fallback="reconciler polling",
+        )
     return AssemblyAIClient(
         api_key=settings.assemblyai_api_key,
         base_url=settings.assemblyai_base_url,

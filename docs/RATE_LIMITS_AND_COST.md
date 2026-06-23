@@ -90,8 +90,8 @@ than assumed.
 |---|---|---|
 | `WORKER_CLAIM_BATCH` | 8 | Matches `GEMINI_MAX_CONCURRENCY`; the loop never claims more than it can work. |
 | `WORKER_LEASE_SECONDS` | 300 | Lease > longest single step. Crash → lease expires in ≤5 min → job reclaimed. |
-| `RECONCILER_INTERVAL_SECONDS` | 180 | Sweep every 3 min for overdue transcripts / stuck leases. |
-| `RECONCILER_TRANSCRIPT_OVERDUE_SECONDS` | 900 | A transcript with no webhook after 15 min is polled directly (lost-webhook recovery). |
+| `RECONCILER_INTERVAL_SECONDS` | 30 | Sweep every 30 sec for overdue transcripts / stuck leases. |
+| `RECONCILER_TRANSCRIPT_OVERDUE_SECONDS` | 60 | A transcript with no webhook after 1 min is polled directly (lost-webhook recovery). |
 
 ---
 

@@ -94,3 +94,38 @@ async def test_retries_on_429_then_succeeds() -> None:
     tid = await client.submit(call_id=uuid.uuid4(), audio_url="https://r2/x.wav")
     assert tid == "t-9"
     assert calls["n"] == 2  # retried once
+
+
+async def test_worker_stt_configures_webhook_when_public_url_and_secret(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from app.worker import main as worker_main
+
+    monkeypatch.setattr(worker_main.settings, "assemblyai_api_key", "k")
+    monkeypatch.setattr(worker_main.settings, "public_base_url", "https://api.example.com/")
+    monkeypatch.setattr(worker_main.settings, "assemblyai_webhook_secret", "secret")
+    http = httpx.AsyncClient()
+    try:
+        stt = worker_main._build_stt(http)
+        assert isinstance(stt, AssemblyAIClient)
+        assert stt._webhook_url == "https://api.example.com/webhooks/assemblyai"
+        assert stt._webhook_secret == "secret"
+    finally:
+        await http.aclose()
+
+
+async def test_worker_stt_uses_polling_when_webhook_secret_missing(
+    monkeypatch: pytest.MonkeyPatch,
+) -> None:
+    from app.worker import main as worker_main
+
+    monkeypatch.setattr(worker_main.settings, "assemblyai_api_key", "k")
+    monkeypatch.setattr(worker_main.settings, "public_base_url", "https://api.example.com")
+    monkeypatch.setattr(worker_main.settings, "assemblyai_webhook_secret", "")
+    http = httpx.AsyncClient()
+    try:
+        stt = worker_main._build_stt(http)
+        assert isinstance(stt, AssemblyAIClient)
+        assert stt._webhook_url is None
+    finally:
+        await http.aclose()

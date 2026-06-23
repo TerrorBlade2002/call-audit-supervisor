@@ -63,9 +63,9 @@ class WorkerSettings(BaseSettings):
     claim_batch: int = Field(default=8, alias="WORKER_CLAIM_BATCH")
     lease_seconds: int = Field(default=300, alias="WORKER_LEASE_SECONDS")
     poll_interval_seconds: float = Field(default=2.0, alias="WORKER_POLL_INTERVAL_SECONDS")
-    reconciler_interval_seconds: int = Field(default=180, alias="RECONCILER_INTERVAL_SECONDS")
+    reconciler_interval_seconds: int = Field(default=30, alias="RECONCILER_INTERVAL_SECONDS")
     transcript_overdue_seconds: int = Field(
-        default=900, alias="RECONCILER_TRANSCRIPT_OVERDUE_SECONDS"
+        default=60, alias="RECONCILER_TRANSCRIPT_OVERDUE_SECONDS"
     )
     # Retention (FR4): recordings + transcripts + reports are purged after this many days;
     # the KB is exempt (kept forever). Enforced app-side because R2 lifecycle needs a

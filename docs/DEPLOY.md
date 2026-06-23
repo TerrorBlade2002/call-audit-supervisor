@@ -90,8 +90,8 @@ Either way, note the DB's connection details (Railway exposes `PGUSER`, `PGPASSW
 
 1. In the same project: **New → GitHub repo →** same repo again (a second service).
 2. **Settings → Dockerfile Path** = `Dockerfile.worker`. No domain needed (no inbound traffic).
-3. **Variables**: same as the API **except** omit `PUBLIC_BASE_URL`/`PORT`. Easiest: copy all API variables (the worker just needs `DATABASE_URL`, R2_*, `GEMINI_*`, `ASSEMBLYAI_*`).
-4. Deploy. Logs should show the worker claiming the queue (idle until calls arrive). The worker does **not** run migrations (by design).
+3. **Variables**: copy the same API variables, including `PUBLIC_BASE_URL` and `ASSEMBLYAI_WEBHOOK_SECRET`; omit only `PORT`. The worker submits AssemblyAI transcription jobs, so it must know the API's public URL to attach `https://<api-domain>/webhooks/assemblyai` as the callback. If `PUBLIC_BASE_URL` or `ASSEMBLYAI_WEBHOOK_SECRET` is missing, the app still works via reconciler polling, but calls can sit in `AWAITING_TRANSCRIPT` until the next poll.
+4. Deploy. Logs should show `worker.stt_webhook_enabled` when the webhook is configured, or `worker.stt_webhook_disabled` when it is falling back to polling. The worker does **not** run migrations (by design).
 
 ---
 
@@ -127,9 +127,9 @@ After the API's first deploy (migrations applied), create the first login:
 
 ---
 
-## 7. Wire the STT webhook (already done if you set PUBLIC_BASE_URL)
+## 7. Wire the STT webhook (already done if the worker has PUBLIC_BASE_URL)
 
-AssemblyAI calls the API back directly (not through Pages). `PUBLIC_BASE_URL` (step 3) must equal the **Railway API** public domain. Nothing else to configure — the API builds the callback URL from it. (If `PUBLIC_BASE_URL` is unset, STT silently falls back to polling — slower but functional.)
+AssemblyAI calls the API back directly (not through Pages). `PUBLIC_BASE_URL` on the **worker** must equal the **Railway API** public domain, and `ASSEMBLYAI_WEBHOOK_SECRET` must match the API service. Nothing else to configure - the worker builds the callback URL from it. If either value is missing, STT falls back to reconciler polling; this is functional but slower.
 
 ---
 
