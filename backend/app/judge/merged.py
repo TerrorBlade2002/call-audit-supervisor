@@ -14,7 +14,7 @@ from google.genai import types
 
 from app.config import RateLimitSettings
 from app.judge.client import JudgeItem, _transcript_text
-from app.judge.gemini import AudioRef, translate_genai_error
+from app.judge.gemini import AudioRef, response_schema_kwargs, translate_genai_error
 from app.judge.prompts import (
     IMPARTIALITY_DIRECTIVE,
     MERGED_AGENT_PROMPT,
@@ -124,11 +124,7 @@ class GeminiMerged:
         parts.append(types.Part.from_text(text=self._prompt(transcript, items, kb)))
         # A custom (admin-authored) schema replaces the built-in one as the response contract;
         # its extra fields survive into model_passes (extra='allow') for the report template.
-        schema_kw: dict[str, Any] = (
-            {"response_json_schema": schema_override}
-            if schema_override is not None
-            else {"response_schema": MergedOut}
-        )
+        schema_kw = response_schema_kwargs(MergedOut, schema_override)
         config = types.GenerateContentConfig(
             system_instruction=_system(system_prompt),
             response_mime_type="application/json",

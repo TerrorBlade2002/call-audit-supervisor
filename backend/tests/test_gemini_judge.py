@@ -6,11 +6,16 @@ import json
 import uuid
 
 import httpx
+import pytest
+from google import genai
+from google.genai import models, types
 
 from app.config import RateLimitSettings
 from app.judge.client import GeminiJudge, JudgeItem
 from app.judge.embeddings import GeminiEmbedder
-from app.judge.gemini import AudioRef
+from app.judge.gemini import AudioRef, response_schema_kwargs
+from app.judge.schema import FeedbackOut, IdealOut, JudgeOutput, MergedOut
+from app.judge.schema_validate import DEFAULT_SCHEMAS, SchemaError, validate_output_schema
 from app.stt import Transcript
 
 _FAST = RateLimitSettings(RETRY_BASE_SECONDS=0.0, RETRY_CAP_SECONDS=0.0, RETRY_MAX_ATTEMPTS=3)
@@ -29,6 +34,7 @@ class _FakeModels:
 
     async def generate_content(self, *, model, contents, config):  # noqa: ANN001
         self._capture["contents"] = contents
+        self._capture["config"] = config
         return _FakeResp(self._payload)
 
 
@@ -97,6 +103,60 @@ async def test_gemini_judge_includes_audio_part_when_provided() -> None:
     )
     # multimodal → audio part + text part
     assert len(capture["contents"][0].parts) == 2
+
+
+def test_developer_api_accepts_builtin_response_schemas() -> None:
+    client = genai.Client(api_key="test-key", vertexai=False)
+
+    for schema in (JudgeOutput, FeedbackOut, IdealOut, MergedOut):
+        config = types.GenerateContentConfig(
+            response_mime_type="application/json",
+            response_schema=schema,
+        )
+        params = types._GenerateContentParameters(
+            model="gemini-test",
+            contents="hello",
+            config=config,
+        )
+        request = models._GenerateContentParameters_to_mldev(client._api_client, params)
+        assert "responseSchema" in request["generationConfig"]
+
+
+def test_custom_response_schema_strips_developer_api_unsupported_keywords() -> None:
+    schema = {
+        "type": "object",
+        "additionalProperties": True,
+        "properties": {
+            "nested": {
+                "type": "object",
+                "additional_properties": {"type": "string"},
+                "properties": {"value": {"type": "string"}},
+            }
+        },
+    }
+
+    kwargs = response_schema_kwargs(JudgeOutput, schema)
+
+    assert kwargs == {
+        "response_json_schema": {
+            "type": "object",
+            "properties": {
+                "nested": {
+                    "type": "object",
+                    "properties": {"value": {"type": "string"}},
+                }
+            },
+        }
+    }
+    assert "additionalProperties" in schema
+    assert "additional_properties" in schema["properties"]["nested"]
+
+
+def test_custom_output_schema_rejects_additional_properties() -> None:
+    schema = {**DEFAULT_SCHEMAS["checklist"], "additionalProperties": True}
+
+    with pytest.raises(SchemaError, match="additionalProperties"):
+        validate_output_schema("checklist", schema)
 
 
 async def test_gemini_embedder_returns_vectors() -> None:

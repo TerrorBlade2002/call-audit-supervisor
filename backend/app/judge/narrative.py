@@ -16,7 +16,7 @@ from typing import Any, Protocol
 from google.genai import types
 
 from app.config import RateLimitSettings
-from app.judge.gemini import translate_genai_error
+from app.judge.gemini import response_schema_kwargs, translate_genai_error
 from app.judge.prompts import (
     IMPARTIALITY_DIRECTIVE,
     REWRITER_AGENT_PROMPT,
@@ -135,11 +135,7 @@ class GeminiNarrative:
         system_prompt: str | None = None,
         schema_override: dict[str, Any] | None = None,
     ) -> dict[str, Any]:
-        schema_kw: dict[str, Any] = (
-            {"response_json_schema": schema_override}
-            if schema_override is not None
-            else {"response_schema": IdealOut}  # hard structure enforcement (§ determinism)
-        )
+        schema_kw = response_schema_kwargs(IdealOut, schema_override)
         config = types.GenerateContentConfig(
             system_instruction=_system(system_prompt),
             response_mime_type="application/json",

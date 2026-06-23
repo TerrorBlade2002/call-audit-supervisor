@@ -16,7 +16,17 @@ from typing import Any
 STAGES = ("feedback", "checklist", "ideal", "merged")
 
 # Composition keywords the model's structured-output mode does not support — reject on upload.
-_UNSUPPORTED = ("$ref", "oneOf", "anyOf", "allOf", "not", "patternProperties", "$defs")
+_UNSUPPORTED = (
+    "$ref",
+    "oneOf",
+    "anyOf",
+    "allOf",
+    "not",
+    "patternProperties",
+    "$defs",
+    "additionalProperties",
+    "additional_properties",
+)
 _TYPES = {"object", "array", "string", "number", "integer", "boolean", "null"}
 
 

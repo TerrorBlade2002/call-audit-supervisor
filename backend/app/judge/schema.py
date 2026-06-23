@@ -7,7 +7,7 @@ No numeric scoring anywhere (§12): verdicts are PASS/FAIL/NA only.
 from __future__ import annotations
 
 import uuid
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -15,9 +15,12 @@ Answer = Literal["PASS", "FAIL", "NA"]
 
 # Custom output schemas (Agent Studio) may add fields beyond the operational core; allowing extras
 # means a custom schema's outputs survive validation + model_dump (→ model_passes → report
-# template's ``extra.*``) instead of being silently dropped. The default Pydantic-schema path is
-# unaffected (the SDK's schema transform tolerates this).
-_ALLOW = ConfigDict(extra="allow")
+# template's ``extra.*``) instead of being silently dropped.
+def _strip_additional_properties(schema: dict[str, Any]) -> None:
+    schema.pop("additionalProperties", None)
+
+
+_ALLOW = ConfigDict(extra="allow", json_schema_extra=_strip_additional_properties)
 
 
 class ItemVerdict(BaseModel):

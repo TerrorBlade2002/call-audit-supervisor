@@ -22,7 +22,7 @@ from typing import Any, Protocol
 from google.genai import types
 
 from app.config import RateLimitSettings
-from app.judge.gemini import AudioRef, translate_genai_error
+from app.judge.gemini import AudioRef, response_schema_kwargs, translate_genai_error
 from app.judge.prompts import (
     CHECKLIST_AGENT_PROMPT,
     IMPARTIALITY_DIRECTIVE,
@@ -160,11 +160,7 @@ class GeminiJudge:
         if audio is not None:
             parts.append(types.Part.from_bytes(data=audio.data, mime_type=audio.mime_type))
         parts.append(types.Part.from_text(text=self._prompt(transcript, items, kb)))
-        schema_kw: dict[str, Any] = (
-            {"response_json_schema": schema_override}
-            if schema_override is not None
-            else {"response_schema": JudgeOutput}  # hard structure enforcement (§ determinism)
-        )
+        schema_kw = response_schema_kwargs(JudgeOutput, schema_override)
         config = types.GenerateContentConfig(
             system_instruction=_system(system_prompt),
             response_mime_type="application/json",

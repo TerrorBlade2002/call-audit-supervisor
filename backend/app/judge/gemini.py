@@ -9,9 +9,11 @@ from __future__ import annotations
 
 from dataclasses import dataclass
 from pathlib import PurePosixPath
+from typing import Any
 
 from google import genai
 from google.genai import errors as genai_errors
+from pydantic import BaseModel
 
 from app.config import Settings
 from app.ratelimit.backoff import FatalError, RateLimitError, RetryableError
@@ -46,6 +48,30 @@ def audio_mime_for(key: str) -> str:
 def build_gemini_client(settings: Settings) -> genai.Client:
     """Developer-API client (not Vertex). Constructed once per process."""
     return genai.Client(api_key=settings.gemini_api_key, vertexai=False)
+
+
+def strip_developer_unsupported_schema_keywords(schema: Any) -> Any:
+    """Return a copy of a JSON schema without Gemini Developer API-incompatible keywords."""
+    if isinstance(schema, dict):
+        return {
+            key: strip_developer_unsupported_schema_keywords(value)
+            for key, value in schema.items()
+            if key not in {"additionalProperties", "additional_properties"}
+        }
+    if isinstance(schema, list):
+        return [strip_developer_unsupported_schema_keywords(value) for value in schema]
+    return schema
+
+
+def response_schema_kwargs(
+    default_schema: type[BaseModel],
+    schema_override: dict[str, Any] | None,
+) -> dict[str, Any]:
+    if schema_override is not None:
+        return {
+            "response_json_schema": strip_developer_unsupported_schema_keywords(schema_override)
+        }
+    return {"response_schema": default_schema}
 
 
 def translate_genai_error(exc: Exception) -> Exception:
