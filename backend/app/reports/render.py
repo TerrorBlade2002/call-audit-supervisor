@@ -196,7 +196,7 @@ def _conversation(turns: list[dict[str, Any]] | None, already_ideal: bool) -> st
     return f'<div class="chat">{"".join(bubbles)}</div>'
 
 
-def _objections(objections: list[Any]) -> str:
+def _objections(objections: list[Any], number: int) -> str:
     if not objections:
         return ""
     rows = []
@@ -215,7 +215,7 @@ def _objections(objections: list[Any]) -> str:
             "</tr>"
         )
     return (
-        '<section class="card"><h2>6. Consumer Objections</h2>'
+        f'<section class="card"><h2>{number}. Consumer Objections</h2>'
         '<table class="report-card"><thead><tr>'
         "<th>Objection</th><th>Category</th><th>Status</th>"
         f"</tr></thead><tbody>{''.join(rows)}</tbody></table></section>"
@@ -287,8 +287,10 @@ def render_report_html(
         for i, (_kind, title, inner) in enumerate(blocks, start=1)
     )
     # Objections belong to the feedback report; pills (overall verdicts) to the checklist one.
+    # Number the objections section as the one after the rendered blocks (so the feedback-only
+    # export reads 1–4, not 1–3 then 6).
     show_objections = section in (None, "feedback")
-    objections_html = _objections(report.objections) if show_objections else ""
+    objections_html = _objections(report.objections, len(blocks) + 1) if show_objections else ""
     show_pills = has_items and section in (None, "checklist")
     pills = (
         f'<div class="pill">Compliance {_badge(comp)}</div>'

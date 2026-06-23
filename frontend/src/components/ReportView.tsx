@@ -261,36 +261,41 @@ export function ReportView({ reportId, onBack }: { reportId: string; onBack: () 
 
         {activeTab === "feedback" && (
           <>
-            {n.coaching && (
-              <GlassCard title="Coaching & Improvement Areas">
-                <Prose text={n.coaching} />
-              </GlassCard>
-            )}
-            {n.compliance && (
-              <GlassCard title="Compliance & Quality Issues">
-                <Prose text={n.compliance} />
-              </GlassCard>
-            )}
-            {n.feedback && (
-              <GlassCard title="Constructive Feedback">
-                <div className="grid gap-6 md:grid-cols-2">
-                  <div>
-                    <h3 className="mb-2 font-display font-semibold text-emerald-300">Strengths</h3>
-                    <ul className="list-disc space-y-1 pl-5 text-sm text-slate-300">
-                      {(n.feedback.strengths ?? []).map((s, i) => <li key={i}>{s}</li>)}
-                    </ul>
-                  </div>
-                  <div>
-                    <h3 className="mb-2 font-display font-semibold text-rose-300">
-                      Areas for Development
-                    </h3>
-                    <ul className="list-disc space-y-1 pl-5 text-sm text-slate-300">
-                      {(n.feedback.development ?? []).map((s, i) => <li key={i}>{s}</li>)}
-                    </ul>
-                  </div>
+            {/* These three cards always render in the feedback report (matching the downloaded
+                HTML); empty fields show "No findings recorded." rather than vanishing — so a clean,
+                compliant call still reports an explicit (empty) Compliance section. */}
+            <GlassCard title="Coaching & Improvement Areas">
+              <Prose text={n.coaching || "No findings recorded."} />
+            </GlassCard>
+            <GlassCard title="Compliance & Quality Issues">
+              <Prose text={n.compliance || "No findings recorded."} />
+            </GlassCard>
+            <GlassCard title="Constructive Feedback">
+              <div className="grid gap-6 md:grid-cols-2">
+                <div>
+                  <h3 className="mb-2 font-display font-semibold text-emerald-300">Strengths</h3>
+                  <ul className="list-disc space-y-1 pl-5 text-sm text-slate-300">
+                    {(n.feedback?.strengths ?? []).length > 0 ? (
+                      (n.feedback?.strengths ?? []).map((s, i) => <li key={i}>{s}</li>)
+                    ) : (
+                      <li className="list-none text-slate-500">None noted.</li>
+                    )}
+                  </ul>
                 </div>
-              </GlassCard>
-            )}
+                <div>
+                  <h3 className="mb-2 font-display font-semibold text-rose-300">
+                    Areas for Development
+                  </h3>
+                  <ul className="list-disc space-y-1 pl-5 text-sm text-slate-300">
+                    {(n.feedback?.development ?? []).length > 0 ? (
+                      (n.feedback?.development ?? []).map((s, i) => <li key={i}>{s}</li>)
+                    ) : (
+                      <li className="list-none text-slate-500">None noted.</li>
+                    )}
+                  </ul>
+                </div>
+              </div>
+            </GlassCard>
             {report.objections.length > 0 && (
               <GlassCard title="Consumer Objections">
                 <table className="w-full text-sm">

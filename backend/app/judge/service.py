@@ -190,6 +190,28 @@ async def judge_call(
         if feedback
         else {}
     )
+
+    # Deterministic compliance backfill (FULL only). The feedback agent's free-text `compliance`
+    # is only SOFT-coupled to the checklist: the prompt asks it to surface failures but also tells
+    # it to keep clean calls short, so the model may leave `compliance` empty even while it marks a
+    # compliance-section checklist item FAIL. That produces a self-contradicting report — a red
+    # compliance FAIL next to "No findings recorded." If the narrative is blank but evidenced
+    # compliance FAILs exist, derive the prose from those marks so the two never disagree.
+    if feedback and items and not str(narrative.get("compliance") or "").strip():
+        comp_lines: list[str] = []
+        for it in items:
+            if "complian" not in (it.section or "").lower():
+                continue
+            cv = verdict_by_id.get(it.id)
+            if cv is None or cv.answer != "FAIL":
+                continue
+            quote = str(getattr(cv, "evidence_quote", "") or "").strip()
+            evidence = f' Evidence: "{quote}"' if quote else ""
+            comp_lines.append(f"{str(it.text).strip().rstrip('.')}.{evidence}")
+        if comp_lines:
+            narrative["compliance"] = (
+                "Compliance/quality issues flagged on the checklist: " + " ".join(comp_lines)
+            )
     if needs_ideal(option) and rewriter_gen is not None:
         summaries = []
         for it in items:
