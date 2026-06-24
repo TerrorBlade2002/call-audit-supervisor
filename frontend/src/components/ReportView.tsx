@@ -21,9 +21,14 @@ function Badge({ answer }: { answer: string | null }) {
   return <span className={`rounded px-2 py-0.5 text-xs font-bold tracking-wide ${cls}`}>{a}</span>;
 }
 
+// A free-text (subjective) item carries a written answer, not a PASS/FAIL/NA verdict.
+const isFreeText = (i: ReportItem) =>
+  i.is_subjective || (i.answer_type || "").toUpperCase() === "TEXT";
+
 function overall(items: ReportItem[], compliance: boolean): string {
   const scope = items.filter(
-    (i) => (i.section || "").toLowerCase().includes("complian") === compliance,
+    (i) =>
+      !isFreeText(i) && (i.section || "").toLowerCase().includes("complian") === compliance,
   );
   if (!scope.length) return "NA";
   return scope.some((i) => i.answer === "FAIL") ? "FAIL" : "PASS";
@@ -103,6 +108,8 @@ export function ReportView({ reportId, onBack }: { reportId: string; onBack: () 
   const [verifyNotes, setVerifyNotes] = useState("");
   const [verifyMsg, setVerifyMsg] = useState<string | null>(null);
   const [tab, setTab] = useState<string | null>(null); // selected individual report
+  // null = not editing the agent name; a string = the in-progress draft.
+  const [nameDraft, setNameDraft] = useState<string | null>(null);
 
   // Per-item notes held here so the explicit Save persists them all at once. Initialized once
   // from the loaded report (a window-focus refetch won't clobber unsaved edits).
@@ -146,6 +153,20 @@ export function ReportView({ reportId, onBack }: { reportId: string; onBack: () 
     mutationFn: () => api.downloadRecording(reportId),
     onSuccess: ({ url }) => window.open(url, "_blank"),
     onError: () => setVerifyMsg("Download not permitted."),
+  });
+  // Auditor override of the agent name (replaces the auto-extracted one in the report + downloads).
+  const saveName = useMutation({
+    mutationFn: (name: string) => api.updateAgentName(reportId, name),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["report", reportId] });
+      setNameDraft(null);
+    },
+    onError: (e) =>
+      setVerifyMsg(
+        e instanceof ApiError && e.status === 403
+          ? "You may not edit this report's agent name."
+          : "Couldn't save the agent name.",
+      ),
   });
   // Download ONE individual report (feedback | checklist | ideal) as HTML (no PDF page-cutoff).
   const sectionHtml = useMutation({
@@ -208,11 +229,52 @@ export function ReportView({ reportId, onBack }: { reportId: string; onBack: () 
           <h1 className="mt-2 bg-gradient-to-r from-teal-300 to-sky-300 bg-clip-text font-display text-3xl font-bold text-transparent">
             Debt Collection Call Quality Report
           </h1>
-          {report.agent_name && (
-            <div className="mt-2 text-sm text-slate-300">
-              Agent: <span className="font-semibold text-slate-100">{report.agent_name}</span>
-            </div>
-          )}
+          {/* Agent name — auto-extracted from the call, editable by the auditor. The override
+              replaces it everywhere (header, HTML/PDF downloads, checklist CSV). */}
+          <div className="mt-2 flex items-center justify-center gap-2 text-sm text-slate-300">
+            <span>Agent:</span>
+            {nameDraft === null ? (
+              <>
+                <span className="font-semibold text-slate-100">
+                  {report.agent_name || <span className="italic text-slate-400">not detected</span>}
+                </span>
+                <button
+                  onClick={() => setNameDraft(report.agent_name ?? "")}
+                  className="rounded border border-white/15 px-1.5 py-0.5 text-xs text-teal-300 hover:bg-white/5"
+                  title="Set the name of the agent who took this call"
+                >
+                  {report.agent_name ? "Edit" : "Add name"}
+                </button>
+              </>
+            ) : (
+              <span className="flex items-center gap-1.5">
+                <input
+                  autoFocus
+                  value={nameDraft}
+                  onChange={(e) => setNameDraft(e.target.value)}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter") saveName.mutate(nameDraft);
+                    if (e.key === "Escape") setNameDraft(null);
+                  }}
+                  placeholder="Agent name"
+                  className="w-44 rounded border border-white/15 bg-white/[0.06] px-2 py-1 text-sm text-slate-100 outline-none placeholder:text-slate-500"
+                />
+                <button
+                  onClick={() => saveName.mutate(nameDraft)}
+                  disabled={saveName.isPending}
+                  className="rounded bg-teal-500/80 px-2 py-1 text-xs font-medium text-white hover:bg-teal-500 disabled:opacity-50"
+                >
+                  {saveName.isPending ? "Saving…" : "Save"}
+                </button>
+                <button
+                  onClick={() => setNameDraft(null)}
+                  className="rounded border border-white/15 px-2 py-1 text-xs text-slate-300 hover:bg-white/5"
+                >
+                  Cancel
+                </button>
+              </span>
+            )}
+          </div>
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <Pill className={report.flagged_for_review ? "text-rose-300" : "text-emerald-300"}>
               {report.flagged_for_review ? "Flagged for Review" : "Reviewed"}
@@ -452,8 +514,16 @@ function ItemRow({
         )}
       </td>
       <td className="px-2">
-        <Badge answer={item.answer} />
-        {item.raw_answer && <span className="ml-1.5 text-xs text-slate-400">{item.raw_answer}</span>}
+        {isFreeText(item) ? (
+          <span className="text-sm font-medium text-slate-200">{item.raw_answer || "—"}</span>
+        ) : (
+          <>
+            <Badge answer={item.answer} />
+            {item.raw_answer && (
+              <span className="ml-1.5 text-xs text-slate-400">{item.raw_answer}</span>
+            )}
+          </>
+        )}
       </td>
       <td className="px-2 text-xs text-slate-400">
         {item.evidence_quote && (

@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import { api, ApiError } from "../lib/api";
 import { useAuth } from "../lib/auth";
 import { APP_BACKDROP as BACKDROP } from "../lib/theme";
@@ -25,6 +26,7 @@ function LockIcon({ className = "" }: { className?: string }) {
 
 export function Login() {
   const setAuth = useAuth((s) => s.setAuth);
+  const [, setParams] = useSearchParams();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(true);
@@ -37,6 +39,8 @@ export function Login() {
     setError(null);
     try {
       const { access_token } = await api.login(email.trim().toLowerCase(), password);
+      // Land on the Portfolio section, never a stale deep-link from a prior session/user.
+      setParams(new URLSearchParams(), { replace: true });
       setAuth(access_token, email.trim().toLowerCase(), remember);
     } catch (err) {
       setError(

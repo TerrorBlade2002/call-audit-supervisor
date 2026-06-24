@@ -78,6 +78,39 @@ export function IconPlus({ className = "h-4 w-4" }: { className?: string }) {
   );
 }
 
+/** A flip switch (in-use / not-in-use). Controlled; single source of truth is `checked`. */
+export function Toggle({
+  checked,
+  onChange,
+  disabled = false,
+  label,
+}: {
+  checked: boolean;
+  onChange: (next: boolean) => void;
+  disabled?: boolean;
+  label?: string;
+}) {
+  return (
+    <button
+      type="button"
+      role="switch"
+      aria-checked={checked}
+      aria-label={label}
+      disabled={disabled}
+      onClick={() => onChange(!checked)}
+      className={`relative inline-flex h-[22px] w-[40px] shrink-0 items-center rounded-full transition-colors disabled:opacity-50 ${
+        checked ? "bg-emerald-500" : "bg-gray-300"
+      }`}
+    >
+      <span
+        className={`inline-block h-[18px] w-[18px] transform rounded-full bg-white shadow transition-transform ${
+          checked ? "translate-x-[20px]" : "translate-x-[2px]"
+        }`}
+      />
+    </button>
+  );
+}
+
 /** Collapse toggle shown at the top of an expanded pane. */
 export function CollapseButton({ onClick, label }: { onClick: () => void; label: string }) {
   return (

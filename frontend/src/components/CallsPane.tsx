@@ -48,7 +48,7 @@ export function CallsPane({
   const push = useToasts((s) => s.push);
   const [offset, setOffset] = useState(0);
   const [uploadOpen, setUploadOpen] = useState(false);
-  const { data } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: ["calls", portfolioId, agentId, offset],
     queryFn: () => api.listCalls(portfolioId!, agentId!, { limit: LIMIT, offset }),
     enabled: !!portfolioId && !!agentId,
@@ -124,10 +124,19 @@ export function CallsPane({
       </div>
 
       <div className="min-h-0 flex-1 space-y-4 overflow-auto pr-1">
-        {batches.length === 0 && (
-          <p className="rounded-xl border border-gray-200/70 bg-white/70 px-4 py-6 text-center text-sm text-gray-400">
-            No calls yet{caps.canManage ? " — upload recordings to get started." : "."}
+        {/* While the first page is loading, don't flash the empty state — the fetch takes a
+            moment for already-processed folders. Only show "no calls" once loading completes. */}
+        {isLoading ? (
+          <p className="flex items-center justify-center gap-2 rounded-xl border border-gray-200/70 bg-white/70 px-4 py-6 text-center text-sm text-gray-500">
+            <Spinner />
+            Please wait while we fetch your calls…
           </p>
+        ) : (
+          batches.length === 0 && (
+            <p className="rounded-xl border border-gray-200/70 bg-white/70 px-4 py-6 text-center text-sm text-gray-400">
+              No calls yet{caps.canManage ? " — upload recordings to get started." : "."}
+            </p>
+          )
         )}
 
         {batches.map((g) => {

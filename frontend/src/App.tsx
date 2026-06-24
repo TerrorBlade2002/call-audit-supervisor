@@ -55,6 +55,7 @@ export function App() {
   const isOrgAdmin = useRoles((s) => s.isOrgAdmin);
   const setRoles = useRoles((s) => s.setRoles);
   const setOrgAdmin = useRoles((s) => s.setOrgAdmin);
+  const resetRoles = useRoles((s) => s.reset);
   const portfolioName = useNav((s) => s.portfolioName);
   const folderName = useNav((s) => s.folderName);
   const setPortfolioName = useNav((s) => s.setPortfolioName);
@@ -93,6 +94,17 @@ export function App() {
   useEffect(() => {
     if (!aid) setFolderName(null);
   }, [aid, setFolderName]);
+
+  // Sign out → wipe the view (URL params), breadcrumb labels, and cached roles so the next
+  // sign-in always starts clean at the Portfolio section — never the previous user's Users (or
+  // any other) panel, and never their privileges. (View selection lives entirely in the URL.)
+  const handleLogout = () => {
+    setParams(new URLSearchParams(), { replace: true });
+    setPortfolioName(null);
+    setFolderName(null);
+    resetRoles();
+    logout();
+  };
 
   if (health.isError)
     return <ServiceDown onRetry={() => health.refetch()} retrying={health.isFetching} />;
@@ -281,7 +293,7 @@ export function App() {
           <span className="font-medium">{email}</span>
           <button
             className="rounded-lg border border-white/50 bg-white/40 px-2.5 py-1 hover:bg-white/70"
-            onClick={logout}
+            onClick={handleLogout}
           >
             Sign out
           </button>

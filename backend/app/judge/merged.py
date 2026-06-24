@@ -13,7 +13,7 @@ from typing import Any, Protocol
 from google.genai import types
 
 from app.config import RateLimitSettings
-from app.judge.client import JudgeItem, _transcript_text
+from app.judge.client import JudgeItem, _checklist_lines, _transcript_text
 from app.judge.gemini import AudioRef, response_schema_kwargs, translate_genai_error
 from app.judge.prompts import (
     IMPARTIALITY_DIRECTIVE,
@@ -60,8 +60,12 @@ class StubMerged:
         verdicts = [
             ItemVerdict(
                 checklist_item_id=it.checklist_item_id,
-                answer="PASS",
-                raw_answer=it.options[0] if it.options else "noted",
+                answer="NA" if (it.answer_type or "").upper() == "TEXT" else "PASS",
+                raw_answer=(
+                    "Noted in the call."
+                    if (it.answer_type or "").upper() == "TEXT"
+                    else (it.options[0] if it.options else "noted")
+                ),
                 confidence=0.9,
                 evidence_quote=f"Evidence for '{it.text}' observed in the call transcript.",
                 evidence_offset_sec=0.0,
@@ -95,11 +99,7 @@ class GeminiMerged:
         self._thinking = thinking_level
 
     def _prompt(self, transcript: Transcript, items: list[JudgeItem], kb: str | None) -> str:
-        checklist = "\n".join(
-            f"- id={it.checklist_item_id} [{it.section}] {it.text}\n"
-            f"  options: {it.options or 'YES/NO/NA'} | guidance: {it.rubric}"
-            for it in items
-        )
+        checklist = _checklist_lines(items)
         kb_block = f"KNOWLEDGE BASE (Everest operational documents):\n{kb}\n\n" if kb else ""
         return (
             f"{kb_block}CHECKLIST + OPTIONS + GUIDANCE (echo each id exactly):\n{checklist}\n\n"

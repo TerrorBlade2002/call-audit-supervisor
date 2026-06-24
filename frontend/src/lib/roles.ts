@@ -9,6 +9,9 @@ interface RoleState {
   isOrgAdmin: boolean;
   setRoles: (map: Record<string, string>) => void;
   setOrgAdmin: (v: boolean) => void;
+  // Wipe all cached roles + org-admin flag — called on logout/login so a new sign-in never
+  // inherits the previous user's privileges (which would briefly flash their admin controls).
+  reset: () => void;
 }
 
 export const useRoles = create<RoleState>((set) => ({
@@ -16,6 +19,7 @@ export const useRoles = create<RoleState>((set) => ({
   isOrgAdmin: false,
   setRoles: (map) => set((s) => ({ roles: { ...s.roles, ...map } })),
   setOrgAdmin: (v) => set({ isOrgAdmin: v }),
+  reset: () => set({ roles: {}, isOrgAdmin: false }),
 }));
 
 export type Caps = { canManage: boolean; isAgent: boolean; isSuperAdmin: boolean };

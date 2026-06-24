@@ -14,11 +14,16 @@ import html
 from datetime import datetime
 from typing import Any
 
+from app.checklists import is_free_text
 from app.schemas import ReportItemOut, ReportOut
 
 
 def _esc(value: Any) -> str:
     return html.escape("" if value is None else str(value))
+
+
+def _is_free(item: ReportItemOut) -> bool:
+    return is_free_text(answer_type=item.answer_type, is_subjective=item.is_subjective)
 
 
 def _answer(item: ReportItemOut) -> str:
@@ -61,7 +66,7 @@ def _overall(items: list[ReportItemOut], compliance: bool) -> str:
     scope = [
         it
         for it in items
-        if ("complian" in (it.section or "").lower()) == compliance
+        if not _is_free(it) and ("complian" in (it.section or "").lower()) == compliance
     ]
     if not scope:
         return "NA"
@@ -91,12 +96,18 @@ def _report_card(items: list[ReportItemOut]) -> str:
                 evidence = f"“{_esc(it.evidence_quote)}”{_fmt_time(it.evidence_offset_sec)}"
             notes = _esc(it.comment) if it.comment else ""
             note_block = f'<div class="note">{notes}</div>' if notes else ""
-            raw = _esc(it.raw_answer) if it.raw_answer else ""
-            raw_block = f' <span class="raw">{raw}</span>' if raw else ""
+            if _is_free(it):
+                # Free-text (subjective) item — show the written answer, not a PASS/FAIL badge.
+                answer = _esc(it.raw_answer) if it.raw_answer else '<span class="muted">—</span>'
+                status_cell = f'<span class="freetext">{answer}</span>'
+            else:
+                raw = _esc(it.raw_answer) if it.raw_answer else ""
+                raw_block = f' <span class="raw">{raw}</span>' if raw else ""
+                status_cell = f"{_badge(_answer(it))}{raw_block}"
             body.append(
                 "<tr>"
                 f'<td class="item">{_esc(it.text)}{review}</td>'
-                f'<td class="status">{_badge(_answer(it))}{raw_block}</td>'
+                f'<td class="status">{status_cell}</td>'
                 f'<td class="evidence">{evidence}{note_block}</td>'
                 "</tr>"
             )
@@ -382,6 +393,7 @@ td.item{color:var(--text);width:38%} td.status{width:18%;white-space:nowrap} td.
 .badge-fail{background:hsla(345,80%,62%,.18);color:var(--fail)}
 .badge-na{background:hsla(220,10%,60%,.18);color:var(--na)}
 .raw{color:var(--muted);font-size:.78rem;margin-left:.4rem}
+.freetext{color:var(--text);font-size:.85rem;font-weight:500;line-height:1.4}
 .review{display:inline-block;background:hsla(40,90%,60%,.18);color:hsl(40,90%,70%);
   border-radius:.35rem;padding:.05rem .4rem;font-size:.68rem;font-weight:600;margin-left:.4rem}
 .ts{color:var(--info)} .note{color:var(--text);font-size:.82rem;margin-top:.3rem;opacity:.9}

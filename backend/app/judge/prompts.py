@@ -30,6 +30,14 @@ _NO_SYSTEM_ACTIONS = (
     "actions, or any account notations anywhere in your output."
 )
 
+# How to answer a FREE-TEXT (subjective) checklist item — appended to both checklist-bearing
+# directives. These items can't be PASS/FAIL, so the model writes a short answer in raw_answer.
+_FREE_TEXT_RULE = (
+    "For any item marked FREE TEXT, set answer to \"NA\" and put a short, precise written answer "
+    "(a phrase or one sentence) in raw_answer; cite evidence_quote when relevant. Never force a "
+    "FREE TEXT item into PASS/FAIL."
+)
+
 # =============================================================================================
 # Agent 1 — FEEDBACK (subjective). Inputs: KB + audio + transcript. No checklist, no rewrite.
 # (User-authored prompt, kept verbatim; only the machine-output directive is appended.)
@@ -101,7 +109,9 @@ JUDGE_OUTPUT_DIRECTIVE = (
     "polarity, e.g. an item phrased as a violation answered YES → FAIL), confidence (0..1), "
     "evidence_quote (a verbatim transcript snippet — REQUIRED for every PASS/FAIL; if you cannot "
     "cite evidence for a FAIL, do not fail the item), evidence_offset_sec, comment, "
-    "needs_review}]}. One verdict per checklist id. Do not invent deficiencies. No numeric scores."
+    "needs_review}]}. One verdict per checklist id. "
+    + _FREE_TEXT_RULE
+    + " Do not invent deficiencies. No numeric scores."
     + _NO_SYSTEM_ACTIONS
 )
 
@@ -165,8 +175,9 @@ MERGED_OUTPUT_DIRECTIVE = (
     "objections:[{text,category,cleared}]}) and \"verdicts\" (the TASK 2 result: a list of "
     "{checklist_item_id (echo exactly), raw_answer (verbatim status YES/NO/NA or the option), "
     "answer (PASS|FAIL|NA), confidence (0..1), evidence_quote (REQUIRED for every PASS/FAIL), "
-    "evidence_offset_sec, comment, needs_review}). One verdict per checklist id. Do not invent "
-    "deficiencies. No numeric scores." + _NO_SYSTEM_ACTIONS
+    "evidence_offset_sec, comment, needs_review}). One verdict per checklist id. "
+    + _FREE_TEXT_RULE
+    + " Do not invent deficiencies. No numeric scores." + _NO_SYSTEM_ACTIONS
 )
 
 

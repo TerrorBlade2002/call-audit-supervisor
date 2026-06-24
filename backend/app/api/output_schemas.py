@@ -134,6 +134,23 @@ async def activate_output_schema(
     return s
 
 
+@router.post("/admin/output-schemas/{sid}/deactivate", status_code=status.HTTP_204_NO_CONTENT)
+async def deactivate_output_schema(
+    sid: uuid.UUID,
+    ctx: Annotated[AuthContext, Depends(authorize_org(Action.USER_MANAGE))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> None:
+    """Turn this schema OFF (flip to not-in-use). With nothing else in use at the scope, the
+    stage reverts to its built-in Pydantic schema — i.e. this is the "use the default" action."""
+    s = await _get(session, sid)
+    s.in_use = False
+    await record_audit(
+        session, actor_id=ctx.user.id, action="output_schema.deactivate",
+        entity="output_schema", entity_id=s.id, meta={"agent": s.agent, "name": s.name},
+    )
+    await session.commit()
+
+
 @router.delete("/admin/output-schemas/{sid}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_output_schema(
     sid: uuid.UUID,

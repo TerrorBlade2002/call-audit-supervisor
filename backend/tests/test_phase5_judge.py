@@ -60,10 +60,12 @@ async def test_judge_produces_report_with_routing_flags() -> None:
         objections = list(await s.scalars(select(Objection)))
 
     assert len(items) > 0
-    assert all(i.answer == "PASS" for i in items)        # PASS/FAIL/NA only, no scores
-    # Default checklist has subjective items → those are flagged for human review.
-    assert any(i.needs_human_review for i in items)
-    assert all(i.decided_by == "primary" for i in items)  # single tier
+    assert all(i.answer in {"PASS", "FAIL", "NA"} for i in items)  # PASS/FAIL/NA only, no scores
+    # Default checklist has subjective items → those are now FREE TEXT: a short written answer
+    # (answer "NA", text in raw_answer), accepted as-is rather than flagged for review.
+    free = [i for i in items if i.answer == "NA" and i.raw_answer]
+    assert free, "expected free-text (subjective) items to carry a written answer"
+    assert all(i.decided_by == "primary" for i in items)  # single tier; free-text accepted as-is
     # Objection persisted with an embedding (for clustering).
     assert len(objections) == 1
     assert objections[0].embedding is not None

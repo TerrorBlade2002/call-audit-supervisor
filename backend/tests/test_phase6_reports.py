@@ -112,6 +112,42 @@ async def test_user_note_persists(client: AsyncClient, fake_storage: FakeStorage
     assert next(i for i in after["items"] if i["id"] == item_id)["user_note"] == "Reviewed — agree."
 
 
+async def test_agent_name_override_persists_and_survives_reprocessing(
+    client: AsyncClient, fake_storage: FakeStorage
+) -> None:
+    pid, report_id = await _seed_report(fake_storage)
+    admin = await _login(client, "admin@example.com", as_admin=True)
+    body = (await client.get(f"/reports/{report_id}", headers=_auth(admin))).json()
+    call_id = uuid.UUID(body["call_id"])
+
+    # Auditor overrides the agent name → reflected on read.
+    patch = await client.patch(
+        f"/reports/{report_id}/agent-name",
+        json={"agent_name": "Jane Auditor"}, headers=_auth(admin),
+    )
+    assert patch.status_code == 204
+    after = (await client.get(f"/reports/{report_id}", headers=_auth(admin))).json()
+    assert after["agent_name"] == "Jane Auditor"
+
+    # Re-process the call (rebuilds the report row) — override lives on the call, so it survives.
+    async with session_scope() as s:
+        new_report_id = await judge_call(
+            s, call_id=call_id, portfolio_id=pid, transcript=_TRANSCRIPT,
+            option=ProcessingOption.FULL, merged_gen=StubMerged(),
+            rewriter_gen=StubNarrative(), embedder=StubEmbedder(), routing_config=_CFG,
+        )
+    reproc = (await client.get(f"/reports/{new_report_id}", headers=_auth(admin))).json()
+    assert reproc["agent_name"] == "Jane Auditor"  # durable across re-judge
+
+    # Clearing the override reverts to the auto-extracted value (None for the stub).
+    clear = await client.patch(
+        f"/reports/{new_report_id}/agent-name", json={"agent_name": ""}, headers=_auth(admin)
+    )
+    assert clear.status_code == 204
+    cleared = (await client.get(f"/reports/{new_report_id}", headers=_auth(admin))).json()
+    assert cleared["agent_name"] is None
+
+
 async def test_viewer_can_read_but_not_note(
     client: AsyncClient, fake_storage: FakeStorage
 ) -> None:

@@ -240,6 +240,9 @@ class Call(Base):
     )
     checklist_id: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("checklists.id"))
     kb_doc_ids: Mapped[list[Any] | None] = mapped_column(JSONB)
+    # Auditor override of the agent name (durable: survives report re-processing, unlike the
+    # auto-extracted reports.agent_name which is rebuilt on re-judge). NULL = use the auto value.
+    agent_name_override: Mapped[str | None] = mapped_column(String(200))
     created_at: Mapped[datetime] = _created_at()
 
 

@@ -19,6 +19,7 @@ from typing import Any
 from sqlalchemy import delete, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.checklists import is_free_text
 from app.checklists.rubric import load_kb_text
 from app.checklists.service import get_default_checklist, get_items
 from app.judge.client import JudgeClient, JudgeItem
@@ -97,9 +98,18 @@ async def judge_call(
                 checklist_item_id=it.id,
                 section=it.section,
                 text=it.text,
-                answer_type=it.answer_type,
+                # Free-text (subjective) items are told to write a short answer, not pick an option.
+                answer_type=(
+                    "TEXT"
+                    if is_free_text(answer_type=it.answer_type, is_subjective=it.is_subjective)
+                    else it.answer_type
+                ),
                 rubric=it.guidance or it.text,
-                options=it.options or [],
+                options=(
+                    []
+                    if is_free_text(answer_type=it.answer_type, is_subjective=it.is_subjective)
+                    else (it.options or [])
+                ),
             )
             for it in items
         ]
@@ -150,9 +160,17 @@ async def judge_call(
     flagged_for_review = False
     flag_reason: str | None = None
     decision_by_id: dict[uuid.UUID, Any] = {}
-    if items:
+    # Routing applies only to objective (PASS/FAIL) items. Free-text items carry no verdict to
+    # confirm, so they're never escalated / flagged for review.
+    objective_items = [
+        it
+        for it in items
+        if not is_free_text(answer_type=it.answer_type, is_subjective=it.is_subjective)
+    ]
+    if objective_items:
         metas = [
-            ItemMeta(item_id=it.id, is_subjective=it.is_subjective, risk=it.risk) for it in items
+            ItemMeta(item_id=it.id, is_subjective=it.is_subjective, risk=it.risk)
+            for it in objective_items
         ]
         routing_verdicts = [
             Verdict(
@@ -252,6 +270,9 @@ async def judge_call(
     for it in items:
         verdict = verdict_by_id.get(it.id)
         d = decision_by_id.get(it.id)
+        # Free-text items aren't routed (no verdict to confirm) — record them as accepted primary.
+        free = is_free_text(answer_type=it.answer_type, is_subjective=it.is_subjective)
+        decided_by = d.decided_by if d else ("primary" if free else None)
         session.add(
             ReportItem(
                 report_id=report.id,
@@ -262,7 +283,7 @@ async def judge_call(
                 evidence_quote=verdict.evidence_quote if verdict else None,
                 evidence_offset_sec=verdict.evidence_offset_sec if verdict else None,
                 comment=verdict.comment if verdict else None,
-                decided_by=d.decided_by if d else None,
+                decided_by=decided_by,
                 needs_human_review=d.needs_human_review if d else False,
             )
         )

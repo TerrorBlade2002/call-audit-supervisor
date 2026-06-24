@@ -167,6 +167,23 @@ async def activate_prompt(
     return p
 
 
+@router.post("/admin/prompts/{pid}/deactivate", status_code=status.HTTP_204_NO_CONTENT)
+async def deactivate_prompt(
+    pid: uuid.UUID,
+    ctx: Annotated[AuthContext, Depends(authorize_org(Action.USER_MANAGE))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> None:
+    """Turn this prompt OFF (flip to not-in-use). With nothing else in use at the scope, the
+    agent reverts to its built-in default — i.e. this is the "use the default" action."""
+    p = await _get(session, pid)
+    p.in_use = False
+    await record_audit(
+        session, actor_id=ctx.user.id, action="prompt.deactivate",
+        entity="agent_prompt", entity_id=p.id, meta={"agent": p.agent, "name": p.name},
+    )
+    await session.commit()
+
+
 @router.delete("/admin/prompts/{pid}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_prompt(
     pid: uuid.UUID,

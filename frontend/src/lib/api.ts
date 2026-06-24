@@ -36,6 +36,8 @@ export interface ReportItem {
   answer: "PASS" | "FAIL" | "NA" | null;
   raw_answer: string | null;
   options: string[] | null;
+  answer_type: string | null;
+  is_subjective: boolean;
   confidence: number | null;
   evidence_quote: string | null;
   evidence_offset_sec: number | null;
@@ -414,6 +416,12 @@ export const api = {
       method: "PATCH",
       body: JSON.stringify({ note }),
     }),
+  // Override the report's agent name (auditor-supplied; replaces the auto-extracted one).
+  updateAgentName: (reportId: string, agentName: string) =>
+    req<void>(`/reports/${reportId}/agent-name`, {
+      method: "PATCH",
+      body: JSON.stringify({ agent_name: agentName }),
+    }),
   submitVerification: (reportId: string, judgement: string, notes: string) =>
     req<unknown>(`/reports/${reportId}/verification`, {
       method: "POST",
@@ -439,6 +447,18 @@ export const api = {
   listChecklists: (pid: string) => req<ChecklistSummary[]>(`/portfolios/${pid}/checklists`),
   getChecklist: (pid: string, cid: string) =>
     req<ChecklistDetail>(`/portfolios/${pid}/checklists/${cid}`),
+  // Create a brand-new checklist in a portfolio (does NOT overwrite the default). Used by the
+  // "Add new checklist" flow, fanned out across the selected portfolios.
+  createChecklist: (
+    pid: string,
+    name: string,
+    items: ChecklistItemModel[],
+    requiresKb: boolean,
+  ) =>
+    req<ChecklistDetail>(`/portfolios/${pid}/checklists`, {
+      method: "POST",
+      body: JSON.stringify({ name, items, requires_kb: requiresKb }),
+    }),
   updateChecklist: (
     pid: string,
     cid: string,
@@ -566,6 +586,8 @@ export const api = {
     }),
   activatePrompt: (id: string) =>
     req<AgentPrompt>(`/admin/prompts/${id}/activate`, { method: "POST" }),
+  deactivatePrompt: (id: string) =>
+    req<void>(`/admin/prompts/${id}/deactivate`, { method: "POST" }),
   deletePrompt: (id: string) => req<void>(`/admin/prompts/${id}`, { method: "DELETE" }),
 
   // Report templates (deterministic HTML layout), same scoping.
@@ -582,6 +604,8 @@ export const api = {
     }),
   activateTemplate: (id: string) =>
     req<ReportTemplate>(`/admin/report-templates/${id}/activate`, { method: "POST" }),
+  deactivateTemplate: (id: string) =>
+    req<void>(`/admin/report-templates/${id}/deactivate`, { method: "POST" }),
   deleteTemplate: (id: string) =>
     req<void>(`/admin/report-templates/${id}`, { method: "DELETE" }),
 
@@ -605,6 +629,8 @@ export const api = {
     }),
   activateOutputSchema: (id: string) =>
     req<OutputSchema>(`/admin/output-schemas/${id}/activate`, { method: "POST" }),
+  deactivateOutputSchema: (id: string) =>
+    req<void>(`/admin/output-schemas/${id}/deactivate`, { method: "POST" }),
   deleteOutputSchema: (id: string) =>
     req<void>(`/admin/output-schemas/${id}`, { method: "DELETE" }),
 };

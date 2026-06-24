@@ -172,6 +172,23 @@ async def activate_template(
     return t
 
 
+@router.post("/admin/report-templates/{tid}/deactivate", status_code=status.HTTP_204_NO_CONTENT)
+async def deactivate_template(
+    tid: uuid.UUID,
+    ctx: Annotated[AuthContext, Depends(authorize_org(Action.USER_MANAGE))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> None:
+    """Turn this template OFF (flip to not-in-use). With nothing else in use at the scope, the
+    report reverts to the built-in renderer — i.e. this is the "use the default" action."""
+    t = await _get(session, tid)
+    t.in_use = False
+    await record_audit(
+        session, actor_id=ctx.user.id, action="report_template.deactivate",
+        entity="report_template", entity_id=t.id, meta={"name": t.name},
+    )
+    await session.commit()
+
+
 @router.delete("/admin/report-templates/{tid}", status_code=status.HTTP_204_NO_CONTENT)
 async def delete_template(
     tid: uuid.UUID,

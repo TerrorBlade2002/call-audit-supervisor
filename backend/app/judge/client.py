@@ -70,6 +70,22 @@ def _transcript_text(transcript: Transcript) -> str:
     return transcript.text
 
 
+def _checklist_lines(items: list[JudgeItem]) -> str:
+    """One prompt line per checklist item. Free-text (subjective) items ask for a short written
+    answer rather than a YES/NO/NA option — shared by the checklist and merged agents."""
+    lines = []
+    for it in items:
+        if (it.answer_type or "").upper() == "TEXT":
+            spec = "FREE TEXT — reply with a short, precise answer (not PASS/FAIL/NA)"
+        else:
+            spec = f"options: {it.options or 'YES/NO/NA'}"
+        lines.append(
+            f"- id={it.checklist_item_id} [{it.section}] {it.text}\n"
+            f"  {spec} | guidance: {it.rubric}"
+        )
+    return "\n".join(lines)
+
+
 class StubJudge:
     """Deterministic judge for tests/dev: PASS, high confidence, plausible evidence.
 
@@ -94,8 +110,12 @@ class StubJudge:
         verdicts = [
             ItemVerdict(
                 checklist_item_id=it.checklist_item_id,
-                answer="PASS",
-                raw_answer=it.options[0] if it.options else "noted",
+                answer="NA" if (it.answer_type or "").upper() == "TEXT" else "PASS",
+                raw_answer=(
+                    "Noted in the call."
+                    if (it.answer_type or "").upper() == "TEXT"
+                    else (it.options[0] if it.options else "noted")
+                ),
                 confidence=0.6 if it.checklist_item_id in self._flag else 0.9,
                 evidence_quote=f"Evidence for '{it.text}' observed in the call transcript.",
                 evidence_offset_sec=0.0,
@@ -130,11 +150,7 @@ class GeminiJudge:
     def _prompt(
         self, transcript: Transcript, items: list[JudgeItem], kb: str | None
     ) -> str:
-        checklist = "\n".join(
-            f"- id={it.checklist_item_id} [{it.section}] {it.text}\n"
-            f"  options: {it.options or 'YES/NO/NA'} | guidance: {it.rubric}"
-            for it in items
-        )
+        checklist = _checklist_lines(items)
         kb_block = (
             f"KNOWLEDGE BASE (Everest operational documents):\n{kb}\n\n" if kb else ""
         )

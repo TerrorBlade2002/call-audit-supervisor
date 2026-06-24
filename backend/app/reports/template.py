@@ -26,6 +26,7 @@ import re
 from datetime import datetime
 from typing import Any
 
+from app.checklists import is_free_text
 from app.schemas import ReportOut
 
 # ── The report data dictionary: what a template may reference. ────────────────────────────────
@@ -40,6 +41,8 @@ _ITEM_FIELDS: dict[str, Any] = {
     "evidence_offset_sec": "scalar",
     "comment": "scalar",
     "needs_review": "bool",
+    "is_subjective": "bool",       # free-text (qualitative) item
+    "answer_display": "scalar",    # raw_answer for free-text items, else the verdict
 }
 _OBJECTION_FIELDS: dict[str, Any] = {
     "text": "scalar",
@@ -263,8 +266,20 @@ def _verdict(answer: str | None) -> str:
     return a if a in {"PASS", "FAIL", "NA"} else "NA"
 
 
+def _free(it: Any) -> bool:
+    return is_free_text(
+        answer_type=getattr(it, "answer_type", None),
+        is_subjective=getattr(it, "is_subjective", False),
+    )
+
+
 def _overall(items: list[Any], compliance: bool) -> str:
-    scope = [it for it in items if ("complian" in (it.section or "").lower()) == compliance]
+    # Free-text items have no PASS/FAIL, so they don't count toward the section roll-up.
+    scope = [
+        it
+        for it in items
+        if not _free(it) and ("complian" in (it.section or "").lower()) == compliance
+    ]
     if not scope:
         return "NA"
     return "FAIL" if any(_verdict(it.answer) == "FAIL" for it in scope) else "PASS"
@@ -323,6 +338,9 @@ def build_context(
                 ),
                 "comment": it.comment or "",
                 "needs_review": bool(it.needs_human_review),
+                "is_subjective": _free(it),
+                # The value to show: the written answer for free-text, else the verdict.
+                "answer_display": (it.raw_answer or "—") if _free(it) else _verdict(it.answer),
             }
             for it in items
         ],

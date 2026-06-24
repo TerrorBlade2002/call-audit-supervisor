@@ -20,9 +20,10 @@ from app.reports.service import (
     load_report,
     render_and_store_report,
     render_html,
+    set_agent_name,
     set_user_note,
 )
-from app.schemas import DownloadUrlOut, NoteUpdate, ReportOut
+from app.schemas import AgentNameUpdate, DownloadUrlOut, NoteUpdate, ReportOut
 from app.storage import StorageService, build_storage
 
 router = APIRouter(tags=["reports"])
@@ -200,3 +201,21 @@ async def update_note(
 ) -> None:
     if not await set_user_note(session, item_id, body.note):
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="item not found")
+
+
+@router.patch("/reports/{report_id}/agent-name", status_code=status.HTTP_204_NO_CONTENT)
+async def update_agent_name(
+    report_id: uuid.UUID,
+    body: AgentNameUpdate,
+    ctx: Annotated[AuthContext, Depends(authorize_report(Action.REPORT_NOTE))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> None:
+    """Override the agent name an auditor knows handled this call (replaces the auto-extracted
+    one in the report, its downloads, and the CSV). REPORT_NOTE-gated, like per-item notes."""
+    if not await set_agent_name(session, report_id, body.agent_name):
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="report not found")
+    await record_audit(
+        session, actor_id=ctx.user.id, action="report.agent_name",
+        entity="report", entity_id=report_id, meta={"agent_name": body.agent_name.strip()},
+    )
+    await session.commit()

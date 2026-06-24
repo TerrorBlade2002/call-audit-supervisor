@@ -24,6 +24,10 @@ async def load_report(session: AsyncSession, report_id: uuid.UUID) -> ReportOut 
     report = await session.get(Report, report_id)
     if report is None:
         return None
+    # Effective agent name: the auditor's durable override (on the call) wins over the
+    # auto-extracted one; clearing the override falls back to the auto value.
+    call = await session.get(Call, report.call_id)
+    agent_name = (call.agent_name_override if call else None) or report.agent_name
 
     rows = (
         await session.execute(
@@ -32,6 +36,8 @@ async def load_report(session: AsyncSession, report_id: uuid.UUID) -> ReportOut 
                 ChecklistItem.section,
                 ChecklistItem.text,
                 ChecklistItem.options,
+                ChecklistItem.answer_type,
+                ChecklistItem.is_subjective,
             )
             .join(ChecklistItem, ChecklistItem.id == ReportItem.checklist_item_id)
             .where(ReportItem.report_id == report_id)
@@ -47,6 +53,8 @@ async def load_report(session: AsyncSession, report_id: uuid.UUID) -> ReportOut 
             answer=ri.answer,
             raw_answer=ri.raw_answer,
             options=options,
+            answer_type=answer_type,
+            is_subjective=bool(is_subjective),
             confidence=ri.confidence,
             evidence_quote=ri.evidence_quote,
             evidence_offset_sec=ri.evidence_offset_sec,
@@ -55,7 +63,7 @@ async def load_report(session: AsyncSession, report_id: uuid.UUID) -> ReportOut 
             needs_human_review=ri.needs_human_review,
             user_note=ri.user_note,
         )
-        for ri, section, text, options in rows
+        for ri, section, text, options, answer_type, is_subjective in rows
     ]
     objections = [
         ReportObjectionOut(text=o.text, category=o.category, cleared=o.cleared)
@@ -68,7 +76,7 @@ async def load_report(session: AsyncSession, report_id: uuid.UUID) -> ReportOut 
         call_id=report.call_id,
         checklist_id=report.checklist_id,
         option=report.option,
-        agent_name=report.agent_name,
+        agent_name=agent_name,
         flagged_for_review=report.flagged_for_review,
         flag_reason=report.flag_reason,
         narrative=report.narrative,
@@ -155,5 +163,22 @@ async def set_user_note(session: AsyncSession, item_id: uuid.UUID, note: str) ->
     if item is None:
         return False
     item.user_note = note
+    await session.commit()
+    return True
+
+
+async def set_agent_name(session: AsyncSession, report_id: uuid.UUID, name: str) -> bool:
+    """Override the agent name with an auditor-supplied value (blank reverts to the auto value).
+
+    Stored on the CALL (not the report) so it survives re-processing — a re-judge rebuilds the
+    report row but the call persists. The override wins everywhere the name is shown: the in-app
+    header, the HTML/PDF downloads, and the checklist CSV."""
+    report = await session.get(Report, report_id)
+    if report is None:
+        return False
+    call = await session.get(Call, report.call_id)
+    if call is None:
+        return False
+    call.agent_name_override = name.strip() or None
     await session.commit()
     return True

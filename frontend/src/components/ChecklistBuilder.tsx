@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { api, ApiError, type ChecklistItemModel } from "../lib/api";
 import { useToasts } from "../lib/toast";
+import { PortfolioPicker } from "./PortfolioPicker";
 
 const ANSWER_TYPES = ["CHOICE", "PASS_FAIL", "PASS_FAIL_NA", "TEXT"] as const;
 const RISKS = ["NORMAL", "ELEVATED", "CRITICAL"] as const;
@@ -30,8 +31,12 @@ export function ChecklistBuilder({
   const fileInput = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("");
   const [items, setItems] = useState<ChecklistItemModel[]>([]);
-  const [cid, setCid] = useState<string | null>(null);
   const [requiresKb, setRequiresKb] = useState(true);
+  // The existing checklist being edited (versioned on save). null while authoring a brand-new one.
+  const [selectedId, setSelectedId] = useState<string | null>(null);
+  const [newMode, setNewMode] = useState(false);
+  // Portfolios a NEW checklist is saved to (defaults to the one being viewed).
+  const [targets, setTargets] = useState<Set<string>>(() => new Set([portfolioId]));
   const [msg, setMsg] = useState<string | null>(null);
 
   const { data: summaries } = useQuery({
@@ -40,33 +45,98 @@ export function ChecklistBuilder({
   });
   const defaultId = summaries?.find((c) => c.is_default)?.id ?? summaries?.[0]?.id;
 
+  // The checklist currently loaded in the editor (the selected one, or the default initially).
   const { data: detail } = useQuery({
+    queryKey: ["checklist", portfolioId, selectedId],
+    queryFn: () => api.getChecklist(portfolioId, selectedId!),
+    enabled: !!selectedId && !newMode,
+  });
+  // The portfolio's default checklist — the seed for "New checklist".
+  const { data: defaultDetail } = useQuery({
     queryKey: ["checklist", portfolioId, defaultId],
     queryFn: () => api.getChecklist(portfolioId, defaultId!),
     enabled: !!defaultId,
   });
 
+  // Land on the default checklist when the panel opens.
   useEffect(() => {
-    if (detail) {
-      setCid(detail.id);
+    if (!selectedId && !newMode && defaultId) setSelectedId(defaultId);
+  }, [defaultId, selectedId, newMode]);
+
+  // Load the selected existing checklist into the editor (not while authoring a new one).
+  useEffect(() => {
+    if (detail && !newMode) {
       setName(detail.name);
       setItems(detail.items.map((i) => ({ ...i })));
       setRequiresKb(detail.requires_kb);
     }
-  }, [detail]);
+  }, [detail, newMode]);
+
+  const startNew = () => {
+    const base = defaultDetail;
+    setNewMode(true);
+    setSelectedId(null);
+    setName(base ? `${base.name} (copy)` : "New checklist");
+    setItems((base?.items ?? []).map((i) => ({ ...i, id: undefined })));
+    setRequiresKb(base?.requires_kb ?? true);
+    setTargets(new Set([portfolioId]));
+    setMsg(null);
+  };
+
+  const editExisting = (id: string) => {
+    setNewMode(false);
+    setSelectedId(id);
+    setMsg(null);
+  };
 
   const save = useMutation({
-    mutationFn: () => api.updateChecklist(portfolioId, cid!, name, items, requiresKb),
-    onSuccess: (d) => {
-      setMsg(`Saved — v${d.version}`);
-      qc.invalidateQueries({ queryKey: ["checklists", portfolioId] });
-      qc.invalidateQueries({ queryKey: ["checklist", portfolioId] });
+    mutationFn: async () => {
+      if (newMode) {
+        const ids = [...targets];
+        const results = await Promise.allSettled(
+          ids.map((pid) => api.createChecklist(pid, name, items, requiresKb)),
+        );
+        const ok = ids.filter((_, i) => results[i].status === "fulfilled");
+        const failed = ids.filter((_, i) => results[i].status === "rejected");
+        const mine = results[ids.indexOf(portfolioId)];
+        const createdHere =
+          mine && mine.status === "fulfilled"
+            ? (mine as PromiseFulfilledResult<{ id: string }>).value.id
+            : null;
+        return { mode: "create" as const, ok, failed, createdHere };
+      }
+      const d = await api.updateChecklist(portfolioId, selectedId!, name, items, requiresKb);
+      return { mode: "update" as const, version: d.version, id: d.id };
     },
-    onError: () => setMsg("Save failed (need MANAGER/ADMIN)."),
+    onSuccess: (res) => {
+      if (res.mode === "create") {
+        res.ok.forEach((pid) => qc.invalidateQueries({ queryKey: ["checklists", pid] }));
+        if (res.failed.length === 0) {
+          setMsg(`Created in ${res.ok.length} portfolio(s).`);
+        } else {
+          setMsg(
+            `Created in ${res.ok.length} portfolio(s); ${res.failed.length} failed ` +
+              "(you may lack manage rights there).",
+          );
+        }
+        setNewMode(false);
+        setSelectedId(res.createdHere ?? defaultId ?? null);
+      } else {
+        setMsg(`Saved — v${res.version}`);
+        setSelectedId(res.id);
+        qc.invalidateQueries({ queryKey: ["checklists", portfolioId] });
+        qc.invalidateQueries({ queryKey: ["checklist", portfolioId] });
+      }
+    },
+    onError: (e) =>
+      setMsg(
+        e instanceof ApiError && e.status === 403
+          ? "Save failed — you need manage rights (SUPERVISOR/ADMIN)."
+          : "Save failed.",
+      ),
   });
 
   // Upload a .txt in the Everest checklist format → parse server-side → load into the editor.
-  // The user then reviews and clicks Save. A file that doesn't match the format just toasts.
   const onUpload = async (file: File) => {
     try {
       const parsed = await api.parseChecklistTxt(portfolioId, file);
@@ -97,6 +167,9 @@ export function ChecklistBuilder({
       return copy;
     });
 
+  const saveDisabled =
+    save.isPending || items.length === 0 || (newMode ? targets.size === 0 : !selectedId);
+
   return (
     <div className="mx-auto max-w-4xl p-6">
       <div className="mb-4 flex items-center justify-between">
@@ -113,7 +186,7 @@ export function ChecklistBuilder({
             onChange={(e) => {
               const f = e.target.files?.[0];
               if (f) onUpload(f);
-              e.target.value = ""; // allow re-uploading the same file
+              e.target.value = "";
             }}
           />
           <button
@@ -125,17 +198,58 @@ export function ChecklistBuilder({
           </button>
           <button
             onClick={() => save.mutate()}
-            disabled={!cid || save.isPending}
-            className="rounded bg-accent px-3 py-1.5 text-sm font-medium text-white"
+            disabled={saveDisabled}
+            className="rounded bg-accent px-3 py-1.5 text-sm font-medium text-white disabled:opacity-50"
           >
-            {save.isPending ? "Saving…" : "Save"}
+            {save.isPending ? "Saving…" : newMode ? "Create checklist" : "Save"}
           </button>
         </div>
       </div>
-      {detail?.updated_at && (
-        <p className="mb-3 text-xs text-gray-400">
-          Last modified {new Date(detail.updated_at).toLocaleString()} · v{detail.version}
-        </p>
+
+      {/* Which checklist — pick an existing one to edit, or author a new one. */}
+      <div className="mb-3 flex flex-wrap items-center gap-2 rounded-xl border border-gray-200 bg-white/60 p-3">
+        <span className="text-xs font-semibold uppercase tracking-wide text-gray-500">
+          Checklist
+        </span>
+        <select
+          className="rounded-lg border border-gray-300 px-2 py-1.5 text-sm disabled:opacity-50"
+          value={newMode ? "" : selectedId ?? ""}
+          onChange={(e) => e.target.value && editExisting(e.target.value)}
+          disabled={newMode}
+        >
+          {newMode && <option value="">(new checklist — unsaved)</option>}
+          {(summaries ?? []).map((c) => (
+            <option key={c.id} value={c.id}>
+              {c.name}
+              {c.is_default ? " (default)" : ""} · v{c.version}
+            </option>
+          ))}
+        </select>
+        <button
+          onClick={startNew}
+          className="rounded-lg border border-[#dd9aa6] px-2.5 py-1.5 text-sm font-medium text-[#8c3a55] hover:bg-[#dd9aa6]/10"
+        >
+          + New checklist
+        </button>
+        {!newMode && detail?.updated_at && (
+          <span className="text-xs text-gray-400">
+            Last modified {new Date(detail.updated_at).toLocaleString()} · v{detail.version}
+          </span>
+        )}
+      </div>
+
+      {/* New-checklist target portfolios. */}
+      {newMode && (
+        <div className="mb-3 rounded-xl border border-[#dd9aa6]/50 bg-[#dd9aa6]/5 p-3">
+          <p className="mb-2 text-sm font-medium text-ink">
+            Save this new checklist to which portfolios?
+          </p>
+          <PortfolioPicker selected={targets} onChange={setTargets} />
+          <p className="mt-2 text-xs text-gray-500">
+            Seeded from the default checklist — edit below, then “Create checklist”. It is saved as a
+            new checklist in each selected portfolio (the default is never overwritten).
+          </p>
+        </div>
       )}
 
       <label className="block text-sm">
@@ -187,15 +301,23 @@ export function ChecklistBuilder({
                   placeholder="Item question…"
                 />
                 <div className="flex flex-wrap items-center gap-2 text-xs">
-                  <select
-                    className="rounded border px-1.5 py-1"
-                    value={it.answer_type}
-                    onChange={(e) => update(idx, { answer_type: e.target.value as ChecklistItemModel["answer_type"] })}
-                  >
-                    {ANSWER_TYPES.map((t) => (
-                      <option key={t}>{t}</option>
-                    ))}
-                  </select>
+                  {/* Subjective = free text: the model writes a short answer instead of PASS/FAIL,
+                      so the answer-type + options controls don't apply and are hidden. */}
+                  <label className="flex items-center gap-1 rounded border border-[#dd9aa6]/60 bg-[#dd9aa6]/10 px-2 py-1 font-medium text-[#8c3a55]">
+                    <input
+                      type="checkbox"
+                      checked={it.is_subjective}
+                      onChange={(e) =>
+                        update(
+                          idx,
+                          e.target.checked
+                            ? { is_subjective: true, answer_type: "TEXT", options: null }
+                            : { is_subjective: false, answer_type: "CHOICE", options: ["Yes", "No", "NA"] },
+                        )
+                      }
+                    />
+                    subjective (free text)
+                  </label>
                   <select
                     className="rounded border px-1.5 py-1"
                     value={it.risk}
@@ -205,27 +327,38 @@ export function ChecklistBuilder({
                       <option key={r}>{r}</option>
                     ))}
                   </select>
-                  <label className="flex items-center gap-1">
-                    <input
-                      type="checkbox"
-                      checked={it.is_subjective}
-                      onChange={(e) => update(idx, { is_subjective: e.target.checked })}
-                    />
-                    subjective
-                  </label>
-                  <input
-                    className="min-w-[180px] flex-1 rounded border px-1.5 py-1"
-                    value={(it.options ?? []).join(", ")}
-                    onChange={(e) =>
-                      update(idx, {
-                        options: e.target.value
-                          .split(",")
-                          .map((s) => s.trim())
-                          .filter(Boolean),
-                      })
-                    }
-                    placeholder="Options (comma-separated) — empty for free text"
-                  />
+                  {it.is_subjective ? (
+                    <span className="flex-1 italic text-gray-400">
+                      Free-text answer — the model writes a short, precise response (no Yes/No).
+                    </span>
+                  ) : (
+                    <>
+                      <select
+                        className="rounded border px-1.5 py-1"
+                        value={it.answer_type}
+                        onChange={(e) =>
+                          update(idx, { answer_type: e.target.value as ChecklistItemModel["answer_type"] })
+                        }
+                      >
+                        {ANSWER_TYPES.map((t) => (
+                          <option key={t}>{t}</option>
+                        ))}
+                      </select>
+                      <input
+                        className="min-w-[180px] flex-1 rounded border px-1.5 py-1"
+                        value={(it.options ?? []).join(", ")}
+                        onChange={(e) =>
+                          update(idx, {
+                            options: e.target.value
+                              .split(",")
+                              .map((s) => s.trim())
+                              .filter(Boolean),
+                          })
+                        }
+                        placeholder="Options (comma-separated) — empty for free text"
+                      />
+                    </>
+                  )}
                   <button
                     onClick={() => setItems((xs) => xs.filter((_, i) => i !== idx))}
                     className="text-red-500 hover:underline"

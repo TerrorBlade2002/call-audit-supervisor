@@ -16,12 +16,12 @@ from collections.abc import Sequence
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, File, HTTPException, Response, UploadFile, status
-from sqlalchemy import select
+from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.audit import record_audit
 from app.authz import AuthContext, authorize
-from app.checklists import service
+from app.checklists import is_free_text, service
 from app.checklists.parse import ParseError, parse_checklist
 from app.db import get_session
 from app.models import Agent, Call, Checklist, ChecklistItem, Report, ReportItem
@@ -136,7 +136,13 @@ async def export_checklist_csv(
     columns = [it.text for it in await service.get_items(session, cl.id)]  # ordered by sort_order
     rep_rows = (
         await session.execute(
-            select(Report.id, Report.call_id, Report.agent_name, Call.created_at, Agent.name)
+            select(
+                Report.id,
+                Report.call_id,
+                func.coalesce(Call.agent_name_override, Report.agent_name),
+                Call.created_at,
+                Agent.name,
+            )
             .join(Call, Call.id == Report.call_id)
             .join(Agent, Agent.id == Call.agent_id, isouter=True)
             .where(Report.checklist_id.in_(family))
@@ -156,13 +162,24 @@ async def _load_verdicts(
     if report_ids:
         item_rows = (
             await session.execute(
-                select(ReportItem.report_id, ChecklistItem.text, ReportItem.answer)
+                select(
+                    ReportItem.report_id,
+                    ChecklistItem.text,
+                    ReportItem.answer,
+                    ReportItem.raw_answer,
+                    ChecklistItem.answer_type,
+                    ChecklistItem.is_subjective,
+                )
                 .join(ChecklistItem, ChecklistItem.id == ReportItem.checklist_item_id)
                 .where(ReportItem.report_id.in_(report_ids))
             )
         ).all()
-        for rid, text, ans in item_rows:
-            verdicts[rid][text] = ans or "NA"
+        for rid, text, ans, raw, atype, subj in item_rows:
+            # Free-text (subjective) items have no PASS/FAIL — write their written answer instead.
+            if is_free_text(answer_type=atype, is_subjective=subj):
+                verdicts[rid][text] = (raw or "").strip() or "—"
+            else:
+                verdicts[rid][text] = ans or "NA"
     return verdicts
 
 
@@ -200,7 +217,11 @@ async def export_batch_csv(
     rep_rows = (
         await session.execute(
             select(
-                Report.id, Report.call_id, Report.agent_name, Call.created_at, Agent.name,
+                Report.id,
+                Report.call_id,
+                func.coalesce(Call.agent_name_override, Report.agent_name),
+                Call.created_at,
+                Agent.name,
                 Report.checklist_id,
             )
             .join(Call, Call.id == Report.call_id)

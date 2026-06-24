@@ -368,6 +368,8 @@ class ReportItemOut(BaseModel):
     answer: str | None          # normalized PASS / FAIL / NA (drives coloring)
     raw_answer: str | None      # verbatim option (Yes / Strong / Submissive / free text)
     options: list[str] | None   # the item's allowed answers
+    answer_type: str | None = None   # CHOICE / PASS_FAIL / TEXT — drives free-text rendering
+    is_subjective: bool = False      # free-text (qualitative) item — show raw_answer, not a badge
     confidence: float | None
     evidence_quote: str | None
     evidence_offset_sec: float | None
@@ -398,6 +400,15 @@ class ReportOut(BaseModel):
 
 class NoteUpdate(BaseModel):
     note: str = Field(max_length=5000)
+
+
+class AgentNameUpdate(BaseModel):
+    """Auditor override for the report's agent name (replaces the auto-extracted one).
+
+    Stored durably on the call, so it survives re-processing. Empty string clears the override and
+    reverts to the auto-extracted name."""
+
+    agent_name: str = Field(max_length=200)
 
 
 # --- verification (Phase 7) ---
