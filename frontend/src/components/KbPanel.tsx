@@ -2,7 +2,7 @@ import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
 import { api, ApiError } from "../lib/api";
 import { PortfolioPicker } from "./PortfolioPicker";
-import { IconTrash } from "./ui";
+import { IconPencil, IconTrash } from "./ui";
 
 export function KbPanel({ portfolioId, onClose }: { portfolioId: string; onClose: () => void }) {
   const qc = useQueryClient();
@@ -50,6 +50,18 @@ export function KbPanel({ portfolioId, onClose }: { portfolioId: string; onClose
   const remove = useMutation({
     mutationFn: (id: string) => api.deleteKb(portfolioId, id),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["kb", portfolioId] }),
+  });
+
+  // Rename a document's display name (local to this portfolio's copy).
+  const rename = useMutation({
+    mutationFn: ({ id, name }: { id: string; name: string }) =>
+      api.renameKbDoc(portfolioId, id, name),
+    onSuccess: () => {
+      qc.invalidateQueries({ queryKey: ["kb", portfolioId] });
+      setMsg("Document renamed.");
+    },
+    onError: (e) =>
+      setMsg(e instanceof ApiError ? `Rename failed (${e.status}).` : "Rename failed."),
   });
 
   return (
@@ -122,17 +134,30 @@ export function KbPanel({ portfolioId, onClose }: { portfolioId: string; onClose
                 {new Date(d.created_at).toLocaleDateString()}
               </div>
             </div>
-            <button
-              title="Delete document"
-              disabled={remove.isPending}
-              onClick={() => {
-                if (window.confirm(`Delete “${d.filename || "this document"}” from the KB?`))
-                  remove.mutate(d.id);
-              }}
-              className="rounded-md p-1.5 text-gray-400 transition hover:bg-red-50 hover:text-red-600 disabled:opacity-40"
-            >
-              <IconTrash />
-            </button>
+            <div className="flex items-center gap-1">
+              <button
+                title="Rename document"
+                onClick={() => {
+                  const current = d.filename || "";
+                  const name = window.prompt("Rename this document", current)?.trim();
+                  if (name && name !== current) rename.mutate({ id: d.id, name });
+                }}
+                className="rounded-md p-1.5 text-gray-400 transition hover:bg-gray-100 hover:text-ink"
+              >
+                <IconPencil />
+              </button>
+              <button
+                title="Delete document"
+                disabled={remove.isPending}
+                onClick={() => {
+                  if (window.confirm(`Delete “${d.filename || "this document"}” from the KB?`))
+                    remove.mutate(d.id);
+                }}
+                className="rounded-md p-1.5 text-gray-400 transition hover:bg-red-50 hover:text-red-600 disabled:opacity-40"
+              >
+                <IconTrash />
+              </button>
+            </div>
           </div>
         ))}
         {!isLoading && docs.length === 0 && (

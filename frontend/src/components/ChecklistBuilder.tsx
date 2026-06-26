@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
 import { api, ApiError, type ChecklistItemModel } from "../lib/api";
+import { useCaps } from "../lib/roles";
 import { useToasts } from "../lib/toast";
 import { PortfolioPicker } from "./PortfolioPicker";
 
@@ -27,6 +28,7 @@ export function ChecklistBuilder({
   onClose: () => void;
 }) {
   const qc = useQueryClient();
+  const caps = useCaps(portfolioId);
   const pushToast = useToasts((s) => s.push);
   const fileInput = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("");
@@ -136,6 +138,37 @@ export function ChecklistBuilder({
       ),
   });
 
+  // Rename the selected checklist (local to this portfolio; no version bump for a label change).
+  const rename = useMutation({
+    mutationFn: ({ id, name }: { id: string; name: string }) =>
+      api.renameChecklist(portfolioId, id, name),
+    onSuccess: (d) => {
+      qc.invalidateQueries({ queryKey: ["checklists", portfolioId] });
+      qc.invalidateQueries({ queryKey: ["checklist", portfolioId] });
+      pushToast(`Renamed to “${d.name}”.`, "success");
+    },
+    onError: () => pushToast("Rename failed.", "error"),
+  });
+  // Delete the selected checklist (admin only; soft-delete — existing reports stay intact).
+  const del = useMutation({
+    mutationFn: (id: string) => api.deleteChecklist(portfolioId, id),
+    onSuccess: () => {
+      pushToast("Checklist deleted. Reports judged against it are unaffected.", "success");
+      setNewMode(false);
+      setSelectedId(defaultId ?? null);
+      qc.invalidateQueries({ queryKey: ["checklists", portfolioId] });
+    },
+    onError: (e) =>
+      pushToast(
+        e instanceof ApiError && e.status === 409
+          ? "The default checklist can't be deleted."
+          : e instanceof ApiError && e.status === 403
+            ? "Only admins can delete checklists."
+            : "Delete failed.",
+        "error",
+      ),
+  });
+
   // Upload a .txt in the Everest checklist format → parse server-side → load into the editor.
   const onUpload = async (file: File) => {
     try {
@@ -231,6 +264,35 @@ export function ChecklistBuilder({
         >
           + New checklist
         </button>
+        {!newMode && selectedId && detail && caps.canManage && (
+          <button
+            onClick={() => {
+              const name = window.prompt("Rename this checklist", detail.name)?.trim();
+              if (name && name !== detail.name) rename.mutate({ id: selectedId, name });
+            }}
+            className="rounded-lg border border-gray-300 px-2.5 py-1.5 text-sm hover:bg-gray-50"
+          >
+            Rename
+          </button>
+        )}
+        {/* Delete is ADMIN-only; the default checklist can't be deleted. */}
+        {!newMode && selectedId && detail && caps.isSuperAdmin && !detail.is_default && (
+          <button
+            onClick={() => {
+              if (
+                window.confirm(
+                  `Delete “${detail.name}”? It disappears from pickers, but reports already judged ` +
+                    "against it stay intact.",
+                )
+              )
+                del.mutate(selectedId);
+            }}
+            disabled={del.isPending}
+            className="rounded-lg border border-red-300 px-2.5 py-1.5 text-sm text-red-600 hover:bg-red-50 disabled:opacity-50"
+          >
+            Delete
+          </button>
+        )}
         {!newMode && detail?.updated_at && (
           <span className="text-xs text-gray-400">
             Last modified {new Date(detail.updated_at).toLocaleString()} · v{detail.version}

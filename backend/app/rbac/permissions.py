@@ -35,7 +35,8 @@ class Action(StrEnum):
     KB_MANAGE = "kb.manage"
     KB_VIEW = "kb.view"
     # Checklists
-    CHECKLIST_MANAGE = "checklist.manage"
+    CHECKLIST_MANAGE = "checklist.manage"  # create / edit (append-only versioning) / rename
+    CHECKLIST_DELETE = "checklist.delete"  # ADMIN only — supervisors are append-only (no delete)
     CHECKLIST_VIEW = "checklist.view"
     # Recordings / reports
     RECORDING_UPLOAD = "recording.upload"
@@ -72,6 +73,9 @@ _MATRIX: dict[Action, frozenset[Role]] = {
     Action.KB_MANAGE: frozenset({_SUP, Role.MANAGER}),
     Action.KB_VIEW: frozenset({_SUP, Role.MANAGER, Role.ANALYST, Role.VERIFIER, Role.VIEWER}),
     Action.CHECKLIST_MANAGE: frozenset({_SUP, Role.MANAGER}),
+    # Deleting a checklist is ADMIN-only (super admin). Supervisors are append-only and will
+    # request deletion via a future review queue (see checklist-deletion-queue).
+    Action.CHECKLIST_DELETE: frozenset(),
     Action.CHECKLIST_VIEW: frozenset(
         {_SUP, Role.MANAGER, Role.ANALYST, Role.VERIFIER, Role.VIEWER}
     ),

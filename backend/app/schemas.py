@@ -189,6 +189,10 @@ class ChecklistUpdate(ChecklistCreate):
     pass
 
 
+class RenameRequest(BaseModel):
+    name: str = Field(min_length=1, max_length=200)
+
+
 class ChecklistOut(ORMModel):
     id: uuid.UUID
     family_id: uuid.UUID

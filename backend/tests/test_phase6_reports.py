@@ -148,6 +148,57 @@ async def test_agent_name_override_persists_and_survives_reprocessing(
     assert cleared["agent_name"] is None
 
 
+async def test_checklist_delete_is_admin_only_and_soft(
+    client: AsyncClient, fake_storage: FakeStorage
+) -> None:
+    pid, _report_id = await _seed_report(fake_storage)
+    admin = await _login(client, "admin@example.com", as_admin=True)
+    created = await client.post(
+        f"/portfolios/{pid}/checklists",
+        headers=_auth(admin),
+        json={
+            "name": "Custom CL", "requires_kb": False,
+            "items": [{"section": "A", "text": "X", "answer_type": "CHOICE",
+                       "options": ["Yes", "No"], "is_subjective": False, "risk": "NORMAL",
+                       "guidance": ""}],
+        },
+    )
+    assert created.status_code == 201, created.text
+    cid = created.json()["id"]
+
+    # A supervisor of this portfolio.
+    sup = await _login(client, "sup@example.com")
+    me = (await client.get("/me", headers=_auth(sup))).json()
+    await client.post(
+        f"/portfolios/{pid}/members",
+        json={"user_id": me["id"], "role": "SUPERVISOR"}, headers=_auth(admin),
+    )
+
+    # Supervisor may rename (manage) but NOT delete (append-only).
+    assert (
+        await client.patch(
+            f"/portfolios/{pid}/checklists/{cid}/rename",
+            json={"name": "Renamed CL"}, headers=_auth(sup),
+        )
+    ).status_code == 200
+    assert (
+        await client.delete(f"/portfolios/{pid}/checklists/{cid}", headers=_auth(sup))
+    ).status_code == 403
+
+    # Admin can delete (soft) — it disappears from the list.
+    assert (
+        await client.delete(f"/portfolios/{pid}/checklists/{cid}", headers=_auth(admin))
+    ).status_code == 204
+    listed = (await client.get(f"/portfolios/{pid}/checklists", headers=_auth(admin))).json()
+    assert all(c["id"] != cid for c in listed)  # gone from the list (soft-deleted)
+
+    # The portfolio's default checklist is protected.
+    default_id = next(c["id"] for c in listed if c["is_default"])
+    assert (
+        await client.delete(f"/portfolios/{pid}/checklists/{default_id}", headers=_auth(admin))
+    ).status_code == 409
+
+
 async def test_viewer_can_read_but_not_note(
     client: AsyncClient, fake_storage: FakeStorage
 ) -> None:

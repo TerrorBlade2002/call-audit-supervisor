@@ -30,6 +30,7 @@ from app.schemas import (
     KbPresignRequest,
     PresignItem,
     PresignResponse,
+    RenameRequest,
 )
 from app.storage import build_s3_client, kb_key, presign_put
 
@@ -146,6 +147,31 @@ async def upload_kb(
     )
     await session.commit()
     return docs
+
+
+@router.patch("/portfolios/{pid}/kb/{doc_id}/rename", response_model=DocumentOut)
+async def rename_kb(
+    pid: uuid.UUID,
+    doc_id: uuid.UUID,
+    body: RenameRequest,
+    ctx: Annotated[AuthContext, Depends(authorize(Action.KB_MANAGE))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> Document:
+    """Rename a KB document's display name (local to this portfolio's copy — independent of any
+    copies shared to other portfolios; the underlying R2 object is unchanged)."""
+    doc = await session.scalar(
+        select(Document).where(Document.id == doc_id, Document.portfolio_id == pid)
+    )
+    if doc is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="document not found")
+    doc.filename = body.name.strip()
+    await record_audit(
+        session, actor_id=ctx.user.id, action="kb.rename",
+        entity="document", entity_id=doc_id, meta={"filename": body.name.strip()},
+    )
+    await session.commit()
+    await session.refresh(doc)
+    return doc
 
 
 @router.delete("/portfolios/{pid}/kb/{doc_id}", status_code=status.HTTP_204_NO_CONTENT)

@@ -11,7 +11,7 @@ from __future__ import annotations
 import uuid
 from typing import Any
 
-from sqlalchemy import delete, func, select
+from sqlalchemy import delete, func, select, update
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.checklists.seed import DEFAULT_CHECKLIST_NAME, DEFAULT_ITEMS
@@ -125,12 +125,39 @@ async def update_checklist(
 async def list_active_checklists(
     session: AsyncSession, portfolio_id: uuid.UUID
 ) -> list[Checklist]:
+    # Hide superseded versions ("archived") and soft-deleted families ("deleted").
     rows = await session.scalars(
         select(Checklist)
-        .where(Checklist.portfolio_id == portfolio_id, Checklist.status != "archived")
+        .where(
+            Checklist.portfolio_id == portfolio_id,
+            Checklist.status.notin_(("archived", "deleted")),
+        )
         .order_by(Checklist.created_at)
     )
     return list(rows)
+
+
+async def rename_checklist(session: AsyncSession, checklist: Checklist, name: str) -> Checklist:
+    """Rename the whole family (all versions share the display name). Local to this portfolio's
+    instance — independent copies in other portfolios are unaffected. Renaming a name is not a
+    content change, so it never forks a new version."""
+    await session.execute(
+        update(Checklist).where(Checklist.family_id == checklist.family_id).values(name=name)
+    )
+    await session.flush()
+    await session.refresh(checklist)
+    return checklist
+
+
+async def soft_delete_checklist(session: AsyncSession, checklist: Checklist) -> None:
+    """Soft-delete the whole family: hide it from every picker/list while KEEPING the rows so
+    reports/CSVs that were judged against it still resolve (history stays intact). Admin-only."""
+    await session.execute(
+        update(Checklist)
+        .where(Checklist.family_id == checklist.family_id)
+        .values(status="deleted")
+    )
+    await session.flush()
 
 
 async def get_default_checklist(

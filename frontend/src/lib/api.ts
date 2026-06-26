@@ -470,6 +470,15 @@ export const api = {
       method: "PUT",
       body: JSON.stringify({ name, items, requires_kb: requiresKb }),
     }),
+  // Rename this portfolio's checklist (local — other portfolios' copies are untouched).
+  renameChecklist: (pid: string, cid: string, name: string) =>
+    req<ChecklistSummary>(`/portfolios/${pid}/checklists/${cid}/rename`, {
+      method: "PATCH",
+      body: JSON.stringify({ name }),
+    }),
+  // Delete a checklist (ADMIN only; soft-delete — reports judged against it stay intact).
+  deleteChecklist: (pid: string, cid: string) =>
+    req<void>(`/portfolios/${pid}/checklists/${cid}`, { method: "DELETE" }),
   // Merged checklist CSV (all calls judged under this checklist) — fetched with auth then
   // triggered as a browser download.
   downloadChecklistCsv: async (pid: string, cid: string, filename: string) => {
@@ -535,6 +544,12 @@ export const api = {
   },
   deleteKb: (pid: string, docId: string) =>
     req<void>(`/portfolios/${pid}/kb/${docId}`, { method: "DELETE" }),
+  // Rename a KB document's display name (local to this portfolio's copy).
+  renameKbDoc: (pid: string, docId: string, name: string) =>
+    req<KbDocument>(`/portfolios/${pid}/kb/${docId}/rename`, {
+      method: "PATCH",
+      body: JSON.stringify({ name }),
+    }),
 
   getActivity: () => req<ActivityEntry[]>("/admin/activity"),
 

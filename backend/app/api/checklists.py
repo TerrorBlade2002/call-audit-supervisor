@@ -34,6 +34,7 @@ from app.schemas import (
     ChecklistOut,
     ChecklistUpdate,
     ParsedChecklistOut,
+    RenameRequest,
 )
 
 router = APIRouter(tags=["checklists"])
@@ -117,6 +118,48 @@ async def update_checklist(
     )
     await session.commit()
     return await _detail(session, updated)
+
+
+@router.patch("/portfolios/{pid}/checklists/{cid}/rename", response_model=ChecklistOut)
+async def rename_checklist_route(
+    pid: uuid.UUID,
+    cid: uuid.UUID,
+    body: RenameRequest,
+    ctx: Annotated[AuthContext, Depends(authorize(Action.CHECKLIST_MANAGE))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> Checklist:
+    """Rename this portfolio's checklist (local — other portfolios' copies are untouched)."""
+    cl = await _get_checklist(session, pid, cid)
+    renamed = await service.rename_checklist(session, cl, body.name.strip())
+    await record_audit(
+        session, actor_id=ctx.user.id, action="checklist.rename",
+        entity="checklist", entity_id=renamed.id, meta={"name": body.name.strip()},
+    )
+    await session.commit()
+    return renamed
+
+
+@router.delete("/portfolios/{pid}/checklists/{cid}", status_code=status.HTTP_204_NO_CONTENT)
+async def delete_checklist_route(
+    pid: uuid.UUID,
+    cid: uuid.UUID,
+    ctx: Annotated[AuthContext, Depends(authorize(Action.CHECKLIST_DELETE))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> None:
+    """Delete a checklist (ADMIN only). Soft-delete: hidden everywhere but the rows are kept so
+    reports/CSVs judged against it still resolve. The portfolio's default cannot be deleted."""
+    cl = await _get_checklist(session, pid, cid)
+    if cl.is_default:
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="the portfolio's default checklist can't be deleted",
+        )
+    await service.soft_delete_checklist(session, cl)
+    await record_audit(
+        session, actor_id=ctx.user.id, action="checklist.delete",
+        entity="checklist", entity_id=cl.id, meta={"family_id": str(cl.family_id)},
+    )
+    await session.commit()
 
 
 @router.get("/portfolios/{pid}/checklists/{cid}/export.csv")
