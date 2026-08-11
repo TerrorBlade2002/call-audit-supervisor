@@ -11,6 +11,9 @@ venv/
 .claude/
 .devdata/
 
+# Local-machine compose overrides (ports, etc.) — per-developer, not shared
+docker-compose.override.yml
+
 # Node / frontend
 node_modules/
 frontend/dist/
