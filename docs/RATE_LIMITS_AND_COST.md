@@ -5,10 +5,13 @@ environment-overridable** — change a value in Railway variables and restart; n
 change, no redeploy of logic. The defaults are sized for the PRD reference volume with
 deliberate safety margin under vendor quotas.
 
-> ⚠️ Two inputs are unverified per §19 and **must be confirmed before they bind cost**:
-> `gemini-3.1-pro` pricing/availability on the Developer API, and your contracted
-> AssemblyAI async rate. The numbers below use the PRD's proxy figures. When you confirm
-> the real ones, update the env vars — the *shape* of the plan does not change.
+> ⚠️ One input is unverified per §19 and **must be confirmed before it binds cost**: your
+> contracted AssemblyAI async rate. The numbers below use the PRD's proxy figures. When you
+> confirm the real one, update the env vars — the *shape* of the plan does not change.
+>
+> The judge now runs on **`gemini-3.6-flash`** (stable), not `gemini-3.1-pro-preview`. The
+> §6 cost envelope below still reflects Pro-tier proxy pricing and is therefore
+> **conservative** — actual spend on Flash is materially lower. See §6.
 
 ---
 
@@ -61,21 +64,21 @@ than assumed.
 ### Gemini (LLM judge)
 | Var | Default | Rationale |
 |---|---|---|
-| `GEMINI_RPM` | 120 | ~48× the ~2.5 calls/min steady rate — absorbs bursts while staying under a typical paid Tier-1 RPM. Lower it if your tier is tighter. |
-| `GEMINI_TPM` | 1,000,000 | Proxy from 2.5-Pro tier; judge load is ~3% of this. Headroom for narrative bursts. |
-| `GEMINI_RPD` | 8,000 | Soft daily request guard. 600 judge calls/day + narratives + distillation sit well under it. |
-| `GEMINI_MAX_CONCURRENCY` | 8 | Bounds in-flight LLM sockets per worker. 8 × ~10s/call ≈ 48 calls/min capacity ≫ demand. |
+| `GEMINI_RPM` | 60 | ~24× the ~2.5 calls/min steady rate — absorbs bursts while staying under a typical paid Tier-1 RPM. Lower it if your tier is tighter. |
+| `GEMINI_TPM` | 1,000,000 | Judge load is ~3% of this. Headroom for narrative bursts. |
+| `GEMINI_RPD` | 4,000 | Soft daily request guard. 600 judge calls/day + narratives + distillation sit well under it. |
+| `GEMINI_MAX_CONCURRENCY` | 4 | Bounds in-flight LLM sockets per worker. Sustained throughput ≈ concurrency × 60 / judge latency; raise this first when you scale past the pilot. |
 
 ### AssemblyAI (STT)
 | Var | Default | Rationale |
 |---|---|---|
-| `AAI_MAX_INFLIGHT` | 32 | Concurrent in-flight async transcripts. Submit-and-webhook means these aren't busy threads; 32 clears a 150-call hour comfortably as transcripts finish and webhooks drain. Sits under typical account concurrency (often 200). |
+| `AAI_MAX_INFLIGHT` | 8 | Concurrent in-flight async transcripts. Submit-and-webhook means these aren't busy threads. Sized for the pilot; sits far under typical account concurrency (often 200), so this is the safest knob to raise for throughput. |
 | `AAI_RPM` | 60 | Submission requests/min. 2.5/min steady; 60 absorbs a batch-upload burst. |
 
 ### Per-portfolio daily cap
 | Var | Default | Rationale |
 |---|---|---|
-| `DAILY_CAP_PER_PORTFOLIO` | 300 | = full-volume per-portfolio/day. **For the $100 pilot, set ~85** (one portfolio, ~8–9 recordings/agent/day) — see §14.2. Over-cap calls **defer**, they don't fail. |
+| `DAILY_CAP_PER_PORTFOLIO` | 100 | Pilot default (~10 agents × ~10 recordings/day) — caps worst-case spend while allowing real testing. Full volume is ~300; raise via env when you go live. Over-cap calls **defer**, they don't fail. |
 
 ### Retry / backoff
 | Var | Default | Rationale |
@@ -88,7 +91,7 @@ than assumed.
 ### Worker loop
 | Var | Default | Rationale |
 |---|---|---|
-| `WORKER_CLAIM_BATCH` | 8 | Matches `GEMINI_MAX_CONCURRENCY`; the loop never claims more than it can work. |
+| `WORKER_CLAIM_BATCH` | 8 | Jobs claimed per loop pass. Currently 2× `GEMINI_MAX_CONCURRENCY` (4), so the surplus waits on the concurrency semaphore rather than the vendor — harmless, but keep the lease (300s) comfortably above the time a queued job may sit. |
 | `WORKER_LEASE_SECONDS` | 300 | Lease > longest single step. Crash → lease expires in ≤5 min → job reclaimed. |
 | `RECONCILER_INTERVAL_SECONDS` | 30 | Sweep every 30 sec for overdue transcripts / stuck leases. |
 | `RECONCILER_TRANSCRIPT_OVERDUE_SECONDS` | 60 | A transcript with no webhook after 1 min is polled directly (lost-webhook recovery). |
@@ -136,8 +139,13 @@ Per the PRD: **~$0.038–0.048 per 5-min call** all-in (lean→rich).
 | Full (lean, narrative lazy) | 13,200 | ~$495 | ~$30 | ~$520–565 |
 | Full (rich, narrative always) | 13,200 | ~$760 | ~$30 | ~$790–830 |
 
-**Levers (priority order, §14.3):** lazy narrative → distilled rubric → add a Flash tier
-(the routing seam already exists; prepend a tier in config) → AssemblyAI webhooks (no idle
+These figures assume Pro-tier proxy pricing. The judge now runs on **`gemini-3.6-flash`**,
+so every LLM row above is an **overestimate** — treat the totals as a ceiling, and reconfirm
+against the live Gemini pricing page before you commit to a number.
+
+**Levers (priority order, §14.3):** lazy narrative → distilled rubric → ~~add a Flash tier~~
+(**done** — Flash is now `GEMINI_MODEL_PRIMARY`; the routing seam remains, so a Pro tier can
+be prepended for escalation-only if quality demands it) → AssemblyAI webhooks (no idle
 billing) → daily caps. To scale the pilot up: **raise `DAILY_CAP_PER_PORTFOLIO`** — a
 config change, not an engineering one.
 

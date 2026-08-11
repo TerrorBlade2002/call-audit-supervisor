@@ -67,7 +67,7 @@ Either way, note the DB's connection details (Railway exposes `PGUSER`, `PGPASSW
    DATABASE_URL=postgresql+asyncpg://${{Postgres.PGUSER}}:${{Postgres.PGPASSWORD}}@${{Postgres.RAILWAY_PRIVATE_DOMAIN}}:5432/${{Postgres.PGDATABASE}}
    JWT_SECRET=<your strong secret>
    GEMINI_API_KEY=<...>
-   GEMINI_MODEL_PRIMARY=gemini-3.1-pro-preview
+   GEMINI_MODEL_PRIMARY=gemini-3.6-flash
    GEMINI_EMBEDDING_MODEL=gemini-embedding-001
    ASSEMBLYAI_API_KEY=<...>
    ASSEMBLYAI_WEBHOOK_SECRET=<random string>

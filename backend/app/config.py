@@ -118,8 +118,12 @@ class Settings(BaseSettings):
         default="https://api.assemblyai.com", alias="ASSEMBLYAI_BASE_URL"
     )
     gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
+    # Drives all four judge agents (checklist, merged, feedback, ideal rewriter). Flash is the
+    # §14.3 cost lever: it keeps the multimodal audio input, structured outputs and thinking
+    # the agents rely on, at a fraction of Pro's per-token price. It is also STABLE, where
+    # gemini-3.1-pro-preview was a preview model with no deprecation guarantee.
     gemini_model_primary: str = Field(
-        default="gemini-3.1-pro-preview", alias="GEMINI_MODEL_PRIMARY"
+        default="gemini-3.6-flash", alias="GEMINI_MODEL_PRIMARY"
     )
     gemini_embedding_model: str = Field(
         default="gemini-embedding-001", alias="GEMINI_EMBEDDING_MODEL"

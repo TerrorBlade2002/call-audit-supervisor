@@ -31,7 +31,7 @@ router tuning. AssemblyAI and Gemini are real clients behind Protocols, with det
 stubs for local dev / CI when no keys are set — the only deploy-time blanks are the API
 keys, R2 creds, and the public webhook URL. CI runs lint + types + tests + the eval gate.
 
-**The judge is multimodal.** `GeminiJudge` (google-genai SDK, `gemini-3.1-pro-preview`,
+**The judge is multimodal.** `GeminiJudge` (google-genai SDK, `gemini-3.6-flash`,
 Developer API, extended thinking) receives the **recording audio *and* the transcript**, so
 it judges tone/empathy/talk-over a transcript can't capture. Anti-bias by design: the judge
 only *evaluates* (every PASS/FAIL must cite a verbatim quote — no evidence, no fail); the
