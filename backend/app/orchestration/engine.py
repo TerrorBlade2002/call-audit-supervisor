@@ -18,6 +18,7 @@ from sqlalchemy.ext.asyncio import AsyncSession
 from app.config import Settings
 from app.judge.client import JudgeClient
 from app.judge.embeddings import Embedder
+from app.judge.gemini import AudioUploader
 from app.judge.merged import MergedGenerator
 from app.judge.narrative import NarrativeGenerator
 from app.judge.routing import RoutingConfig
@@ -63,6 +64,8 @@ class EngineDeps:
     merged: MergedGenerator | None = None
     subjective: SubjectiveGenerator | None = None
     rewriter: NarrativeGenerator | None = None
+    # Files API uploader for judge audio (None → inline bytes, the pre-Files-API behavior).
+    audio_uploader: AudioUploader | None = None
 
     def routing_config(self) -> RoutingConfig:
         r = self.settings.router
@@ -128,6 +131,7 @@ async def process_one(session: AsyncSession, job: ClaimedJob, deps: EngineDeps) 
                 merged=deps.merged,
                 subjective=deps.subjective,
                 rewriter=deps.rewriter,
+                audio_uploader=deps.audio_uploader,
             )
         else:  # defensive: a non-claimable state should never be claimed
             from app.ratelimit.backoff import FatalError

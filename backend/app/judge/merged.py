@@ -14,7 +14,12 @@ from google.genai import types
 
 from app.config import RateLimitSettings
 from app.judge.client import JudgeItem, _checklist_lines, _transcript_text
-from app.judge.gemini import AudioRef, response_schema_kwargs, translate_genai_error
+from app.judge.gemini import (
+    AudioRef,
+    audio_part,
+    response_schema_kwargs,
+    translate_genai_error,
+)
 from app.judge.prompts import (
     IMPARTIALITY_DIRECTIVE,
     MERGED_AGENT_PROMPT,
@@ -120,7 +125,7 @@ class GeminiMerged:
     ) -> MergedOut:
         parts: list[types.Part] = []
         if audio is not None:
-            parts.append(types.Part.from_bytes(data=audio.data, mime_type=audio.mime_type))
+            parts.append(audio_part(audio))
         parts.append(types.Part.from_text(text=self._prompt(transcript, items, kb)))
         # A custom (admin-authored) schema replaces the built-in one as the response contract;
         # its extra fields survive into model_passes (extra='allow') for the report template.

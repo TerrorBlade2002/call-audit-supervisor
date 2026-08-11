@@ -13,7 +13,12 @@ from typing import Any, Protocol
 from google.genai import types
 
 from app.config import RateLimitSettings
-from app.judge.gemini import AudioRef, response_schema_kwargs, translate_genai_error
+from app.judge.gemini import (
+    AudioRef,
+    audio_part,
+    response_schema_kwargs,
+    translate_genai_error,
+)
 from app.judge.prompts import (
     FEEDBACK_AGENT_PROMPT,
     FEEDBACK_OUTPUT_DIRECTIVE,
@@ -109,7 +114,7 @@ class GeminiSubjective:
     ) -> dict[str, Any]:
         parts: list[types.Part] = []
         if audio is not None:
-            parts.append(types.Part.from_bytes(data=audio.data, mime_type=audio.mime_type))
+            parts.append(audio_part(audio))
         parts.append(types.Part.from_text(text=self._prompt(transcript, kb)))
         schema_kw = response_schema_kwargs(FeedbackOut, schema_override)
         config = types.GenerateContentConfig(

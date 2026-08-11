@@ -17,7 +17,7 @@ import structlog
 from app.config import settings
 from app.judge.client import GeminiJudge, JudgeClient, StubJudge
 from app.judge.embeddings import Embedder, GeminiEmbedder, StubEmbedder
-from app.judge.gemini import build_gemini_client
+from app.judge.gemini import AudioUploader, GeminiFileUploader, build_gemini_client
 from app.judge.merged import GeminiMerged, MergedGenerator, StubMerged
 from app.judge.narrative import GeminiNarrative, NarrativeGenerator, StubNarrative
 from app.judge.subjective import GeminiSubjective, StubSubjective, SubjectiveGenerator
@@ -101,6 +101,18 @@ def _build_merged(gclient: object) -> MergedGenerator:
     )
 
 
+def _build_audio_uploader(gclient: object) -> AudioUploader | None:
+    """Files API uploader when Gemini is real and the flag is on; None → inline bytes."""
+    if gclient is None or not settings.gemini_use_files_api:
+        return None
+    return GeminiFileUploader(
+        client=gclient,
+        retry=settings.ratelimit,
+        poll_seconds=settings.gemini_file_poll_seconds,
+        timeout_seconds=settings.gemini_file_timeout_seconds,
+    )
+
+
 def _build_embedder(http: httpx.AsyncClient) -> Embedder:
     if not settings.gemini_api_key:
         return StubEmbedder()
@@ -128,6 +140,7 @@ def build_deps(http: httpx.AsyncClient) -> EngineDeps:
         merged=_build_merged(gclient),
         subjective=_build_subjective(gclient),
         rewriter=_build_rewriter(gclient),
+        audio_uploader=_build_audio_uploader(gclient),
     )
 
 
@@ -140,6 +153,7 @@ async def run() -> None:
         env=settings.env,
         worker_id=worker_id,
         gemini_rpm=settings.ratelimit.gemini_rpm,
+        gemini_files_api=deps.audio_uploader is not None,
         aai_inflight=settings.ratelimit.aai_max_inflight,
         daily_cap=settings.ratelimit.daily_cap_per_portfolio,
     )

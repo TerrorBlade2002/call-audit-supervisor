@@ -11,11 +11,12 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass
 
+import structlog
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.judge.client import JudgeClient
 from app.judge.embeddings import Embedder
-from app.judge.gemini import AudioRef, audio_mime_for
+from app.judge.gemini import AudioRef, AudioUploader, audio_mime_for
 from app.judge.merged import MergedGenerator
 from app.judge.narrative import NarrativeGenerator
 from app.judge.options import ProcessingOption, needs_judge
@@ -29,6 +30,8 @@ from app.ratelimit.backoff import FatalError
 from app.ratelimit.buckets import Limiters
 from app.ratelimit.caps import DailyCap
 from app.storage import StorageService
+
+log = structlog.get_logger("orchestration.handlers")
 
 
 @dataclass(frozen=True)
@@ -103,6 +106,32 @@ async def handle_transcription(
     return Park(transcript_id=transcript_id)
 
 
+async def _resolve_audio(
+    job: JobView, storage: StorageService, uploader: AudioUploader | None
+) -> AudioRef | None:
+    """The AudioRef the agents receive: Files API reference when possible, else inline.
+
+    Uploaded once per job — every agent in the pipeline (merged/checklist + escalation)
+    references the same file instead of re-sending the bytes. Any upload failure falls
+    back to inline bytes, which is exactly the pre-Files-API behavior.
+    """
+    audio_bytes = await storage.get_audio_bytes(job.audio_uri)
+    if not audio_bytes:
+        return None  # unavailable → agents degrade gracefully to text-only
+    mime = audio_mime_for(job.audio_uri)
+    if uploader is not None:
+        try:
+            return await uploader.upload(audio_bytes, mime)
+        except Exception as exc:  # noqa: BLE001 — fallback keeps the job moving
+            log.warning(
+                "judge.files_api_fallback_inline",
+                call_id=str(job.call_id),
+                bytes=len(audio_bytes),
+                error=str(exc)[:200],
+            )
+    return AudioRef(audio_bytes, mime)
+
+
 async def handle_judge(
     job: JobView,
     *,
@@ -117,6 +146,7 @@ async def handle_judge(
     merged: MergedGenerator | None = None,
     subjective: SubjectiveGenerator | None = None,
     rewriter: NarrativeGenerator | None = None,
+    audio_uploader: AudioUploader | None = None,
 ) -> StepOutcome:
     """PENDING_JUDGE → materialize the transcript (once), then run the OPTION's pipeline, DONE.
 
@@ -141,29 +171,36 @@ async def handle_judge(
         return Complete()  # RAW_ONLY — transcript stored, nothing else to produce
 
     # Multimodal: hand the recording audio to the agents (None when unavailable → text-only).
-    audio_bytes = await storage.get_audio_bytes(job.audio_uri)
-    audio = AudioRef(audio_bytes, audio_mime_for(job.audio_uri)) if audio_bytes else None
+    # Files API when available (uploaded once, referenced by every agent), inline as fallback.
+    audio = await _resolve_audio(job, storage, audio_uploader)
     kb_doc_ids = (
         [uuid.UUID(str(x)) for x in call.kb_doc_ids] if call and call.kb_doc_ids else None
     )
 
-    async with limiters.gemini.guard(est_tokens=JUDGE_TOKEN_ESTIMATE):
-        await judge_call(
-            session,
-            call_id=job.call_id,
-            portfolio_id=job.portfolio_id,
-            agent_id=call.agent_id if call else None,
-            transcript=transcript,
-            option=option,
-            judge=judge,
-            merged_gen=merged,
-            subjective_gen=subjective,
-            rewriter_gen=rewriter,
-            embedder=embedder,
-            routing_config=routing_config,
-            escalation_judge=escalation_judge,
-            audio=audio,
-            checklist_id=call.checklist_id if call else None,
-            kb_doc_ids=kb_doc_ids,
-        )
+    try:
+        async with limiters.gemini.guard(est_tokens=JUDGE_TOKEN_ESTIMATE):
+            await judge_call(
+                session,
+                call_id=job.call_id,
+                portfolio_id=job.portfolio_id,
+                agent_id=call.agent_id if call else None,
+                transcript=transcript,
+                option=option,
+                judge=judge,
+                merged_gen=merged,
+                subjective_gen=subjective,
+                rewriter_gen=rewriter,
+                embedder=embedder,
+                routing_config=routing_config,
+                escalation_judge=escalation_judge,
+                audio=audio,
+                checklist_id=call.checklist_id if call else None,
+                kb_doc_ids=kb_doc_ids,
+            )
+    finally:
+        # Post-job hygiene: drop the uploaded file (best-effort — auto-expires in 48 h).
+        # Kept on retry-able failures too: the retry re-uploads, which is simpler and safer
+        # than tracking cross-attempt file state on the job row.
+        if audio_uploader is not None and audio is not None and audio.file_name:
+            await audio_uploader.delete(audio.file_name)
     return Complete()

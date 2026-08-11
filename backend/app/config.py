@@ -124,6 +124,15 @@ class Settings(BaseSettings):
     gemini_embedding_model: str = Field(
         default="gemini-embedding-001", alias="GEMINI_EMBEDDING_MODEL"
     )
+    # Gemini Files API for judge audio: upload the recording once per job and reference it
+    # in every agent call, instead of re-sending inline bytes (which also hit the Developer
+    # API's ~20 MB request ceiling on long calls). Falls back to inline bytes per job if an
+    # upload fails, so turning this off (or an outage) reverts to the old behavior exactly.
+    gemini_use_files_api: bool = Field(default=True, alias="GEMINI_USE_FILES_API")
+    gemini_file_poll_seconds: float = Field(default=2.0, alias="GEMINI_FILE_POLL_SECONDS")
+    gemini_file_timeout_seconds: float = Field(
+        default=120.0, alias="GEMINI_FILE_TIMEOUT_SECONDS"
+    )
 
     # Auth
     oidc_issuer: str = Field(default="", alias="OIDC_ISSUER")
