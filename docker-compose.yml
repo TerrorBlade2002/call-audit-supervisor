@@ -21,6 +21,10 @@ services:
     build:
       context: .
       dockerfile: Dockerfile.api
+      args:
+        # Default 1 (full parity with Railway). Set INSTALL_CHROMIUM=0 in the shell env on
+        # networks that block the Debian mirrors — PDF export 503s; everything else works.
+        INSTALL_CHROMIUM: ${INSTALL_CHROMIUM:-1}
     env_file: .env
     environment:
       DATABASE_URL: postgresql+asyncpg://everest:everest@db:5432/everest

@@ -12,8 +12,15 @@ COPY alembic.ini ./
 RUN pip install --no-cache-dir -e .
 
 # Chromium for the PDF report export (app/reports/pdf.py). --with-deps pulls the OS libs
-# Chromium needs on slim. Drop these two lines if you don't need server-side PDF.
-RUN python -m playwright install --with-deps chromium
+# Chromium needs on slim. Build with INSTALL_CHROMIUM=0 to skip it (e.g. local builds on
+# networks that block the Debian mirrors) — PDF endpoints then return a graceful 503 and
+# the HTML report artifact remains the download fallback. apt goes over HTTPS because
+# some networks 403/reset plain-HTTP deb.debian.org.
+ARG INSTALL_CHROMIUM=1
+RUN if [ "$INSTALL_CHROMIUM" = "1" ]; then \
+      sed -i 's|http://|https://|g' /etc/apt/sources.list.d/debian.sources \
+      && python -m playwright install --with-deps chromium; \
+    else echo "skipping Chromium install (INSTALL_CHROMIUM=0)"; fi
 
 # Release runs migrations, then serves. (Railway "release command" can also run migrations.)
 # Migration 0001 builds the FULL current schema via Base.metadata.create_all(), so the
