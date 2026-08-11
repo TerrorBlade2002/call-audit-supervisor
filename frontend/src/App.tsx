@@ -214,7 +214,7 @@ export function App() {
       return (
         <div className="flex h-full flex-col items-center justify-center p-8 text-center">
           <span className="mb-3 text-4xl">📂</span>
-          <h2 className="text-lg font-semibold text-ink">Welcome to Everest Auditor</h2>
+          <h2 className="text-lg font-semibold text-ink">Welcome to Supervisor Call Monitoring</h2>
           <p className="mt-1 max-w-sm text-sm text-gray-500">
             Pick a portfolio on the left to see its folders, then open a folder to review its calls.
           </p>
@@ -236,7 +236,7 @@ export function App() {
     <div style={APP_BACKDROP} className="flex h-screen flex-col">
       <header className="relative z-50 flex items-center justify-between border-b border-white/30 bg-white/30 px-5 py-3 backdrop-blur-xl">
         <div className="flex items-center gap-2">
-          <span className="text-lg font-bold text-[#3a2417]">Everest Auditor</span>
+          <span className="text-lg font-bold text-[#3a2417]">Supervisor Call Monitoring</span>
         </div>
         <div className="flex items-center gap-3 text-sm text-[#4a3322]">
           {pid && caps.canManage && <ExportMenu portfolioId={pid} />}
