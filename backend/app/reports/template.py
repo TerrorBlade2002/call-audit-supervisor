@@ -54,6 +54,7 @@ _TURN_FIELDS: dict[str, Any] = {"speaker": "scalar", "text": "scalar"}
 DATA_FIELDS: dict[str, Any] = {
     "agent_name": "scalar",
     "call_id": "scalar",
+    "recording_filename": "scalar",  # uploader's file name ("" for pre-0014 calls)
     "generated": "scalar",
     "option": "scalar",
     "flagged_for_review": "bool",
@@ -309,6 +310,7 @@ def build_context(
     return {
         "agent_name": agent_name,
         "call_id": str(report.call_id)[:8],
+        "recording_filename": report.original_filename or "",
         "generated": (created_at or datetime.utcnow()).strftime("%B %d, %Y"),
         "option": report.option or "",
         "flagged_for_review": bool(report.flagged_for_review),

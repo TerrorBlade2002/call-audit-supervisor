@@ -98,6 +98,10 @@ class PresignResponse(BaseModel):
 class CallRegisterItem(BaseModel):
     key: str = Field(min_length=1)
     duration_sec: int | None = Field(default=None, ge=0)
+    # The client echoes back the original file name from the presign step (the object key itself
+    # is a UUID and can't carry it). Optional so older clients keep working — the call just has
+    # no recording name and falls back to the short call id, as before.
+    filename: str | None = Field(default=None, max_length=400)
 
 
 class CallRegisterRequest(BaseModel):
@@ -107,6 +111,7 @@ class CallRegisterRequest(BaseModel):
 class CallOut(ORMModel):
     id: uuid.UUID
     agent_id: uuid.UUID
+    original_filename: str | None = None  # uploader's file name; None for pre-0014 calls
     duration_sec: int | None
     batch_id: uuid.UUID | None
     status: str | None  # job state: PENDING_TRANSCRIPTION/AWAITING_TRANSCRIPT/.../DONE/FAILED
@@ -233,6 +238,7 @@ class ObjectionLogOut(BaseModel):
     text: str
     agent: str | None = None
     cleared: bool = False
+    original_filename: str | None = None  # source recording; None for pre-0014 calls
 
 
 class TranscriptLogOut(BaseModel):
@@ -392,6 +398,8 @@ class ReportObjectionOut(BaseModel):
 class ReportOut(BaseModel):
     id: uuid.UUID
     call_id: uuid.UUID
+    # The recording this report was produced from, so a report is traceable to its source file.
+    original_filename: str | None = None
     checklist_id: uuid.UUID | None = None  # null for feedback-only (FEEDBACK_IDEAL) reports
     option: str | None = None  # the OPTION that produced this report (drives which sections show)
     agent_name: str | None = None   # extracted from the transcript (Agent 1)

@@ -209,7 +209,22 @@ export function CallsPane({
                 <tbody>
                   {g.calls.map((c) => (
                     <tr key={c.id} className="border-t border-gray-200/50 first:border-t-0">
-                      <td className="px-4 py-2 font-mono text-xs text-gray-600">{c.id.slice(0, 8)}</td>
+                      {/* The uploaded file name is how a user recognizes a call; the short id is
+                          only a fallback for calls registered before names were captured. */}
+                      <td className="max-w-[22rem] px-4 py-2">
+                        {c.original_filename ? (
+                          <span
+                            className="block truncate text-xs text-gray-700"
+                            title={c.original_filename}
+                          >
+                            {c.original_filename}
+                          </span>
+                        ) : (
+                          <span className="font-mono text-xs text-gray-500" title="No file name recorded for this call">
+                            {c.id.slice(0, 8)}
+                          </span>
+                        )}
+                      </td>
                       <td className="px-4 py-2">
                         <div className="flex items-center gap-2">
                           {!isTerminal(c.status) && <Spinner />}

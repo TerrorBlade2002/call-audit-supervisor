@@ -19,6 +19,8 @@ export interface Agent {
 export interface Call {
   id: string;
   agent_id: string;
+  /** Uploader's file name. null for calls registered before it was captured — show the id. */
+  original_filename: string | null;
   duration_sec: number | null;
   batch_id: string | null;
   status: string | null;
@@ -54,6 +56,8 @@ export interface ReportObjection {
 export interface Report {
   id: string;
   call_id: string;
+  /** The recording this report came from. null for calls predating filename capture. */
+  original_filename: string | null;
   checklist_id: string | null;
   option: string | null;
   agent_name: string | null;
@@ -119,6 +123,7 @@ export interface ObjectionLogEntry {
   text: string;
   agent: string | null;
   cleared: boolean;
+  original_filename: string | null;
 }
 export interface TranscriptLogEntry {
   call_id: string;
@@ -366,10 +371,12 @@ export const api = {
       method: "POST",
       body: JSON.stringify({ files: filenames.map((filename) => ({ filename })) }),
     }),
-  registerCalls: (pid: string, aid: string, keys: string[]) =>
+  // The object key is a UUID, so the original file name is echoed back from the presign step —
+  // otherwise the call has no human-readable link to the file that was uploaded.
+  registerCalls: (pid: string, aid: string, items: { key: string; filename?: string }[]) =>
     req<{ batch_id: string; calls: Call[] }>(`/portfolios/${pid}/agents/${aid}/calls`, {
       method: "POST",
-      body: JSON.stringify({ items: keys.map((key) => ({ key })) }),
+      body: JSON.stringify({ items }),
     }),
   // Server-side upload proxy: bytes go browser → API → R2 (no bucket CORS needed). The
   // request fails loudly if a file doesn't land, instead of silently registering an

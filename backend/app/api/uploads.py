@@ -17,7 +17,7 @@ from fastapi import APIRouter, Depends, File, Form, HTTPException, UploadFile, s
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
-from app.api.calls import assert_inflight_quota, register_keys
+from app.api.calls import UploadedKey, _clean_filename, assert_inflight_quota, register_keys
 from app.authz import AuthContext, authorize
 from app.config import settings
 from app.db import get_session
@@ -146,7 +146,7 @@ async def upload_recordings(
     await assert_inflight_quota(session, pid, len(files))
 
     storage = build_storage(settings)
-    registered: list[tuple[str, int | None]] = []
+    registered: list[UploadedKey] = []
     for f in files:
         data = await f.read()
         if not data:
@@ -162,7 +162,8 @@ async def upload_recordings(
         filename = PurePosixPath(f.filename or "recording").name
         key = recording_key(pid, aid, filename)
         await storage.put_recording(key, data, _audio_content_type(filename, f.content_type))
-        registered.append((key, None))
+        # Keep the uploader's name — the key itself is a UUID, so this is the only link back.
+        registered.append((key, None, _clean_filename(f.filename)))
 
     return await register_keys(
         session, pid=pid, aid=aid, keys=registered, uploaded_by=ctx.user.id,

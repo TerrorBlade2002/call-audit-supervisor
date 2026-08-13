@@ -11,6 +11,7 @@ from fastapi import APIRouter, Depends, Response
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api import csv_safe
 from app.authz import AuthContext, authorize
 from app.db import get_session
 from app.judge.clustering import cluster_objections
@@ -29,6 +30,7 @@ async def _objection_log(session: AsyncSession, pid: uuid.UUID) -> list[Objectio
             select(
                 Report.call_id, Call.created_at, Objection.text,
                 Report.agent_name, Agent.name, Objection.cleared,
+                Call.original_filename,
             )
             .join(Report, Report.id == Objection.report_id)
             .join(Call, Call.id == Report.call_id)
@@ -39,9 +41,10 @@ async def _objection_log(session: AsyncSession, pid: uuid.UUID) -> list[Objectio
     ).all()
     return [
         ObjectionLogOut(
-            call_id=c, created_at=t, text=x, agent=(agent_name or folder), cleared=cleared
+            call_id=c, created_at=t, text=x, agent=(agent_name or folder), cleared=cleared,
+            original_filename=filename,
         )
-        for c, t, x, agent_name, folder, cleared in rows
+        for c, t, x, agent_name, folder, cleared, filename in rows
     ]
 
 
@@ -82,9 +85,10 @@ async def export_objection_log_csv(
     rows = await _objection_log(session, pid)
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow(["Call ID", "Agent", "Status", "Uploaded", "Objection"])
+    writer.writerow(["Recording", "Call ID", "Agent", "Status", "Uploaded", "Objection"])
     for r in rows:
         writer.writerow([
+            csv_safe(r.original_filename) or "—",
             str(r.call_id), r.agent or "—", "PASS" if r.cleared else "FAIL",
             r.created_at.isoformat(), r.text,
         ])

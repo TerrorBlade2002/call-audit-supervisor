@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import uuid
 from datetime import datetime
+from pathlib import PurePosixPath
 from typing import Annotated
 
 from fastapi import APIRouter, Depends, HTTPException, Response, status
@@ -34,6 +35,27 @@ _notifier = PgNotifier()
 # Per-portfolio in-flight cap (NFR3): at most this many recordings may be processing at once
 # across the whole portfolio. A recording is "in-flight" until its job reaches a terminal state.
 MAX_INFLIGHT_PER_PORTFOLIO = 10
+
+# One uploaded recording ready to register: (object key, duration_sec, original file name).
+# The name is optional — a client that doesn't send it leaves the call without a recording name.
+UploadedKey = tuple[str, int | None, str | None]
+
+_FILENAME_MAX = 400
+
+
+def _clean_filename(raw: str | None) -> str | None:
+    """Normalize a client-supplied recording name before it is stored.
+
+    The name is echoed into HTML reports and CSV exports, so it is reduced to a bare basename
+    here: any directory component is dropped (a browser may send a relative path for a folder
+    upload) and control characters — including the newlines that would break a CSV row — are
+    stripped. Returns None for anything that normalizes to empty.
+    """
+    if not raw:
+        return None
+    name = PurePosixPath(raw.replace("\\", "/")).name
+    name = "".join(ch for ch in name if ch.isprintable()).strip()
+    return name[:_FILENAME_MAX] or None
 _TERMINAL_STATES = (JobState.DONE.value, JobState.FAILED.value)
 
 
@@ -108,7 +130,7 @@ async def register_calls(
         session,
         pid=pid,
         aid=aid,
-        keys=[(item.key, item.duration_sec) for item in body.items],
+        keys=[(item.key, item.duration_sec, _clean_filename(item.filename)) for item in body.items],
         uploaded_by=ctx.user.id,
     )
 
@@ -133,7 +155,7 @@ async def register_keys(
     *,
     pid: uuid.UUID,
     aid: uuid.UUID,
-    keys: list[tuple[str, int | None]],
+    keys: list[UploadedKey],
     uploaded_by: uuid.UUID,
     option: ProcessingOption = ProcessingOption.FULL,
     checklist_id: uuid.UUID | None = None,
@@ -148,11 +170,12 @@ async def register_keys(
     batch_id = uuid.uuid4()
     kb_ids = [str(x) for x in kb_doc_ids] if kb_doc_ids else None
     created_ids: list[uuid.UUID] = []
-    for key, duration in keys:
+    for key, duration, filename in keys:
         call = Call(
             agent_id=aid,
             portfolio_id=pid,
             r2_audio_uri=key,
+            original_filename=filename,
             duration_sec=duration,
             batch_id=batch_id,
             uploaded_by=uploaded_by,
@@ -288,6 +311,7 @@ def _to_call_out(
     return CallOut(
         id=call.id,
         agent_id=call.agent_id,
+        original_filename=call.original_filename,
         duration_sec=call.duration_sec,
         batch_id=call.batch_id,
         status=state,

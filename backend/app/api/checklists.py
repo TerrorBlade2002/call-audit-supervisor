@@ -19,6 +19,7 @@ from fastapi import APIRouter, Depends, File, HTTPException, Response, UploadFil
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
+from app.api import csv_safe
 from app.audit import record_audit
 from app.authz import AuthContext, authorize
 from app.checklists import is_free_text, service
@@ -185,6 +186,7 @@ async def export_checklist_csv(
                 func.coalesce(Call.agent_name_override, Report.agent_name),
                 Call.created_at,
                 Agent.name,
+                Call.original_filename,
             )
             .join(Call, Call.id == Report.call_id)
             .join(Agent, Agent.id == Call.agent_id, isouter=True)
@@ -232,11 +234,17 @@ def _csv_response(
 ) -> Response:
     buf = io.StringIO()
     writer = csv.writer(buf)
-    writer.writerow(["Call ID", "Agent", "Uploaded", *columns])
-    for rid, call_id, agent_name, uploaded, folder in rep_rows:
+    writer.writerow(["Recording", "Call ID", "Agent", "Uploaded", *columns])
+    for rid, call_id, agent_name, uploaded, folder, filename in rep_rows:
         name = agent_name or folder or "—"
         writer.writerow(
-            [str(call_id), name, uploaded.isoformat(), *[verdicts[rid].get(c, "") for c in columns]]
+            [
+                csv_safe(filename) or "—",
+                str(call_id),
+                name,
+                uploaded.isoformat(),
+                *[verdicts[rid].get(c, "") for c in columns],
+            ]
         )
     return Response(
         content=buf.getvalue(),
@@ -265,6 +273,7 @@ async def export_batch_csv(
                 func.coalesce(Call.agent_name_override, Report.agent_name),
                 Call.created_at,
                 Agent.name,
+                Call.original_filename,
                 Report.checklist_id,
             )
             .join(Call, Call.id == Report.call_id)
@@ -281,10 +290,10 @@ async def export_batch_csv(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="no checklist results for this batch"
         )
-    columns = [it.text for it in await service.get_items(session, rep_rows[0][5])]
+    columns = [it.text for it in await service.get_items(session, rep_rows[0][6])]
     verdicts = await _load_verdicts(session, [r[0] for r in rep_rows])
-    rows5 = [(r[0], r[1], r[2], r[3], r[4]) for r in rep_rows]
-    return _csv_response(rows5, columns, verdicts, f"batch_{str(batch_id)[:8]}_checklist.csv")
+    rows6 = [(r[0], r[1], r[2], r[3], r[4], r[5]) for r in rep_rows]
+    return _csv_response(rows6, columns, verdicts, f"batch_{str(batch_id)[:8]}_checklist.csv")
 
 
 @router.post("/portfolios/{pid}/checklists/parse", response_model=ParsedChecklistOut)

@@ -33,7 +33,7 @@ export function ObjectionsPanel({
         <table className="w-full text-sm">
           <thead className="bg-gray-50/90 text-left text-xs uppercase text-gray-500">
             <tr>
-              <th className="px-4 py-2">Call</th>
+              <th className="px-4 py-2">Recording</th>
               <th className="px-4 py-2">Agent</th>
               <th className="px-4 py-2">Status</th>
               <th className="px-4 py-2">Uploaded</th>
@@ -43,8 +43,14 @@ export function ObjectionsPanel({
           <tbody>
             {rows.map((r, i) => (
               <tr key={i} className="border-t border-gray-200/60">
-                <td className="px-4 py-2 font-mono text-xs text-gray-600">
-                  {r.call_id.slice(0, 8)}
+                <td className="max-w-[18rem] px-4 py-2">
+                  {r.original_filename ? (
+                    <span className="block truncate text-xs text-gray-700" title={r.original_filename}>
+                      {r.original_filename}
+                    </span>
+                  ) : (
+                    <span className="font-mono text-xs text-gray-500">{r.call_id.slice(0, 8)}</span>
+                  )}
                 </td>
                 <td className="px-4 py-2 text-ink">{r.agent ?? "—"}</td>
                 <td className="px-4 py-2">

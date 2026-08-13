@@ -275,6 +275,13 @@ export function ReportView({ reportId, onBack }: { reportId: string; onBack: () 
               </span>
             )}
           </div>
+          {/* Source recording — what ties this report back to the file that was uploaded. */}
+          {report.original_filename && (
+            <div className="mt-1 text-sm text-slate-400">
+              <span>Recording: </span>
+              <span className="font-medium text-slate-200">{report.original_filename}</span>
+            </div>
+          )}
           <div className="mt-4 flex flex-wrap justify-center gap-3">
             <Pill className={report.flagged_for_review ? "text-rose-300" : "text-emerald-300"}>
               {report.flagged_for_review ? "Flagged for Review" : "Reviewed"}

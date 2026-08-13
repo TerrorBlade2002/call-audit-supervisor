@@ -228,6 +228,11 @@ class Call(Base):
         ForeignKey("portfolios.id", ondelete="CASCADE"), nullable=False, index=True
     )
     r2_audio_uri: Mapped[str] = mapped_column(Text, nullable=False)
+    # The uploader's original file name (e.g. "AGT-1042_2026-07-28.mp3"). The R2 key is a random
+    # UUID for collision-safety, so this is the ONLY link back to the file the user uploaded —
+    # it's what the dashboard and the downloadable reports show. NULL for calls registered
+    # before this column existed (the name was never captured, so it can't be backfilled).
+    original_filename: Mapped[str | None] = mapped_column(String(400))
     r2_transcript_uri: Mapped[str | None] = mapped_column(Text)
     duration_sec: Mapped[int | None] = mapped_column(Integer)
     batch_id: Mapped[uuid.UUID | None] = mapped_column(UUID(as_uuid=True), index=True)

@@ -74,6 +74,7 @@ async def load_report(session: AsyncSession, report_id: uuid.UUID) -> ReportOut 
     return ReportOut(
         id=report.id,
         call_id=report.call_id,
+        original_filename=call.original_filename if call else None,
         checklist_id=report.checklist_id,
         option=report.option,
         agent_name=agent_name,

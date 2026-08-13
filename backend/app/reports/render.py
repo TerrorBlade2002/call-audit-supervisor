@@ -262,6 +262,13 @@ def render_report_html(
     qual = _overall(items, compliance=False)
     generated = (created_at or datetime.utcnow()).strftime("%B %d, %Y")
     flagged = report.flagged_for_review
+    # The uploaded recording's name — the only human-readable link from a report back to its
+    # source file. Omitted entirely for calls registered before it was captured.
+    recording_meta = (
+        f"<span><b>Recording:</b> {_esc(report.original_filename)}</span>"
+        if report.original_filename
+        else ""
+    )
 
     # (kind, title, inner) — kind drives the per-section filter.
     all_blocks: list[tuple[str, str, str]] = []
@@ -326,6 +333,7 @@ def render_report_html(
     <h1>Debt Collection Call Quality Report</h1>
     <div class="meta">
       <span><b>Agent:</b> {_esc(agent_name)}</span>
+      {recording_meta}
       <span><b>Call ID:</b> {_esc(str(report.call_id)[:8])}</span>
       <span><b>Generated:</b> {_esc(generated)}</span>
     </div>
