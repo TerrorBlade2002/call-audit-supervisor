@@ -96,8 +96,10 @@ async def test_registered_call_keeps_the_original_filename(client: AsyncClient) 
     )
     assert resp.status_code == 201, resp.text
     calls = resp.json()["calls"]
-    # Directory component dropped; the call without a name stays null rather than inventing one.
-    assert [c["original_filename"] for c in calls] == ["AGT-1042 call.mp3", None]
+    # Compared as a set: both rows are inserted in one transaction and ordered by created_at,
+    # so their relative order is not guaranteed. What matters is that the directory component
+    # is dropped and that the call with no name sent stays null rather than inventing one.
+    assert {c["original_filename"] for c in calls} == {"AGT-1042 call.mp3", None}
 
     listing = await client.get(f"/portfolios/{pid}/agents/{aid}/calls", headers=_auth(admin))
     assert {c["original_filename"] for c in listing.json()} == {"AGT-1042 call.mp3", None}
