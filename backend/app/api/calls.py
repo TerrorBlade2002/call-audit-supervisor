@@ -132,6 +132,7 @@ async def register_calls(
         aid=aid,
         keys=[(item.key, item.duration_sec, _clean_filename(item.filename)) for item in body.items],
         uploaded_by=ctx.user.id,
+        batch_id=body.batch_id,
     )
 
 
@@ -160,14 +161,20 @@ async def register_keys(
     option: ProcessingOption = ProcessingOption.FULL,
     checklist_id: uuid.UUID | None = None,
     kb_doc_ids: list[uuid.UUID] | None = None,
+    batch_id: uuid.UUID | None = None,
 ) -> CallRegisterResponse:
     """Create a call + PENDING_TRANSCRIPTION job per uploaded key, then commit.
 
     Shared by ``register_calls`` (presigned-direct keys) and the upload-proxy endpoint
     (server-uploaded keys), so both paths enqueue identically. The whole batch carries one
     processing OPTION + the checklist/KB selection that the pipeline reads per call (§7.3).
+
+    ``batch_id`` lets a caller add these calls to a batch it already started. The proxy upload
+    sends one file per request (a combined request would exceed the CDN's body limit), so the
+    first request creates the batch and the rest join it — keeping one upload = one batch for
+    the batch summary and the batch CSV.
     """
-    batch_id = uuid.uuid4()
+    batch_id = batch_id or uuid.uuid4()
     kb_ids = [str(x) for x in kb_doc_ids] if kb_doc_ids else None
     created_ids: list[uuid.UUID] = []
     for key, duration, filename in keys:

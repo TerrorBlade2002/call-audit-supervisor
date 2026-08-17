@@ -106,6 +106,10 @@ class CallRegisterItem(BaseModel):
 
 class CallRegisterRequest(BaseModel):
     items: list[CallRegisterItem] = Field(min_length=1, max_length=MAX_BATCH)
+    # Join a batch this client already started, instead of opening a new one. Recordings upload
+    # one request per file (a combined body exceeds the CDN's request limit), so the first
+    # request creates the batch and the rest pass its id here to stay grouped.
+    batch_id: uuid.UUID | None = None
 
 
 class CallOut(ORMModel):

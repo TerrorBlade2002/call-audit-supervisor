@@ -103,3 +103,31 @@ async def test_registered_call_keeps_the_original_filename(client: AsyncClient) 
 
     listing = await client.get(f"/portfolios/{pid}/agents/{aid}/calls", headers=_auth(admin))
     assert {c["original_filename"] for c in listing.json()} == {"AGT-1042 call.mp3", None}
+
+
+async def test_separate_registrations_can_share_one_batch(client: AsyncClient) -> None:
+    """Recordings upload one request per file, so they must be able to join an open batch.
+
+    Without this the batch summary and the batch CSV would see each file as its own batch.
+    """
+    admin = await _login(client, "admin@example.com", as_admin=True)
+    pid, aid = await _portfolio_and_agent(client, admin)
+
+    async def register(key: str, batch: str | None) -> dict[str, object]:
+        items: dict[str, object] = {"items": [{"key": f"{pid}/{aid}/{key}", "filename": key}]}
+        if batch is not None:
+            items["batch_id"] = batch
+        resp = await client.post(
+            f"/portfolios/{pid}/agents/{aid}/calls", json=items, headers=_auth(admin)
+        )
+        assert resp.status_code == 201, resp.text
+        return dict(resp.json())
+
+    first = await register("one.mp3", None)
+    batch = str(first["batch_id"])
+    second = await register("two.mp3", batch)
+
+    # The second registration joined the first one's batch instead of opening a new one.
+    assert str(second["batch_id"]) == batch
+    listing = await client.get(f"/portfolios/{pid}/agents/{aid}/calls", headers=_auth(admin))
+    assert {c["batch_id"] for c in listing.json()} == {batch}

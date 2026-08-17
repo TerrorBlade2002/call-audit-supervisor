@@ -381,28 +381,56 @@ export const api = {
   // Server-side upload proxy: bytes go browser → API → R2 (no bucket CORS needed). The
   // request fails loudly if a file doesn't land, instead of silently registering an
   // un-transcribable call. The whole batch carries one processing OPTION + checklist/KB choice.
+  //
+  // ONE FILE PER REQUEST. Sending the whole selection in a single multipart body made the
+  // request as large as the sum of the files, which a CDN in front of the API rejects with a
+  // 413 well before the API's own per-file limit applies (Cloudflare caps a request body at
+  // 100 MB on Free/Pro; four 45 MB recordings is already ~176 MB). Uploading one at a time
+  // keeps every request the size of its largest single file. The first response creates the
+  // batch and the rest join it via batch_id, so an upload is still one batch downstream.
   uploadRecordings: async (
     pid: string,
     aid: string,
     files: File[],
-    opts?: { option?: string; checklistId?: string | null; kbDocIds?: string[] | null },
+    opts?: {
+      option?: string;
+      checklistId?: string | null;
+      kbDocIds?: string[] | null;
+      onProgress?: (done: number, total: number, current: string) => void;
+    },
   ) => {
-    const form = new FormData();
-    for (const f of files) form.append("files", f, f.name);
-    form.append("option", opts?.option ?? "FULL");
-    if (opts?.checklistId) form.append("checklist_id", opts.checklistId);
-    if (opts?.kbDocIds && opts.kbDocIds.length) form.append("kb_doc_ids", opts.kbDocIds.join(","));
     const token = useAuth.getState().token;
-    const resp = await fetch(`${BASE}/portfolios/${pid}/agents/${aid}/recordings`, {
-      method: "POST",
-      headers: token ? { Authorization: `Bearer ${token}` } : {},
-      body: form,
-    });
-    if (!resp.ok) {
-      const text = await resp.text();
-      throw new ApiError(resp.status, text || resp.statusText);
+    let batchId: string | null = null;
+    const calls: Call[] = [];
+
+    for (const [i, f] of files.entries()) {
+      opts?.onProgress?.(i, files.length, f.name);
+      const form = new FormData();
+      form.append("files", f, f.name);
+      form.append("option", opts?.option ?? "FULL");
+      if (opts?.checklistId) form.append("checklist_id", opts.checklistId);
+      if (opts?.kbDocIds && opts.kbDocIds.length)
+        form.append("kb_doc_ids", opts.kbDocIds.join(","));
+      if (batchId) form.append("batch_id", batchId);
+
+      const resp = await fetch(`${BASE}/portfolios/${pid}/agents/${aid}/recordings`, {
+        method: "POST",
+        headers: token ? { Authorization: `Bearer ${token}` } : {},
+        body: form,
+      });
+      if (!resp.ok) {
+        const text = await resp.text();
+        // Name the file that failed — with per-file requests the rest of the batch is already
+        // queued, so a bare "upload failed" would leave the user unsure of what landed.
+        throw new ApiError(resp.status, text || `${resp.statusText} (${f.name})`);
+      }
+      const body = (await resp.json()) as { batch_id: string; calls: Call[] };
+      batchId = batchId ?? body.batch_id;
+      calls.push(...body.calls);
     }
-    return (await resp.json()) as { batch_id: string; calls: Call[] };
+
+    opts?.onProgress?.(files.length, files.length, "");
+    return { batch_id: batchId ?? "", calls };
   },
   listCalls: (pid: string, aid: string, page?: PageOpts) =>
     reqPaged<Call>(`/portfolios/${pid}/agents/${aid}/calls${pageQuery(page)}`),

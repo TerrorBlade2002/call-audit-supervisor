@@ -56,14 +56,14 @@ def _parse_option(raw: str) -> ProcessingOption:
         ) from exc
 
 
-def _parse_uuid(raw: str | None) -> uuid.UUID | None:
+def _parse_uuid(raw: str | None, what: str = "checklist id") -> uuid.UUID | None:
     if not raw:
         return None
     try:
         return uuid.UUID(raw)
     except ValueError as exc:
         raise HTTPException(
-            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="invalid checklist id"
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail=f"invalid {what}"
         ) from exc
 
 
@@ -125,6 +125,7 @@ async def upload_recordings(
     option: Annotated[str, Form()] = "FULL",
     checklist_id: Annotated[str | None, Form()] = None,
     kb_doc_ids: Annotated[str | None, Form()] = None,
+    batch_id: Annotated[str | None, Form()] = None,
 ) -> CallRegisterResponse:
     """Server-side upload proxy: browser → API → R2, then register calls (FR3).
 
@@ -170,4 +171,5 @@ async def upload_recordings(
         option=_parse_option(option),
         checklist_id=_parse_uuid(checklist_id),
         kb_doc_ids=_parse_uuid_list(kb_doc_ids),
+        batch_id=_parse_uuid(batch_id, "batch id"),
     )

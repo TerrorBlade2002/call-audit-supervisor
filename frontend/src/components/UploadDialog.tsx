@@ -3,6 +3,13 @@ import { useEffect, useRef, useState } from "react";
 import { api, ApiError } from "../lib/api";
 import { useToasts } from "../lib/toast";
 
+// Largest single request the deployment will carry. Recordings are uploaded one per request, so
+// this is a per-FILE ceiling. It is set by the CDN in front of the API, not by the API: Cloudflare
+// rejects a request body over 100 MB with a 413 on the Free/Pro plans, before the request ever
+// reaches the backend (the backend's own per-file cap is higher, and applies locally). Kept a
+// little under 100 MB to leave room for multipart framing.
+const MAX_REQUEST_BYTES = 95 * 1024 * 1024;
+
 // The four processing OPTIONs (input feature §3) — each fully determines the pipeline + which
 // inputs it needs (a checklist and/or the knowledge base).
 const OPTIONS = [
@@ -60,6 +67,9 @@ export function UploadDialog({
   const [kbDocIds, setKbDocIds] = useState<Set<string>>(new Set());
   const [files, setFiles] = useState<File[]>([]);
   const [busy, setBusy] = useState(false);
+  // Files upload one request at a time, so show which one is in flight — a multi-file batch
+  // can take tens of seconds and a static "Uploading…" looks stalled.
+  const [progress, setProgress] = useState<{ done: number; total: number } | null>(null);
   const fileInput = useRef<HTMLInputElement>(null);
 
   const { data: checklists = [] } = useQuery({
@@ -124,6 +134,19 @@ export function UploadDialog({
       pushToast("Choose at least one recording to upload.", "error");
       return;
     }
+    // Each file is now its own request, so only a single oversized file can still be rejected
+    // by the CDN in front of the API (100 MB request body on Cloudflare Free/Pro). Catch it
+    // here so the user gets the file name and the reason instead of an opaque 413.
+    const tooBig = files.filter((f) => f.size > MAX_REQUEST_BYTES);
+    if (tooBig.length) {
+      pushToast(
+        `${tooBig.map((f) => f.name).join(", ")} — each recording must be under ` +
+          `${Math.floor(MAX_REQUEST_BYTES / 1024 / 1024)} MB. Split the recording, or convert ` +
+          `it to a compressed format (a WAV is roughly 10× the size of the same call as MP3).`,
+        "error",
+      );
+      return;
+    }
     // Per-portfolio in-flight cap (the server enforces this too — this is just a faster, clearer
     // client-side guard).
     if (files.length > remaining) {
@@ -142,6 +165,7 @@ export function UploadDialog({
         option,
         checklistId: needsChecklist(option) ? checklistId : null,
         kbDocIds: needsKb(option) && kbMode === "specific" ? [...kbDocIds] : null,
+        onProgress: (done, total) => setProgress({ done, total }),
       });
       onUploaded(res.calls.length);
       onClose();
@@ -157,6 +181,7 @@ export function UploadDialog({
       pushToast(msg, "error");
     } finally {
       setBusy(false);
+      setProgress(null);
     }
   };
 
@@ -359,7 +384,11 @@ export function UploadDialog({
             disabled={busy}
             className="rounded-lg bg-[#dd9aa6] px-4 py-1.5 text-sm font-medium text-white disabled:opacity-50"
           >
-            {busy ? "Uploading…" : "Upload"}
+            {busy
+              ? progress && progress.total > 1
+                ? `Uploading ${Math.min(progress.done + 1, progress.total)} of ${progress.total}…`
+                : "Uploading…"
+              : "Upload"}
           </button>
         </div>
       </div>
