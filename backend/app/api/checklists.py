@@ -9,6 +9,7 @@ from __future__ import annotations
 
 import csv
 import io
+import json
 import re
 import uuid
 from collections import defaultdict
@@ -16,6 +17,7 @@ from collections.abc import Sequence
 from typing import Annotated, Any
 
 from fastapi import APIRouter, Depends, File, HTTPException, Response, UploadFile, status
+from pydantic import ValidationError
 from sqlalchemy import func, select
 from sqlalchemy.ext.asyncio import AsyncSession
 
@@ -30,6 +32,7 @@ from app.rbac import Action
 from app.schemas import (
     ChecklistCreate,
     ChecklistDetailOut,
+    ChecklistExport,
     ChecklistItemIn,
     ChecklistItemOut,
     ChecklistOut,
@@ -333,4 +336,72 @@ async def parse_checklist_txt(
     return ParsedChecklistOut(
         name=name,
         items=[ChecklistItemIn.model_validate(it, from_attributes=True) for it in items],
+    )
+
+
+@router.get("/portfolios/{pid}/checklists/{cid}/export.json")
+async def export_checklist_json(
+    pid: uuid.UUID,
+    cid: uuid.UUID,
+    _ctx: Annotated[AuthContext, Depends(authorize(Action.CHECKLIST_VIEW))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> Response:
+    """Download this checklist as a portable JSON definition.
+
+    Round-trips with the import endpoint below, so a checklist can be copied between portfolios
+    or environments, kept in version control, or edited in bulk outside the builder.
+    """
+    cl = await _get_checklist(session, pid, cid)
+    export = ChecklistExport(
+        name=cl.name,
+        requires_kb=cl.requires_kb,
+        items=[
+            ChecklistItemIn.model_validate(it, from_attributes=True)
+            for it in await service.get_items(session, cl.id)
+        ],
+    )
+    fname = re.sub(r"[^A-Za-z0-9_.-]+", "_", cl.name).strip("_") or "checklist"
+    return Response(
+        content=export.model_dump_json(indent=2),
+        media_type="application/json",
+        headers={"Content-Disposition": f'attachment; filename="{fname}.json"'},
+    )
+
+
+@router.post("/portfolios/{pid}/checklists/import-json", response_model=ParsedChecklistOut)
+async def import_checklist_json(
+    pid: uuid.UUID,
+    _ctx: Annotated[AuthContext, Depends(authorize(Action.CHECKLIST_MANAGE))],
+    file: Annotated[UploadFile, File(...)],
+) -> ParsedChecklistOut:
+    """Read an uploaded .json checklist into editable items for the builder.
+
+    Like the .txt parser this does NOT save — the builder loads the result so the user can
+    review it, choose the target portfolio(s), and press Save. Anything malformed comes back
+    as a 422 whose message names the actual problem, since a hand-edited file is the likely
+    source and "invalid" alone would not help the author fix it.
+    """
+    if not (file.filename or "").lower().endswith(".json"):
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY, detail="Please upload a .json file."
+        )
+    raw = await file.read()
+    try:
+        payload = json.loads(raw.decode("utf-8"))
+    except (UnicodeDecodeError, json.JSONDecodeError) as exc:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"That file isn't valid JSON ({exc}).",
+        ) from exc
+    try:
+        export = ChecklistExport.model_validate(payload)
+    except ValidationError as exc:
+        first = exc.errors()[0]
+        where = " → ".join(str(p) for p in first.get("loc", ())) or "file"
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=f"{where}: {first.get('msg', 'invalid value')}",
+        ) from exc
+    return ParsedChecklistOut(
+        name=export.name, items=export.items, requires_kb=export.requires_kb
     )

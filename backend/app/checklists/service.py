@@ -21,11 +21,19 @@ _ITEM_FIELDS = ("section", "text", "answer_type", "is_subjective", "risk", "guid
 
 
 def _add_items(session: AsyncSession, checklist_id: uuid.UUID, items: list[dict[str, Any]]) -> None:
+    """Persist the checklist's items. **Position in ``items`` defines the order.**
+
+    sort_order is assigned from the list index and never read off the incoming item. Callers
+    send the complete desired state in the order they want it shown, so the position is the
+    intent; an item's previous sort_order is stale the moment anything is moved or inserted.
+    (Honouring a client-sent sort_order used to let the builder's ▲▼ reordering silently snap
+    back on save, and let a newly added item collide with an existing item's number.)
+    """
     for i, item in enumerate(items):
         session.add(
             ChecklistItem(
                 checklist_id=checklist_id,
-                sort_order=item.get("sort_order", i),
+                sort_order=i,
                 section=item["section"],
                 text=item["text"],
                 answer_type=item["answer_type"],
@@ -178,10 +186,13 @@ async def get_default_checklist(
 
 
 async def get_items(session: AsyncSession, checklist_id: uuid.UUID) -> list[ChecklistItem]:
+    # id is a tiebreaker, not decoration: rows saved before sort_order was assigned from the
+    # list index can share a number, and Postgres is free to return equal keys in any order —
+    # so without it the same checklist can come back in a different order on each read.
     rows = await session.scalars(
         select(ChecklistItem)
         .where(ChecklistItem.checklist_id == checklist_id)
-        .order_by(ChecklistItem.sort_order)
+        .order_by(ChecklistItem.sort_order, ChecklistItem.id)
     )
     return list(rows)
 

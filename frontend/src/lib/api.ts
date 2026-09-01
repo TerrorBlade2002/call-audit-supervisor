@@ -562,6 +562,30 @@ export const api = {
     if (!resp.ok) throw new ApiError(resp.status, (await resp.text()) || resp.statusText);
     return (await resp.json()) as { name: string | null; items: ChecklistItemModel[] };
   },
+  // Download a checklist as a portable JSON definition (round-trips with importChecklistJson).
+  exportChecklistJson: (pid: string, cid: string, filename: string) =>
+    downloadBlob(`/portfolios/${pid}/checklists/${cid}/export.json`, filename),
+  // Read a .json checklist into editable items for the builder. Like the .txt parser this does
+  // not save — the user reviews it and presses Save. ApiError(422) carries the reason.
+  importChecklistJson: async (
+    pid: string,
+    file: File,
+  ): Promise<{ name: string | null; items: ChecklistItemModel[]; requires_kb: boolean | null }> => {
+    const form = new FormData();
+    form.append("file", file, file.name);
+    const token = useAuth.getState().token;
+    const resp = await fetch(`${BASE}/portfolios/${pid}/checklists/import-json`, {
+      method: "POST",
+      headers: token ? { Authorization: `Bearer ${token}` } : {},
+      body: form,
+    });
+    if (!resp.ok) throw new ApiError(resp.status, (await resp.text()) || resp.statusText);
+    return (await resp.json()) as {
+      name: string | null;
+      items: ChecklistItemModel[];
+      requires_kb: boolean | null;
+    };
+  },
 
   // Knowledge base (supervisor/super-admin only — gated server-side by KB_MANAGE)
   listKb: (pid: string) => req<KbDocument[]>(`/portfolios/${pid}/kb`),

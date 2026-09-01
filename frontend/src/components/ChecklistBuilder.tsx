@@ -8,6 +8,17 @@ import { PortfolioPicker } from "./PortfolioPicker";
 const ANSWER_TYPES = ["CHOICE", "PASS_FAIL", "PASS_FAIL_NA", "TEXT"] as const;
 const RISKS = ["NORMAL", "ELEVATED", "CRITICAL"] as const;
 
+// Server errors arrive as a JSON body {"detail": "..."} inside the ApiError message. The import
+// endpoint puts the actual problem there (which field, what was wrong), which is the whole point
+// of showing it — a hand-edited JSON file needs to know WHAT to fix.
+function friendlyDetail(e: ApiError): string {
+  try {
+    return String(JSON.parse(e.message).detail ?? e.message);
+  } catch {
+    return e.message;
+  }
+}
+
 function blankItem(): ChecklistItemModel {
   return {
     section: "A · Compliance & Mandatory Disclosures",
@@ -31,6 +42,7 @@ export function ChecklistBuilder({
   const caps = useCaps(portfolioId);
   const pushToast = useToasts((s) => s.push);
   const fileInput = useRef<HTMLInputElement>(null);
+  const jsonInput = useRef<HTMLInputElement>(null);
   const [name, setName] = useState("");
   const [items, setItems] = useState<ChecklistItemModel[]>([]);
   const [requiresKb, setRequiresKb] = useState(true);
@@ -189,6 +201,39 @@ export function ChecklistBuilder({
     }
   };
 
+  // Import a .json checklist (the export format) → load into the editor as a NEW checklist, so
+  // importing never silently overwrites whatever is currently selected.
+  const onImportJson = async (file: File) => {
+    try {
+      const parsed = await api.importChecklistJson(portfolioId, file);
+      setNewMode(true);
+      setSelectedId(null);
+      if (parsed.name) setName(parsed.name);
+      if (parsed.requires_kb !== null) setRequiresKb(parsed.requires_kb);
+      setItems(parsed.items.map((i) => ({ ...i, id: undefined })));
+      pushToast(
+        `Loaded ${parsed.items.length} item(s) from ${file.name} — review, pick the portfolio(s), then Create checklist.`,
+        "success",
+      );
+    } catch (e) {
+      pushToast(
+        e instanceof ApiError && e.status === 422
+          ? `Couldn't import ${file.name}: ${friendlyDetail(e)}`
+          : "Import failed.",
+        "error",
+      );
+    }
+  };
+
+  const onExportJson = async () => {
+    if (!selectedId) return;
+    try {
+      await api.exportChecklistJson(portfolioId, selectedId, `${name || "checklist"}.json`);
+    } catch {
+      pushToast("Export failed.", "error");
+    }
+  };
+
   const update = (idx: number, patch: Partial<ChecklistItemModel>) =>
     setItems((xs) => xs.map((it, i) => (i === idx ? { ...it, ...patch } : it)));
   const move = (idx: number, dir: -1 | 1) =>
@@ -228,6 +273,36 @@ export function ChecklistBuilder({
             title="Upload a checklist .txt in the Everest format"
           >
             Upload .txt
+          </button>
+          <input
+            ref={jsonInput}
+            type="file"
+            accept=".json,application/json"
+            className="hidden"
+            onChange={(e) => {
+              const f = e.target.files?.[0];
+              if (f) onImportJson(f);
+              e.target.value = "";
+            }}
+          />
+          <button
+            onClick={() => jsonInput.current?.click()}
+            className="rounded border px-3 py-1.5 text-sm hover:bg-gray-50"
+            title="Import a checklist from a .json file — loads it as a new checklist to review before saving"
+          >
+            Import JSON
+          </button>
+          <button
+            onClick={onExportJson}
+            disabled={!selectedId}
+            className="rounded border px-3 py-1.5 text-sm hover:bg-gray-50 disabled:opacity-40"
+            title={
+              selectedId
+                ? "Download this checklist as JSON — re-importable into any portfolio"
+                : "Select a saved checklist to export it"
+            }
+          >
+            Export JSON
           </button>
           <button
             onClick={() => save.mutate()}

@@ -41,7 +41,9 @@ async def load_report(session: AsyncSession, report_id: uuid.UUID) -> ReportOut 
             )
             .join(ChecklistItem, ChecklistItem.id == ReportItem.checklist_item_id)
             .where(ReportItem.report_id == report_id)
-            .order_by(ChecklistItem.sort_order)
+            # Tiebreak on id so a report renders its items in a stable order even when the
+            # underlying checklist has rows sharing a sort_order (see checklists.service).
+            .order_by(ChecklistItem.sort_order, ChecklistItem.id)
         )
     ).all()
     items = [

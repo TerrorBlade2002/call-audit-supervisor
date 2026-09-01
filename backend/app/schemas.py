@@ -172,7 +172,8 @@ class ChecklistItemIn(BaseModel):
     is_subjective: bool = False
     risk: RiskLevel = "NORMAL"
     guidance: str | None = None
-    sort_order: int | None = None
+    # No sort_order: the ORDER OF THIS LIST is the order the items are stored and displayed in.
+    # A client that still sends one has it ignored rather than overriding its own list position.
 
 
 class ChecklistItemOut(ORMModel):
@@ -219,10 +220,25 @@ class ChecklistDetailOut(ChecklistOut):
 
 
 class ParsedChecklistOut(BaseModel):
-    """Result of parsing an uploaded checklist .txt — editable items for the builder to load."""
+    """Result of parsing an uploaded checklist (.txt or .json) — items for the builder to load."""
 
     name: str | None = None
     items: list[ChecklistItemIn]
+    # Only the JSON format carries this; None means "leave the builder's current setting alone".
+    requires_kb: bool | None = None
+
+
+class ChecklistExport(BaseModel):
+    """Portable checklist definition — the payload of export.json and of an imported .json.
+
+    Deliberately holds no ids, versions or sort_order: it describes *what* the checklist asks,
+    not which database rows it happened to occupy, so it can be imported into any portfolio.
+    Item order is the order of ``items``.
+    """
+
+    name: str
+    requires_kb: bool = True
+    items: list[ChecklistItemIn] = Field(min_length=1)
 
 
 # --- objection clustering (Phase 5) ---
