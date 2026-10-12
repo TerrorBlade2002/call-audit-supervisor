@@ -56,6 +56,22 @@ def _build_stt(http: httpx.AsyncClient) -> object:
             missing=",".join(missing),
             fallback="reconciler polling",
         )
+    policies = settings.pii_policies()
+    if settings.assemblyai_redact_pii:
+        log.info(
+            "worker.stt_pii_redaction_enabled",
+            policies=len(policies),
+            substitution=settings.assemblyai_redact_pii_sub,
+            speech_models=",".join(settings.speech_models()),
+        )
+    else:
+        # Loud on purpose: this is the switch that decides whether raw PII is written to
+        # object storage, so it must never be off without showing up in the logs.
+        log.warning(
+            "worker.stt_pii_redaction_DISABLED",
+            impact="unredacted transcripts will be stored",
+            fix="set ASSEMBLYAI_REDACT_PII=true",
+        )
     return AssemblyAIClient(
         api_key=settings.assemblyai_api_key,
         base_url=settings.assemblyai_base_url,
@@ -64,6 +80,10 @@ def _build_stt(http: httpx.AsyncClient) -> object:
         webhook_url=webhook_url,
         webhook_auth_header=WEBHOOK_AUTH_HEADER,
         webhook_secret=settings.assemblyai_webhook_secret,
+        speech_models=settings.speech_models(),
+        redact_pii=settings.assemblyai_redact_pii,
+        redact_pii_policies=policies,
+        redact_pii_sub=settings.assemblyai_redact_pii_sub,
     )
 
 

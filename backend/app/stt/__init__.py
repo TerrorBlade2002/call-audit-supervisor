@@ -33,6 +33,10 @@ class Transcript:
     duration_sec: float | None
     text: str
     utterances: list[Utterance] = field(default_factory=list)
+    # Whether the provider applied PII redaction to this text. Carried on the transcript (and
+    # persisted with it) so the storage step can refuse anything unredacted, and so an old
+    # object can later be told apart from one written after redaction was turned on.
+    redacted: bool = False
 
     def to_dict(self) -> dict[str, Any]:
         return asdict(self)
@@ -44,6 +48,7 @@ class Transcript:
             duration_sec=data.get("duration_sec"),
             text=data.get("text", ""),
             utterances=[Utterance(**u) for u in data.get("utterances", [])],
+            redacted=bool(data.get("redacted", False)),
         )
 
 

@@ -53,6 +53,9 @@ class StubStt:
         return None
 
     async def fetch_transcript(self, *, transcript_id: str) -> Transcript:
+        # redacted=True: the stub's canned text contains no PII, and marking it so keeps the
+        # offline/CI path working against the same "only redacted transcripts are stored"
+        # guard that production enforces, rather than needing an exemption from it.
         return Transcript(
             transcript_id=transcript_id,
             duration_sec=300.0,
@@ -61,4 +64,5 @@ class StubStt:
                 Utterance(speaker="A", start_sec=0.0, end_sec=2.0, text="Hello."),
                 Utterance(speaker="B", start_sec=2.0, end_sec=4.0, text="Hi."),
             ],
+            redacted=True,
         )

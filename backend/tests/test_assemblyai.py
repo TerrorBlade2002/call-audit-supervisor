@@ -65,6 +65,9 @@ async def test_poll_maps_status(aai_status: str, expected: str) -> None:
 async def test_fetch_transcript_normalizes_diarization() -> None:
     payload = {
         "status": "completed",
+        # Redaction is on by default and fetch_transcript refuses anything the provider did
+        # not mark redacted, so a completed transcript always carries this (see NFR6).
+        "redact_pii": True,
         "text": "Hello. Hi.",
         "audio_duration": 300,
         "utterances": [

@@ -18,6 +18,13 @@ from functools import lru_cache
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
+from app.stt.redaction import (
+    DEFAULT_PII_POLICIES,
+    DEFAULT_PII_SUB,
+    DEFAULT_SPEECH_MODELS,
+    parse_csv_setting,
+)
+
 
 class RateLimitSettings(BaseSettings):
     """Provider quotas + our self-imposed caps. All env-override-able.
@@ -117,6 +124,30 @@ class Settings(BaseSettings):
     assemblyai_base_url: str = Field(
         default="https://api.assemblyai.com", alias="ASSEMBLYAI_BASE_URL"
     )
+    # Speech models in priority order. Pinned, not defaulted: PII redaction is only supported
+    # on the Universal models, and the provider documents its own default as varying by tier.
+    assemblyai_speech_models: str = Field(
+        default=",".join(DEFAULT_SPEECH_MODELS), alias="ASSEMBLYAI_SPEECH_MODELS"
+    )
+    # PII redaction (NFR6). ON by default and intended to stay on — turning it off means
+    # unredacted transcripts get written to object storage. The worker logs loudly at startup
+    # when it is off so that it can never be an unnoticed configuration drift.
+    assemblyai_redact_pii: bool = Field(default=True, alias="ASSEMBLYAI_REDACT_PII")
+    # Comma-separated override of app.stt.redaction.DEFAULT_PII_POLICIES. Empty = the default
+    # set. The provider redacts NOTHING when this list is empty, so it is never sent empty.
+    assemblyai_redact_pii_policies: str = Field(
+        default="", alias="ASSEMBLYAI_REDACT_PII_POLICIES"
+    )
+    # "entity_name" -> [PERSON_NAME] (keeps audit signal), "hash" -> ####.
+    assemblyai_redact_pii_sub: str = Field(
+        default=DEFAULT_PII_SUB, alias="ASSEMBLYAI_REDACT_PII_SUB"
+    )
+
+    def speech_models(self) -> list[str]:
+        return parse_csv_setting(self.assemblyai_speech_models, DEFAULT_SPEECH_MODELS)
+
+    def pii_policies(self) -> list[str]:
+        return parse_csv_setting(self.assemblyai_redact_pii_policies, DEFAULT_PII_POLICIES)
     gemini_api_key: str = Field(default="", alias="GEMINI_API_KEY")
     # Drives all four judge agents (checklist, merged, feedback, ideal rewriter). Flash is the
     # §14.3 cost lever: it keeps the multimodal audio input, structured outputs and thinking

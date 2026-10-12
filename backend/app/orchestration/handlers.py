@@ -147,6 +147,7 @@ async def handle_judge(
     subjective: SubjectiveGenerator | None = None,
     rewriter: NarrativeGenerator | None = None,
     audio_uploader: AudioUploader | None = None,
+    require_redaction: bool = True,
 ) -> StepOutcome:
     """PENDING_JUDGE → materialize the transcript (once), then run the OPTION's pipeline, DONE.
 
@@ -160,6 +161,15 @@ async def handle_judge(
             raise FatalError("PENDING_JUDGE without a transcript_id")
         async with limiters.assemblyai.guard():
             transcript = await stt.fetch_transcript(transcript_id=job.transcript_id)
+        # Last gate before anything is written: with redaction enabled, only a transcript the
+        # provider confirmed it redacted may be persisted. The client checks this too; this
+        # second check is here because THIS is the line that writes to object storage, and a
+        # future STT client must not be able to bypass the guarantee by omitting its own.
+        if require_redaction and not transcript.redacted:
+            raise FatalError(
+                f"refusing to store an unredacted transcript for call {job.call_id} "
+                "(ASSEMBLYAI_REDACT_PII is on but the transcript is not marked redacted)"
+            )
         uri = await storage.put_transcript(job.call_id, transcript)
         await queue.set_transcript_uri(session, job.call_id, uri)
     else:

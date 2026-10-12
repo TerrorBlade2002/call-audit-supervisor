@@ -132,6 +132,7 @@ async def process_one(session: AsyncSession, job: ClaimedJob, deps: EngineDeps) 
                 subjective=deps.subjective,
                 rewriter=deps.rewriter,
                 audio_uploader=deps.audio_uploader,
+                require_redaction=deps.settings.assemblyai_redact_pii,
             )
         else:  # defensive: a non-claimable state should never be claimed
             from app.ratelimit.backoff import FatalError

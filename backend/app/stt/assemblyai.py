@@ -13,8 +13,9 @@ from typing import Any
 import httpx
 
 from app.config import RateLimitSettings
-from app.ratelimit.backoff import classify_http_status, retry_async
+from app.ratelimit.backoff import FatalError, classify_http_status, retry_async
 from app.stt import Transcript, TranscriptStatus, Utterance
+from app.stt.redaction import DEFAULT_PII_POLICIES, DEFAULT_PII_SUB, DEFAULT_SPEECH_MODELS
 
 # AssemblyAI status string -> our neutral status.
 _STATUS_MAP: dict[str, TranscriptStatus] = {
@@ -36,6 +37,10 @@ class AssemblyAIClient:
         webhook_url: str | None = None,
         webhook_auth_header: str | None = None,
         webhook_secret: str | None = None,
+        speech_models: list[str] | None = None,
+        redact_pii: bool = True,
+        redact_pii_policies: list[str] | None = None,
+        redact_pii_sub: str = DEFAULT_PII_SUB,
     ) -> None:
         self._key = api_key
         self._base = base_url.rstrip("/")
@@ -44,6 +49,12 @@ class AssemblyAIClient:
         self._webhook_url = webhook_url
         self._webhook_auth_header = webhook_auth_header
         self._webhook_secret = webhook_secret
+        self._speech_models = speech_models or list(DEFAULT_SPEECH_MODELS)
+        self._redact_pii = redact_pii
+        # The provider redacts nothing when the policy list is empty, so an empty override is
+        # treated as "use the defaults" rather than silently disabling redaction.
+        self._redact_policies = list(redact_pii_policies or DEFAULT_PII_POLICIES)
+        self._redact_sub = redact_pii_sub
 
     @property
     def _headers(self) -> dict[str, str]:
@@ -71,8 +82,24 @@ class AssemblyAIClient:
         )
 
     async def submit(self, *, call_id: object, audio_url: str) -> str:
-        """Submit audio for async, diarized transcription. Returns the transcript id."""
-        body: dict[str, object] = {"audio_url": audio_url, "speaker_labels": True}
+        """Submit audio for async, diarized, PII-redacted transcription → transcript id."""
+        body: dict[str, object] = {
+            "audio_url": audio_url,
+            "speaker_labels": True,
+            "speech_models": self._speech_models,
+            # Redaction requires formatted text; both are the provider's own defaults but are
+            # sent explicitly so a future default change cannot silently disable redaction.
+            "format_text": True,
+            "punctuate": True,
+        }
+        if self._redact_pii:
+            # policies are mandatory — `redact_pii: true` with no policies redacts NOTHING.
+            body["redact_pii"] = True
+            body["redact_pii_policies"] = self._redact_policies
+            body["redact_pii_sub"] = self._redact_sub
+            # `redact_pii_return_unredacted` is deliberately NOT sent. Left off, the provider
+            # returns only redacted content, so the raw text never reaches this process and
+            # therefore can never be written to storage or shown in the UI.
         if self._webhook_url:
             body["webhook_url"] = self._webhook_url
             if self._webhook_auth_header and self._webhook_secret:
@@ -92,8 +119,20 @@ class AssemblyAIClient:
         return str(err) if err else None
 
     async def fetch_transcript(self, *, transcript_id: str) -> Transcript:
-        """Fetch the completed transcript and normalize to our diarized shape."""
+        """Fetch the completed transcript and normalize to our diarized shape.
+
+        Refuses to return a transcript that is not redacted while redaction is enabled. The
+        caller stores whatever this returns, so this is the last point at which unredacted
+        text can be stopped — failing the job is strictly better than persisting PII. It is a
+        FatalError because a retry would re-fetch the same already-transcribed audio and fail
+        identically; the call needs re-submitting, not retrying.
+        """
         data = await self._request("GET", f"/v2/transcript/{transcript_id}")
+        if self._redact_pii and not bool(data.get("redact_pii")):
+            raise FatalError(
+                f"transcript {transcript_id} came back WITHOUT PII redaction applied "
+                "(redact_pii is not set on the provider's response) — refusing to store it"
+            )
         utterances = [
             Utterance(
                 speaker=str(u.get("speaker", "?")),
@@ -109,4 +148,5 @@ class AssemblyAIClient:
             duration_sec=float(duration) if duration is not None else None,
             text=str(data.get("text") or ""),
             utterances=utterances,
+            redacted=bool(data.get("redact_pii")),
         )
