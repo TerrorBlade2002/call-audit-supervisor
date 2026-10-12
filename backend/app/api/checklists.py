@@ -293,7 +293,11 @@ async def export_batch_csv(
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND, detail="no checklist results for this batch"
         )
-    columns = [it.text for it in await service.get_items(session, rep_rows[0][6])]
+    # checklist_id is nullable on the model but the query filters `isnot(None)`, which the
+    # type checker can't see — assert it so the narrowing is explicit rather than assumed.
+    first_checklist_id = rep_rows[0][6]
+    assert first_checklist_id is not None
+    columns = [it.text for it in await service.get_items(session, first_checklist_id)]
     verdicts = await _load_verdicts(session, [r[0] for r in rep_rows])
     rows6 = [(r[0], r[1], r[2], r[3], r[4], r[5]) for r in rep_rows]
     return _csv_response(rows6, columns, verdicts, f"batch_{str(batch_id)[:8]}_checklist.csv")

@@ -12,6 +12,7 @@ and re-validated by the eval gate.
 
 from __future__ import annotations
 
+import uuid
 from dataclasses import dataclass
 
 from sqlalchemy import delete, func, select
@@ -43,11 +44,13 @@ async def recompute_overrides(
         )
     ).all()
 
-    counts: dict[object, dict[str, int]] = {}
+    # Keyed by checklist_item_id. Typed as UUID rather than object so the three loops below
+    # agree on the key type (mypy infers it from the first loop and flags the rest otherwise).
+    counts: dict[uuid.UUID, dict[str, int]] = {}
     for item_id, judgement, n in rows:
         counts.setdefault(item_id, {})[judgement] = int(n)
 
-    should_override: dict[object, str] = {}
+    should_override: dict[uuid.UUID, str] = {}
     for item_id, by_j in counts.items():
         correct = by_j.get("CORRECT", 0)
         wrong = by_j.get("WRONG", 0)
