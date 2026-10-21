@@ -1,5 +1,10 @@
 # PII Redaction (NFR6)
 
+> **Set per portfolio by a super admin**, not globally. Portfolios → hover a portfolio →
+> **PII**. Three levels: `OFF` (default), `TRANSCRIPT`, `TRANSCRIPT_AND_RECORDING`. The level
+> is read when a call is *processed*, so a change governs every call processed after it;
+> calls already processed are untouched.
+
 Debt-collection calls carry regulated personal data by nature: the collector reads back a
 partial SSN and a mailing address to verify identity, states a balance, and the consumer may
 read out a card number. **No unredacted transcript is ever written to storage.**
@@ -98,11 +103,34 @@ hours after transcription). Adopting it means fetching that file and replacing t
 after transcription, and accepting that the judge then grades beeped audio. That is a separate
 change — see the limitation noted above before treating the pipeline as fully PII-free.
 
+## The three levels
+
+| Level | Transcript | Stored recording | Use when |
+|---|---|---|---|
+| `OFF` *(default)* | raw | raw | The client has no redaction requirement |
+| `TRANSCRIPT` | redacted | raw | Standard. The judge still hears real names, so it can grade "did the collector identify the company?" |
+| `TRANSCRIPT_AND_RECORDING` | redacted | **beeped, after judging** | The client requires no PII at rest |
+
+`TRANSCRIPT_AND_RECORDING` swaps the recording **only once judging has finished**, writing the
+beeped copy over the same object key. Until then the judge gets the original audio — that
+ordering is the whole point, and it is why the swap sits outside the judge's `try/finally`
+(a failed judge is retried and must still find unredacted audio). The swap is best-effort: if
+the provider has no redacted copy, the transcript is still redacted and the retention sweep
+still deletes the audio on schedule, so failing the call would cost more than it protects.
+
+**`OFF` is the default, including for portfolios that existed before this shipped.** Redaction
+is an explicit per-client decision; nothing switches itself on. Note this was a change in
+posture — redaction used to be a global flag that was on for everyone.
+
 ## Configuration
+
+The level is a database column (`portfolios.pii_mode`), set through the UI or
+`PATCH /portfolios/{id}/pii-mode` (super admin only, audited). The variables below only
+configure *how* redaction behaves when a portfolio asks for it:
 
 | Variable | Default | Notes |
 |---|---|---|
-| `ASSEMBLYAI_REDACT_PII` | `true` | Off = unredacted transcripts get stored. The worker logs a warning at startup when off. |
+| `ASSEMBLYAI_REDACT_PII` | `true` | Fallback default for callers that don't pass a per-call value. The portfolio level is what decides in practice. |
 | `ASSEMBLYAI_REDACT_PII_POLICIES` | *(empty → built-in set)* | Comma-separated override. Empty is treated as "use defaults", never sent empty. |
 | `ASSEMBLYAI_REDACT_PII_SUB` | `entity_name` | or `hash` |
 | `ASSEMBLYAI_SPEECH_MODELS` | `universal-3-pro,universal-2` | Must be models that support redaction. |

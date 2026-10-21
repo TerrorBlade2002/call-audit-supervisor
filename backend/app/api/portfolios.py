@@ -21,6 +21,7 @@ from app.passwords import hash_password
 from app.rbac import Action, Role
 from app.schemas import (
     MemberAssign,
+    PiiModeUpdate,
     PortfolioCreate,
     PortfolioOut,
     PortfolioUserCreate,
@@ -97,7 +98,11 @@ async def list_portfolios(
 
 def _with_role(portfolio: Portfolio, role: str | None) -> PortfolioOut:
     return PortfolioOut(
-        id=portfolio.id, name=portfolio.name, created_at=portfolio.created_at, my_role=role
+        id=portfolio.id,
+        name=portfolio.name,
+        created_at=portfolio.created_at,
+        my_role=role,
+        pii_mode=portfolio.pii_mode,
     )
 
 
@@ -116,6 +121,32 @@ async def rename_portfolio(
     await record_audit(
         session, actor_id=ctx.user.id, action="portfolio.rename",
         entity="portfolio", entity_id=pid, meta={"name": body.name},
+    )
+    await session.commit()
+    return _with_role(portfolio, "ADMIN")
+
+
+@router.patch("/portfolios/{pid}/pii-mode", response_model=PortfolioOut)
+async def set_pii_mode(
+    pid: uuid.UUID,
+    body: PiiModeUpdate,
+    ctx: Annotated[AuthContext, Depends(authorize(Action.PORTFOLIO_DELETE))],
+    session: Annotated[AsyncSession, Depends(get_session)],
+) -> PortfolioOut:
+    """Set this portfolio's PII redaction level (super admin only — it is a compliance control).
+
+    Takes effect for every call processed after this returns; calls already processed keep
+    whatever was stored for them. Audited, because "who turned redaction off, and when" is
+    the first question anyone asks after an incident.
+    """
+    portfolio = await session.get(Portfolio, pid)
+    if portfolio is None:
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="portfolio not found")
+    previous = portfolio.pii_mode
+    portfolio.pii_mode = body.pii_mode
+    await record_audit(
+        session, actor_id=ctx.user.id, action="portfolio.pii_mode",
+        entity="portfolio", entity_id=pid, meta={"from": previous, "to": body.pii_mode},
     )
     await session.commit()
     return _with_role(portfolio, "ADMIN")

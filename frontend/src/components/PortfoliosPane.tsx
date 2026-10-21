@@ -1,6 +1,6 @@
 import { keepPreviousData, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useEffect, useRef, useState } from "react";
-import { api } from "../lib/api";
+import { api, type PiiMode } from "../lib/api";
 import { useNav } from "../lib/nav";
 import { useRoles } from "../lib/roles";
 import { IconPencil, IconPin, IconPlus, IconTrash, PANE, Pager } from "./ui";
@@ -29,6 +29,8 @@ export function PortfoliosPane({
   const [offset, setOffset] = useState(0);
   const [editing, setEditing] = useState<{ id: string; name: string } | null>(null);
   const [confirmDelete, setConfirmDelete] = useState<string | null>(null);
+  // Which portfolio has its PII control open (one row at a time, like rename/delete).
+  const [piiFor, setPiiFor] = useState<string | null>(null);
 
   const { data, isLoading, isError } = useQuery({
     queryKey: ["portfolios", offset],
@@ -78,6 +80,13 @@ export function PortfoliosPane({
     onSuccess: () => {
       invalidate();
       setEditing(null);
+    },
+  });
+  const setPii = useMutation({
+    mutationFn: ({ id, mode }: { id: string; mode: PiiMode }) => api.setPiiMode(id, mode),
+    onSuccess: () => {
+      invalidate();
+      setPiiFor(null);
     },
   });
   const del = useMutation({
@@ -194,6 +203,34 @@ export function PortfoliosPane({
                 />
                 <button className="rounded bg-[#dd9aa6] px-2 text-xs font-medium text-white">Save</button>
               </form>
+            ) : piiFor === p.id ? (
+              <div className="flex flex-col gap-1 px-2 py-1.5">
+                <span className="truncate text-xs font-medium text-gray-600">
+                  PII redaction — {p.name}
+                </span>
+                <select
+                  autoFocus
+                  disabled={setPii.isPending}
+                  value={p.pii_mode}
+                  onChange={(e) =>
+                    setPii.mutate({ id: p.id, mode: e.target.value as PiiMode })
+                  }
+                  className="w-full rounded border border-gray-300 bg-white/90 px-1.5 py-1 text-xs outline-none"
+                >
+                  <option value="OFF">Off — nothing redacted</option>
+                  <option value="TRANSCRIPT">Transcript only</option>
+                  <option value="TRANSCRIPT_AND_RECORDING">Transcript + recording</option>
+                </select>
+                <span className="text-[0.65rem] leading-tight text-gray-500">
+                  Applies to calls processed from now on.
+                </span>
+                <button
+                  onClick={() => setPiiFor(null)}
+                  className="self-end rounded border border-gray-300 px-2 py-0.5 text-[0.7rem]"
+                >
+                  Close
+                </button>
+              </div>
             ) : confirmDelete === p.id ? (
               <div className="flex items-center justify-between gap-1 px-2 py-1.5 text-sm">
                 <span className="truncate text-rose-700">Delete “{p.name}”?</span>
@@ -241,6 +278,13 @@ export function PortfoliosPane({
                       className="rounded px-1 py-0.5 text-[0.7rem] font-medium text-gray-500 hover:bg-black/5 hover:text-gray-800"
                     >
                       Users
+                    </button>
+                    <button
+                      title="PII redaction level for this portfolio"
+                      onClick={() => setPiiFor(p.id)}
+                      className="rounded px-1 py-0.5 text-[0.7rem] font-medium text-gray-500 hover:bg-black/5 hover:text-gray-800"
+                    >
+                      PII
                     </button>
                     <button
                       title="Rename portfolio"

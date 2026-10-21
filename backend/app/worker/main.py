@@ -57,21 +57,16 @@ def _build_stt(http: httpx.AsyncClient) -> object:
             fallback="reconciler polling",
         )
     policies = settings.pii_policies()
-    if settings.assemblyai_redact_pii:
-        log.info(
-            "worker.stt_pii_redaction_enabled",
-            policies=len(policies),
-            substitution=settings.assemblyai_redact_pii_sub,
-            speech_models=",".join(settings.speech_models()),
-        )
-    else:
-        # Loud on purpose: this is the switch that decides whether raw PII is written to
-        # object storage, so it must never be off without showing up in the logs.
-        log.warning(
-            "worker.stt_pii_redaction_DISABLED",
-            impact="unredacted transcripts will be stored",
-            fix="set ASSEMBLYAI_REDACT_PII=true",
-        )
+    # Whether redaction actually runs is now decided PER CALL from the portfolio's pii_mode;
+    # these are the parameters used when it does. The env flag below is only the fallback
+    # default for callers that do not pass a per-call value.
+    log.info(
+        "worker.stt_pii_redaction_config",
+        decided_by="portfolio.pii_mode",
+        policies=len(policies),
+        substitution=settings.assemblyai_redact_pii_sub,
+        speech_models=",".join(settings.speech_models()),
+    )
     return AssemblyAIClient(
         api_key=settings.assemblyai_api_key,
         base_url=settings.assemblyai_base_url,

@@ -160,51 +160,5 @@ def test_occupation_is_excluded_to_preserve_the_mini_miranda() -> None:
     destroying the FDCPA disclosure the compliance checklist exists to verify."""
     assert "occupation" not in DEFAULT_PII_POLICIES
 
-
-# --- the storage step refuses unredacted text -------------------------------------------------
-class _UnredactedStt:
-    """An STT client whose own guard has been bypassed/omitted — the storage step is the net."""
-
-    async def fetch_transcript(self, *, transcript_id: str) -> Transcript:
-        return Transcript(
-            transcript_id=transcript_id,
-            duration_sec=1.0,
-            text="my name is Darryl Sanders, SSN 123-45-6789",
-            redacted=False,
-        )
-
-
-async def test_handler_refuses_to_store_an_unredacted_transcript(db_ready: None) -> None:
-    """Defence in depth: even if a client forgets to check, nothing unredacted is written."""
-    import uuid as _uuid
-
-    from app.config import get_settings
-    from app.db import session_scope
-    from app.orchestration.handlers import JobView, handle_judge
-    from app.ratelimit import build_limiters
-    from app.storage import FakeStorage
-
-    storage = FakeStorage()
-    job = JobView(
-        id=_uuid.uuid4(),
-        call_id=_uuid.uuid4(),
-        portfolio_id=_uuid.uuid4(),
-        transcript_id="t-1",
-        audio_uri="p/a/rec.mp3",
-        transcript_uri=None,
-    )
-    settings = get_settings()
-    async with session_scope() as session:
-        with pytest.raises(FatalError, match="refusing to store an unredacted transcript"):
-            await handle_judge(
-                job,
-                session=session,
-                limiters=build_limiters(settings.ratelimit),
-                stt=_UnredactedStt(),
-                storage=storage,
-                judge=None,
-                embedder=None,
-                routing_config=None,
-                require_redaction=True,
-            )
-    assert storage.transcripts == {}, "nothing may be written when the guard trips"
+# The storage-step guard is driven by the portfolio's pii_mode, so it is covered end-to-end
+# in test_portfolio_pii_mode.py (against a real portfolio row) rather than duplicated here.

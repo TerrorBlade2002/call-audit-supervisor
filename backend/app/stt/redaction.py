@@ -24,6 +24,43 @@ one. ``####`` would destroy that signal entirely. See ``docs/PII_REDACTION.md``.
 
 from __future__ import annotations
 
+import enum
+
+
+class PiiMode(enum.StrEnum):
+    """How much of a portfolio's data is redacted. Admin-set per portfolio (§2).
+
+    One setting with three levels rather than two independent toggles: redacting the
+    recording without redacting the transcript is not a state anyone wants, and two booleans
+    would allow it. Read live at processing time, so changing it applies to every call
+    processed afterwards — it is not snapshotted onto the call.
+    """
+
+    OFF = "OFF"
+    #: Redact the transcript. The recording stays as uploaded, so the multimodal judge still
+    #: hears the real names and can grade "did the collector identify the company?".
+    TRANSCRIPT = "TRANSCRIPT"
+    #: Also replace the stored recording with a redacted (beeped) version — but only AFTER
+    #: judging, so the judge still gets the original audio. Shrinks PII-at-rest from the full
+    #: retention window to roughly the processing time.
+    TRANSCRIPT_AND_RECORDING = "TRANSCRIPT_AND_RECORDING"
+
+    @property
+    def redacts_transcript(self) -> bool:
+        return self is not PiiMode.OFF
+
+    @property
+    def redacts_recording(self) -> bool:
+        return self is PiiMode.TRANSCRIPT_AND_RECORDING
+
+
+def parse_pii_mode(raw: str | None) -> PiiMode:
+    """Tolerant parse of a stored/sent value; anything unrecognized falls back to OFF."""
+    try:
+        return PiiMode(str(raw or "").upper())
+    except ValueError:
+        return PiiMode.OFF
+
 # The policies we send. Grouped by the categories the business asked for, plus the broader
 # "any other personal data" sweep. Every name here is a value of the provider's PiiPolicy
 # enum — an unknown name is rejected by the API for the whole request, so additions must be

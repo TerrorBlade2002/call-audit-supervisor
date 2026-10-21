@@ -11,7 +11,9 @@ from __future__ import annotations
 import uuid
 from dataclasses import dataclass
 
+import httpx
 import structlog
+from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
 
 from app.judge.client import JudgeClient
@@ -23,15 +25,63 @@ from app.judge.options import ProcessingOption, needs_judge
 from app.judge.routing import RoutingConfig
 from app.judge.service import judge_call
 from app.judge.subjective import SubjectiveGenerator
-from app.models import Call
+from app.models import Call, Portfolio
 from app.orchestration import queue
 from app.orchestration.stubs import SttClient
 from app.ratelimit.backoff import FatalError
 from app.ratelimit.buckets import Limiters
 from app.ratelimit.caps import DailyCap
 from app.storage import StorageService
+from app.stt.redaction import PiiMode, parse_pii_mode
 
 log = structlog.get_logger("orchestration.handlers")
+
+
+async def get_portfolio_pii_mode(session: AsyncSession, portfolio_id: uuid.UUID) -> PiiMode:
+    """This portfolio's redaction level, read at processing time.
+
+    Deliberately a live lookup rather than a value copied onto the call at upload: the
+    product rule is "change the setting, and every call processed after it follows the new
+    setting". A missing portfolio falls back to OFF, matching the column default.
+    """
+    raw = await session.scalar(select(Portfolio.pii_mode).where(Portfolio.id == portfolio_id))
+    return parse_pii_mode(raw)
+
+
+async def _redact_stored_recording(
+    job: JobView, stt: SttClient, storage: StorageService
+) -> None:
+    """Replace the stored recording with the provider's redacted (beeped) copy.
+
+    Runs only AFTER judging, so the multimodal judge still heard the original audio — which
+    is the whole point of keeping it until now (it is what lets the judge grade "did the
+    collector identify the company?" when the transcript says [ORGANIZATION]).
+
+    Written to the SAME object key, so the call's stored URI stays valid and no orphan is
+    left behind. Best-effort: if the provider has no redacted copy, the transcript is still
+    redacted and the retention sweep still deletes the audio on schedule, so failing the
+    whole call here would cost more than it protects.
+    """
+    getter = getattr(stt, "get_redacted_audio_url", None)
+    if getter is None:
+        return
+    try:
+        url = await getter(transcript_id=job.transcript_id)
+        if not url:
+            log.warning("judge.redacted_audio_unavailable", call_id=str(job.call_id))
+            return
+        async with httpx.AsyncClient(timeout=300.0) as http:
+            resp = await http.get(url)
+            resp.raise_for_status()
+            data = resp.content
+        if not data:
+            return
+        await storage.put_recording(job.audio_uri, data, audio_mime_for(job.audio_uri))
+        log.info("judge.recording_redacted", call_id=str(job.call_id), bytes=len(data))
+    except Exception as exc:  # noqa: BLE001 — see docstring: best-effort by design
+        log.warning(
+            "judge.redacted_audio_failed", call_id=str(job.call_id), error=str(exc)[:200]
+        )
 
 
 @dataclass(frozen=True)
@@ -75,6 +125,7 @@ JUDGE_TOKEN_ESTIMATE = 16_000
 async def handle_transcription(
     job: JobView,
     *,
+    session: AsyncSession,
     limiters: Limiters,
     daily_cap: DailyCap,
     stt: SttClient,
@@ -100,9 +151,19 @@ async def handle_transcription(
     if decision.deferred:
         return Deferred(reason=f"daily limit reached ({decision.used}/{decision.cap})")
 
+    # The portfolio's current redaction level, read live — not snapshotted onto the call —
+    # so an admin's change governs every call submitted after it. redact_pii_audio has to be
+    # decided here: the provider only builds a redacted audio file for a request that asked
+    # for one, so it cannot be bolted on after the transcript comes back.
+    mode = await get_portfolio_pii_mode(session, job.portfolio_id)
     audio_url = storage.presign_audio_get(job.audio_uri)
     async with limiters.assemblyai.guard():
-        transcript_id = await stt.submit(call_id=job.call_id, audio_url=audio_url)
+        transcript_id = await stt.submit(
+            call_id=job.call_id,
+            audio_url=audio_url,
+            redact_pii=mode.redacts_transcript,
+            redact_pii_audio=mode.redacts_recording,
+        )
     return Park(transcript_id=transcript_id)
 
 
@@ -147,7 +208,6 @@ async def handle_judge(
     subjective: SubjectiveGenerator | None = None,
     rewriter: NarrativeGenerator | None = None,
     audio_uploader: AudioUploader | None = None,
-    require_redaction: bool = True,
 ) -> StepOutcome:
     """PENDING_JUDGE → materialize the transcript (once), then run the OPTION's pipeline, DONE.
 
@@ -156,19 +216,23 @@ async def handle_judge(
     re-fetches or double-charges. The OPTION on the call then drives the pipeline — RAW_ONLY
     ends right here (transcript only, no LLM, no report). Re-judging is safe (keyed by call_id).
     """
+    mode = await get_portfolio_pii_mode(session, job.portfolio_id)
     if job.transcript_uri is None:
         if not job.transcript_id:
             raise FatalError("PENDING_JUDGE without a transcript_id")
         async with limiters.assemblyai.guard():
-            transcript = await stt.fetch_transcript(transcript_id=job.transcript_id)
+            transcript = await stt.fetch_transcript(
+                transcript_id=job.transcript_id,
+                require_redacted=mode.redacts_transcript,
+            )
         # Last gate before anything is written: with redaction enabled, only a transcript the
         # provider confirmed it redacted may be persisted. The client checks this too; this
         # second check is here because THIS is the line that writes to object storage, and a
         # future STT client must not be able to bypass the guarantee by omitting its own.
-        if require_redaction and not transcript.redacted:
+        if mode.redacts_transcript and not transcript.redacted:
             raise FatalError(
                 f"refusing to store an unredacted transcript for call {job.call_id} "
-                "(ASSEMBLYAI_REDACT_PII is on but the transcript is not marked redacted)"
+                f"(portfolio pii_mode={mode.value} but the transcript is not marked redacted)"
             )
         uri = await storage.put_transcript(job.call_id, transcript)
         await queue.set_transcript_uri(session, job.call_id, uri)
@@ -178,7 +242,11 @@ async def handle_judge(
     call = await session.get(Call, job.call_id)
     option = ProcessingOption(call.option) if call and call.option else ProcessingOption.FULL
     if not needs_judge(option):
-        return Complete()  # RAW_ONLY — transcript stored, nothing else to produce
+        # RAW_ONLY — no LLM, no report. The recording still gets swapped for the redacted
+        # copy when the portfolio asks for it; there is no judge pass to wait for here.
+        if mode.redacts_recording:
+            await _redact_stored_recording(job, stt, storage)
+        return Complete()  # transcript stored, nothing else to produce
 
     # Multimodal: hand the recording audio to the agents (None when unavailable → text-only).
     # Files API when available (uploaded once, referenced by every agent), inline as fallback.
@@ -213,4 +281,10 @@ async def handle_judge(
         # than tracking cross-attempt file state on the job row.
         if audio_uploader is not None and audio is not None and audio.file_name:
             await audio_uploader.delete(audio.file_name)
+    # Only now, with the judge finished and the report written, is it safe to swap the stored
+    # recording for the beeped copy: up to this point the judge needed the original audio.
+    # Deliberately outside the try/finally — a failed judge will be retried and must still
+    # find the unredacted audio.
+    if mode.redacts_recording:
+        await _redact_stored_recording(job, stt, storage)
     return Complete()

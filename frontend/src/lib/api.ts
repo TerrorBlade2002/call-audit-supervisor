@@ -3,11 +3,14 @@ import { useAuth } from "./auth";
 const BASE = "/api";
 
 // ---- types (mirror the backend schemas) ----
+export type PiiMode = "OFF" | "TRANSCRIPT" | "TRANSCRIPT_AND_RECORDING";
 export interface Portfolio {
   id: string;
   name: string;
   created_at: string;
   my_role: string | null; // caller's role here: ADMIN / SUPERVISOR / AGENT
+  /** Admin-set redaction level. Applies to calls processed after it is changed. */
+  pii_mode: PiiMode;
 }
 export interface Agent {
   id: string;
@@ -341,6 +344,12 @@ export const api = {
   renamePortfolio: (pid: string, name: string) =>
     req<Portfolio>(`/portfolios/${pid}`, { method: "PATCH", body: JSON.stringify({ name }) }),
   deletePortfolio: (pid: string) => req<void>(`/portfolios/${pid}`, { method: "DELETE" }),
+  // Super-admin only (compliance control). Takes effect for calls processed afterwards.
+  setPiiMode: (pid: string, pii_mode: PiiMode) =>
+    req<Portfolio>(`/portfolios/${pid}/pii-mode`, {
+      method: "PATCH",
+      body: JSON.stringify({ pii_mode }),
+    }),
   // Per-portfolio user accounts (super admin).
   listPortfolioUsers: (pid: string) => req<PortfolioUser[]>(`/portfolios/${pid}/users`),
   createPortfolioUser: (pid: string, email: string, password: string, role: string) =>

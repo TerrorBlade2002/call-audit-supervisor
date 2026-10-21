@@ -8,6 +8,8 @@ are retried with backoff; the ``httpx.AsyncClient`` is injectable so tests run o
 
 from __future__ import annotations
 
+import asyncio
+from pathlib import PurePosixPath
 from typing import Any
 
 import httpx
@@ -41,6 +43,9 @@ class AssemblyAIClient:
         redact_pii: bool = True,
         redact_pii_policies: list[str] | None = None,
         redact_pii_sub: str = DEFAULT_PII_SUB,
+        redacted_audio_poll_seconds: float = 3.0,
+        redacted_audio_attempts: int = 40,
+        sleep_fn: Any = asyncio.sleep,
     ) -> None:
         self._key = api_key
         self._base = base_url.rstrip("/")
@@ -55,6 +60,9 @@ class AssemblyAIClient:
         # treated as "use the defaults" rather than silently disabling redaction.
         self._redact_policies = list(redact_pii_policies or DEFAULT_PII_POLICIES)
         self._redact_sub = redact_pii_sub
+        self._redacted_audio_poll_seconds = redacted_audio_poll_seconds
+        self._redacted_audio_attempts = redacted_audio_attempts
+        self._sleep = sleep_fn
 
     @property
     def _headers(self) -> dict[str, str]:
@@ -81,8 +89,22 @@ class AssemblyAIClient:
             jitter_ratio=self._retry.retry_jitter_ratio,
         )
 
-    async def submit(self, *, call_id: object, audio_url: str) -> str:
-        """Submit audio for async, diarized, PII-redacted transcription → transcript id."""
+    async def submit(
+        self,
+        *,
+        call_id: object,
+        audio_url: str,
+        redact_pii: bool | None = None,
+        redact_pii_audio: bool = False,
+    ) -> str:
+        """Submit audio for async, diarized transcription → transcript id.
+
+        ``redact_pii`` is per call (the level is a portfolio setting), defaulting to the
+        client's own configuration when not given. ``redact_pii_audio`` must be decided HERE,
+        at submit time — the provider only produces a redacted audio file for a request that
+        asked for one, so it cannot be added after the fact.
+        """
+        redact = self._redact_pii if redact_pii is None else redact_pii
         body: dict[str, object] = {
             "audio_url": audio_url,
             "speaker_labels": True,
@@ -92,7 +114,15 @@ class AssemblyAIClient:
             "format_text": True,
             "punctuate": True,
         }
-        if self._redact_pii:
+        if redact and redact_pii_audio:
+            body["redact_pii_audio"] = True
+            # Match the source container so the redacted object can replace the original in
+            # place, under the same key and extension.
+            body["redact_pii_audio_quality"] = (
+                "wav" if PurePosixPath(audio_url.split("?")[0]).suffix.lower() == ".wav"
+                else "mp3"
+            )
+        if redact:
             # policies are mandatory — `redact_pii: true` with no policies redacts NOTHING.
             body["redact_pii"] = True
             body["redact_pii_policies"] = self._redact_policies
@@ -118,7 +148,32 @@ class AssemblyAIClient:
         err = data.get("error")
         return str(err) if err else None
 
-    async def fetch_transcript(self, *, transcript_id: str) -> Transcript:
+    async def get_redacted_audio_url(self, *, transcript_id: str) -> str | None:
+        """Poll for the redacted (beeped) audio of a transcript submitted with that option.
+
+        Returns None when the provider does not produce one — e.g. the request did not ask
+        for redacted audio, or the recording had no detected speech. The caller treats that
+        as "leave the original in place" rather than failing the call, since the transcript
+        (the thing that gets read) is already redacted by then.
+
+        The URL is short-lived (the provider keeps redacted audio ~24h), so download it now.
+        """
+        for _ in range(self._redacted_audio_attempts):
+            data = await self._request(
+                "GET", f"/v2/transcript/{transcript_id}/redacted-audio"
+            )
+            status = str(data.get("status") or "")
+            if status == "redacted_audio_ready":
+                url = data.get("redacted_audio_url")
+                return str(url) if url else None
+            if status == "error":
+                return None
+            await self._sleep(self._redacted_audio_poll_seconds)
+        return None
+
+    async def fetch_transcript(
+        self, *, transcript_id: str, require_redacted: bool | None = None
+    ) -> Transcript:
         """Fetch the completed transcript and normalize to our diarized shape.
 
         Refuses to return a transcript that is not redacted while redaction is enabled. The
@@ -127,8 +182,9 @@ class AssemblyAIClient:
         FatalError because a retry would re-fetch the same already-transcribed audio and fail
         identically; the call needs re-submitting, not retrying.
         """
+        expect_redacted = self._redact_pii if require_redacted is None else require_redacted
         data = await self._request("GET", f"/v2/transcript/{transcript_id}")
-        if self._redact_pii and not bool(data.get("redact_pii")):
+        if expect_redacted and not bool(data.get("redact_pii")):
             raise FatalError(
                 f"transcript {transcript_id} came back WITHOUT PII redaction applied "
                 "(redact_pii is not set on the provider's response) — refusing to store it"

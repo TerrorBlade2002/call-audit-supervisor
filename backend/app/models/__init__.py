@@ -86,6 +86,13 @@ class Portfolio(Base):
     __tablename__ = "portfolios"
     id: Mapped[uuid.UUID] = _pk()
     name: Mapped[str] = mapped_column(String(200), nullable=False)
+    # PII redaction level for this portfolio: OFF | TRANSCRIPT | TRANSCRIPT_AND_RECORDING.
+    # Admin-set, and read live when a call is processed (never snapshotted onto the call), so
+    # changing it governs every call processed from that point on. Defaults to OFF: redaction
+    # is an explicit per-client decision rather than something that switches itself on.
+    pii_mode: Mapped[str] = mapped_column(
+        String(32), nullable=False, default="OFF", server_default="OFF"
+    )
     created_by: Mapped[uuid.UUID | None] = mapped_column(ForeignKey("users.id"))
     created_at: Mapped[datetime] = _created_at()
 

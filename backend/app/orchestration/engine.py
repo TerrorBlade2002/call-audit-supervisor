@@ -112,6 +112,7 @@ async def process_one(session: AsyncSession, job: ClaimedJob, deps: EngineDeps) 
         if state is JobState.PENDING_TRANSCRIPTION:
             outcome = await handle_transcription(
                 view,
+                session=session,
                 limiters=deps.limiters,
                 daily_cap=deps.make_daily_cap(session),
                 stt=deps.stt,
@@ -132,7 +133,6 @@ async def process_one(session: AsyncSession, job: ClaimedJob, deps: EngineDeps) 
                 subjective=deps.subjective,
                 rewriter=deps.rewriter,
                 audio_uploader=deps.audio_uploader,
-                require_redaction=deps.settings.assemblyai_redact_pii,
             )
         else:  # defensive: a non-claimable state should never be claimed
             from app.ratelimit.backoff import FatalError

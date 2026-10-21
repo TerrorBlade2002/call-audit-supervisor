@@ -15,8 +15,20 @@ from app.stt import Transcript, TranscriptStatus, Utterance
 
 
 class SttClient(Protocol):
-    async def submit(self, *, call_id: uuid.UUID, audio_url: str) -> str:
-        """Submit audio (a downloadable URL) for async transcription; return a transcript id."""
+    async def submit(
+        self,
+        *,
+        call_id: uuid.UUID,
+        audio_url: str,
+        redact_pii: bool | None = None,
+        redact_pii_audio: bool = False,
+    ) -> str:
+        """Submit audio (a downloadable URL) for async transcription; return a transcript id.
+
+        Redaction is per call because the level is a portfolio setting. ``redact_pii_audio``
+        must be requested here — a redacted audio file can only be produced by the same
+        request that transcribes.
+        """
         ...
 
     async def poll(self, *, transcript_id: str) -> TranscriptStatus:
@@ -28,8 +40,13 @@ class SttClient(Protocol):
         user-facing message). None if unavailable."""
         ...
 
-    async def fetch_transcript(self, *, transcript_id: str) -> Transcript:
-        """Fetch the completed, diarized transcript for storage + judging."""
+    async def fetch_transcript(
+        self, *, transcript_id: str, require_redacted: bool | None = None
+    ) -> Transcript:
+        """Fetch the completed, diarized transcript for storage + judging.
+
+        Implementations must refuse to return unredacted text when ``require_redacted``.
+        """
         ...
 
 
@@ -40,7 +57,14 @@ class StubStt:
         self._remaining_failures = fail_times
         self._poll_status = poll_status
 
-    async def submit(self, *, call_id: uuid.UUID, audio_url: str) -> str:
+    async def submit(
+        self,
+        *,
+        call_id: uuid.UUID,
+        audio_url: str,
+        redact_pii: bool | None = None,
+        redact_pii_audio: bool = False,
+    ) -> str:
         if self._remaining_failures > 0:
             self._remaining_failures -= 1
             raise RetryableError("stub STT transient failure")
@@ -52,7 +76,9 @@ class StubStt:
     async def get_error(self, *, transcript_id: str) -> str | None:
         return None
 
-    async def fetch_transcript(self, *, transcript_id: str) -> Transcript:
+    async def fetch_transcript(
+        self, *, transcript_id: str, require_redacted: bool | None = None
+    ) -> Transcript:
         # redacted=True: the stub's canned text contains no PII, and marking it so keeps the
         # offline/CI path working against the same "only redacted transcripts are stored"
         # guard that production enforces, rather than needing an exemption from it.

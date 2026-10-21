@@ -46,6 +46,13 @@ class PortfolioOut(ORMModel):
     name: str
     created_at: datetime
     my_role: str | None = None  # caller's role here: ADMIN / SUPERVISOR / AGENT / …
+    pii_mode: str = "OFF"  # OFF | TRANSCRIPT | TRANSCRIPT_AND_RECORDING (admin-set)
+
+
+class PiiModeUpdate(BaseModel):
+    """Admin-set PII redaction level for a portfolio. Applies to calls processed afterwards."""
+
+    pii_mode: Literal["OFF", "TRANSCRIPT", "TRANSCRIPT_AND_RECORDING"]
 
 
 class MemberAssign(BaseModel):
