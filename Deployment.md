@@ -755,6 +755,25 @@ The app now uploads **one file per request**, so this only happens if a *single*
 
 ---
 
+### Nothing deploys, and Railway shows "Limited Access — Paused temporarily"
+
+**Symptom:** pushes to `main` produce no deployment at all — not a failed one, no record
+created — and the service page shows a *Limited Access / Paused temporarily* banner.
+
+**Cause:** this is usually **Railway pausing builds platform-wide**, not a problem with the
+repo, the webhook or the account. It looks identical to a billing hold from inside the
+dashboard, which is misleading.
+
+**Check this first:** https://status.railway.com — if builds are paused there, nothing you
+do in the project will deploy. Restoration is staged by plan tier (Enterprise → Pro → Hobby →
+Free/Trial), so your tier may lag behind "resolved".
+
+**When builds return**, Railway does NOT replay push events it missed during the outage. Push
+again (an empty commit is enough: `git commit --allow-empty -m "trigger deploy"`) or hit
+**Deploy** on the service in the dashboard.
+
+---
+
 ### Migrations fail on deploy with an extension error
 
 The Railway Postgres image lacks **pgvector**. See [2.2](#22-railway--the-database).
